@@ -1,0 +1,46 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 500 500" width="100%" height="100%">
+  <defs>
+    <!-- Gradientes de Alta Calidad Estilo TFT Gold & Cosmic -->
+    <linearGradient id="tftGoldGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FFF2A1"/>
+      <stop offset="35%" stop-color="#EEA402"/>
+      <stop offset="100%" stop-color="#B87200"/>
+    </linearGradient>
+
+    <linearGradient id="tftBgGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#1F222E"/>
+      <stop offset="100%" stop-color="#0B0D12"/>
+    </linearGradient>
+
+    <linearGradient id="tftGlowGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#FE3E4B"/>
+      <stop offset="50%" stop-color="#EEA402"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+
+    <filter id="goldGlow" x="-20%" y="-20%" width="140%" height="140%">
+      <feGaussianBlur stdDeviation="8" result="blur"/>
+      <feComposite in="SourceGraphic" in2="blur" operator="over"/>
+    </filter>
+  </defs>
+
+  <!-- Base Hexagonal Externa -->
+  <polygon points="250,15 460,132 460,368 250,485 40,368 40,132" fill="url(#tftBgGrad)" stroke="url(#tftGoldGrad)" stroke-width="12" stroke-linejoin="round"/>
+
+  <!-- Hexágono Interior Fino de Acento -->
+  <polygon points="250,35 440,143 440,357 250,465 60,357 60,143" fill="none" stroke="url(#tftGlowGrad)" stroke-width="4" opacity="0.6" stroke-linejoin="round"/>
+
+  <!-- Corona / Espada Vectorial TFT Central (Emblema de Rey / Campeón) -->
+  <path d="M 170,160 L 210,210 L 250,120 L 290,210 L 330,160 L 310,320 L 190,320 Z" fill="url(#tftGoldGrad)" filter="url(#goldGlow)"/>
+
+  <!-- Gemas Interiores de la Corona -->
+  <circle cx="250" cy="180" r="10" fill="#FE3E4B"/>
+  <circle cx="210" cy="230" r="6" fill="#3B82F6"/>
+  <circle cx="290" cy="230" r="6" fill="#3B82F6"/>
+
+  <!-- Texto Principal TFT en Tipografía Vectorial Nítida -->
+  <text x="250" y="405" text-anchor="middle" font-family="system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif" font-weight="900" font-size="82" fill="#FFFFFF" letter-spacing="4">TFT</text>
+
+  <!-- Detalle Inferior Estelar -->
+  <polygon points="250,418 255,432 270,432 258,441 262,455 250,446 238,455 242,441 230,432 245,432" fill="url(#tftGoldGrad)"/>
+</svg>
