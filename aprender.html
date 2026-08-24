@@ -1,0 +1,276 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TFT: Qué es Teamfight Tactics, Cómo Descargar, Modos de Juego | Guía para Principiantes</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgDark: '#0b0d0f',
+            cardDark: '#17181a',
+            borderDark: '#26282c',
+            tierS: '#fe3e4b',
+            tierA: '#eea402',
+            tierB: '#3b82f6',
+            cost1: '#a1a1aa',
+            cost2: '#10b981',
+            cost3: '#3b82f6',
+            cost4: '#8b5cf6',
+            cost5: '#eab308'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0b0d0f;
+      color: #f3f4f6;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    .border-tft-gold {
+      border-color: #eea402 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Menú de navegación superior estandarizado -->
+  <nav class="border-b border-[#26282c] bg-[#17181a]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-red-600 to-amber-500 flex items-center justify-center font-black text-white shadow-lg shadow-red-500/20">
+            TFT
+          </div>
+          <span class="font-extrabold text-lg tracking-wider bg-gradient-to-r from-red-400 via-amber-300 to-purple-400 bg-clip-text text-transparent">
+            META COMPS TIER LIST
+          </span>
+        </a>
+      </div>
+      
+      <div class="flex items-center space-x-6 text-sm font-semibold text-gray-400">
+        <a href="index.html" class="hover:text-amber-400 transition-colors" data-i18n="navHome">Inicio / Tier List</a>
+        <a href="index.html#comps-container" class="hover:text-white transition-colors" data-i18n="navComps">Composiciones</a>
+        <a href="set17.html" class="hover:text-amber-400 transition-colors" data-i18n="navSet17">Set 17</a>
+        <a href="aprender.html" class="text-amber-400 hover:text-amber-400 transition-colors" data-i18n="navLearn">Aprender TFT</a>
+        
+        <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR -->
+        <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
+          <span>🌐</span>
+          <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none">
+            <option value="es" class="bg-[#17181a] text-white">🇪🇸 Español</option>
+            <option value="en" class="bg-[#17181a] text-white">🇺🇸 English</option>
+            <option value="pt" class="bg-[#17181a] text-white">🇧🇷 Português</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Contenedor Central Principal -->
+  <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-8">
+    
+    <!-- Encabezado Principal -->
+    <header>
+      <h1 class="font-black text-2xl md:text-3xl text-white mb-6 tracking-tight">
+        TFT: Qué es Teamfight Tactics, Cómo descargar, Modos de juego
+      </h1>
+    </header>
+
+    <!-- Sección Superior: Grid 2 Columnas en Escritorio / 1 Columna en Móviles -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-8">
+      
+      <!-- Columna Izquierda: Índice Ordenado -->
+      <div class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-2xl">
+        <h2 class="text-xs font-black uppercase text-gray-400 tracking-wider mb-4 border-b border-[#26282c] pb-2 flex items-center gap-2" data-i18n="tocHeader">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+          </svg>
+          Índice de la Guía
+        </h2>
+        <ol class="space-y-3 text-sm text-gray-300 font-medium">
+          <li>
+            <a href="#que-es-tft" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">1.</span>
+              <span data-i18n="toc1">¿Qué es Teamfight Tactics?</span>
+            </a>
+          </li>
+          <li>
+            <a href="#como-descargar" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">2.</span>
+              <span data-i18n="toc2">¿Cómo Descargar TFT en PC, Mac y Mobile?</span>
+            </a>
+          </li>
+          <li>
+            <a href="#como-ganar-reglas" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">3.</span>
+              <span data-i18n="toc3">¿Cómo Ganar en TFT: Reglas y Sistema de ELO?</span>
+            </a>
+          </li>
+          <li>
+            <a href="#modos-de-juego" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">4.</span>
+              <span data-i18n="toc4">Modos de Juego: Normales, Ranked y Double Up</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Columna Derecha: Espacio Publicitario / AdSlot -->
+      <div class="relative w-full aspect-video rounded-3xl overflow-hidden border-2 border-dashed border-[#26282c] bg-[#121316] shadow-2xl flex flex-col items-center justify-center gap-2 text-xs font-black text-gray-500 tracking-widest text-center">
+        <span>ESPACIO PUBLICITARIO / ADSENSE</span>
+        <span class="text-[10px] font-normal text-gray-600">300 x 250 / Responsivo</span>
+      </div>
+
+    </section>
+
+    <!-- Línea Separadora Sutil -->
+    <hr class="border-[#26282c] my-8" />
+
+    <!-- Sección de Contenido: Bloques de Texto de la Guía -->
+    <div class="space-y-8">
+      
+      <!-- Bloque 1: ¿Qué es Teamfight Tactics? -->
+      <section id="que-es-tft" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2" data-i18n="sec1Title">
+          <span class="text-amber-400">1.</span> ¿Qué es Teamfight Tactics?
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed mb-6" data-i18n="sec1Text">
+          Teamfight Tactics (TFT) es un juego de estrategia por turnos tipo <em>Auto Battler</em> desarrollado por Riot Games. En cada partida compites contra otros 7 jugadores en un entorno de "todos contra todos". Tu objetivo es reclutar campeones de League of Legends, posicionarlos en tu tablero, equiparles objetos y construir sinergias poderosas para derrotar a los ejércitos enemigos de forma automática durante las batallas.
+        </p>
+      </section>
+
+      <!-- Bloque 2: ¿Cómo Descargar TFT en PC, Mac y Mobile? -->
+      <section id="como-descargar" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2" data-i18n="sec2Title">
+          <span class="text-amber-400">2.</span> ¿Cómo Descargar TFT en PC, Mac y Mobile?
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed mb-4" data-i18n="sec2Text">
+          Teamfight Tactics es completamente gratuito (*Free-to-Play*) y cuenta con juego cruzado (*cross-play*), lo que significa que puedes jugar desde tu ordenador o smartphone manteniendo todo tu progreso unificado.
+        </p>
+        <ul class="list-disc ml-5 text-sm text-gray-300 space-y-2 leading-relaxed mb-6">
+          <li><strong>PC / Mac:</strong> Descarga el Cliente oficial de Riot Games desde la página web oficial. TFT se encuentra integrado directamente dentro del cliente de League of Legends.</li>
+          <li><strong>Dispositivos Móviles (iOS / Android):</strong> Busca <em>"Teamfight Tactics"</em> en la App Store (iPhone/iPad) o en la Google Play Store (Android), descárgalo e inicia sesión con tu cuenta de Riot.</li>
+        </ul>
+      </section>
+
+      <!-- Bloque 3: ¿Cómo Ganar en TFT: Reglas y Sistema de ELO? -->
+      <section id="como-ganar-reglas" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">3.</span> ¿Cómo Ganar en TFT: Reglas y Sistema de ELO?
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed mb-6">
+          Todos los jugadores comienzan la partida con 100 puntos de vida. Cada vez que pierdes una ronda contra otro jugador, tu Minileyenda recibe daño. La partida termina para ti cuando tu vida llega a 0. Para ganar o sumar ELO (Puntos de Liga), debes gestionar eficientemente tu economía de oro, comprar copias repetidas de campeones para subirlos a 2 estrellas o 3 estrellas y adaptar tus sinergias según los aumentos que obtengas. Quedar entre los primeros 4 puestos garantiza una ganancia neta de ELO.
+        </p>
+      </section>
+
+      <!-- Bloque 4: Modos de Juego: Normales, Ranked y Double Up -->
+      <section id="modos-de-juego" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">4.</span> Modos de Juego: Normales, Ranked y Double Up
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed mb-4">
+          TFT ofrece una variedad de modos de juego diseñados tanto para jugadores casuales como para competir al máximo nivel:
+        </p>
+        <ul class="list-disc ml-5 text-sm text-gray-300 space-y-2 leading-relaxed mb-6">
+          <li><strong>Normales:</strong> Partidas informales ideales para practicar nuevas composiciones y probar combinaciones de objetos sin riesgo de perder ELO.</li>
+          <li><strong>Ranked (Clasificatorias):</strong> Compite contra jugadores de tu mismo nivel de habilidad para escalar desde Hierro hasta Aspirante (*Challenger*).</li>
+          <li><strong>Double Up (Dúos Dinámicos):</strong> Modo cooperativo de 2v2v2v2 en el que compartes barra de vida con tu compañero de equipo y pueden enviarse campeones u objetos mediante refuerzos mágicos.</li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- Pie de Sección -->
+    <hr class="border-[#26282c] my-8" />
+
+    <footer class="mt-8 mb-12">
+      <h2 class="text-xl font-black text-white tracking-tight">
+        Guías y Tutoriales de TFT
+      </h2>
+      <p class="text-xs text-gray-400 mt-2">
+        Aprende los conceptos clave para dominar el tablero, la economía y escalar rangos en Teamfight Tactics.
+      </p>
+    </footer>
+
+  <script>
+    const aprenderI18n = {
+      es: {
+        title: "TFT: Qué es Teamfight Tactics, Cómo descargar, Modos de juego",
+        navHome: "Inicio / Tier List",
+        navComps: "Composiciones",
+        navSet17: "Set 17",
+        navLearn: "Aprender TFT",
+        tocHeader: "Índice de la Guía",
+        toc1: "¿Qué es Teamfight Tactics?",
+        toc2: "¿Cómo Descargar TFT en PC, Mac y Mobile?",
+        toc3: "¿Cómo Ganar en TFT: Reglas y Sistema de ELO?",
+        toc4: "Modos de Juego: Normales, Ranked y Double Up",
+        sec1Title: "1. ¿Qué es Teamfight Tactics?",
+        sec1Text: "Teamfight Tactics (TFT) es un juego de estrategia por turnos tipo Auto Battler desarrollado por Riot Games. En cada partida compites contra otros 7 jugadores en un entorno de 'todos contra todos'. Tu objetivo es reclutar campeones de League of Legends, posicionarlos en tu tablero, equiparles objetos y construir sinergias poderosas para derrotar a los ejércitos enemigos de forma automática durante las batallas.",
+        sec2Title: "2. ¿Cómo Descargar TFT en PC, Mac y Mobile?",
+        sec2Text: "Teamfight Tactics es completamente gratuito (Free-to-Play) y cuenta con juego cruzado (cross-play), lo que significa que puedes jugar desde tu ordenador o smartphone manteniendo todo tu progreso unificado."
+      },
+      en: {
+        title: "TFT: What is Teamfight Tactics, How to Download, Game Modes",
+        navHome: "Home / Tier List",
+        navComps: "Compositions",
+        navSet17: "Set 17",
+        navLearn: "Learn TFT",
+        tocHeader: "Guide Index",
+        toc1: "What is Teamfight Tactics?",
+        toc2: "How to Download TFT on PC, Mac & Mobile?",
+        toc3: "How to Win in TFT: Rules & ELO System?",
+        toc4: "Game Modes: Normals, Ranked & Double Up",
+        sec1Title: "1. What is Teamfight Tactics?",
+        sec1Text: "Teamfight Tactics (TFT) is an auto-battler turn-based strategy game developed by Riot Games. In each match you compete against 7 other players in a free-for-all environment. Your objective is to recruit League of Legends champions, position them on your board, equip items, and build synergies.",
+        sec2Title: "2. How to Download TFT on PC, Mac & Mobile?",
+        sec2Text: "Teamfight Tactics is completely Free-to-Play and features full cross-play across PC, Mac, and mobile devices."
+      },
+      pt: {
+        title: "TFT: O que é Teamfight Tactics, Como Baixar, Modos de Jogo",
+        navHome: "Início / Lista de Níveis",
+        navComps: "Composições",
+        navSet17: "Conjunto 17",
+        navLearn: "Aprender TFT",
+        tocHeader: "Índice do Guia",
+        toc1: "O que é Teamfight Tactics?",
+        toc2: "Como Baixar TFT no PC, Mac e Celular?",
+        toc3: "Como Vencer no TFT: Regras e Sistema de ELO?",
+        toc4: "Modos de Jogo: Normais, Ranqueadas e Duplas",
+        sec1Title: "1. O que é Teamfight Tactics?",
+        sec1Text: "Teamfight Tactics (TFT) é um jogo de estratégia por turnos do tipo Auto Battler desenvolvido pela Riot Games.",
+        sec2Title: "2. Como Baixar TFT no PC, Mac e Celular?",
+        sec2Text: "Teamfight Tactics é totalmente gratuito (Free-to-Play) e possui suporte a jogo cruzado entre PC, Mac e dispositivos móveis."
+      }
+    };
+
+    function changeLanguage(lang) {
+      localStorage.setItem('tft_lang', lang);
+      const t = aprenderI18n[lang] || aprenderI18n.es;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerText = t[key];
+      });
+      const titleEl = document.querySelector('h1');
+      if (titleEl) titleEl.innerText = t.title;
+
+      const select = document.getElementById('lang-select');
+      if (select) select.value = lang;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('tft_lang') || 'es';
+      changeLanguage(savedLang);
+    });
+  </script>
+</body>
+</html>

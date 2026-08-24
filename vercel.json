@@ -1,0 +1,9 @@
+{
+  "version": 2,
+  "cleanUrls": true,
+  "routes": [
+    { "src": "/", "dest": "/index.html" },
+    { "src": "/set17", "dest": "/set17.html" },
+    { "src": "/aprender", "dest": "/aprender.html" }
+  ]
+}

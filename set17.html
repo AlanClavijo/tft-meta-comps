@@ -1,0 +1,427 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Set 17 TFT: Dioses del Espacio | Guía Completa y Mecánicas</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgDark: '#0b0d0f',
+            cardDark: '#17181a',
+            borderDark: '#26282c',
+            tftGold: '#eea402',
+            tftPurple: '#8b5cf6',
+            tierS: '#fe3e4b'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0b0d0f;
+      color: #f3f4f6;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    .border-tft-gold {
+      border-color: #eea402 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Menú de navegación superior estandarizado -->
+  <nav class="border-b border-[#26282c] bg-[#17181a]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-red-600 to-amber-500 flex items-center justify-center font-black text-white shadow-lg shadow-red-500/20">
+            TFT
+          </div>
+          <span class="font-extrabold text-lg tracking-wider bg-gradient-to-r from-red-400 via-amber-300 to-purple-400 bg-clip-text text-transparent">
+            META COMPS TIER LIST
+          </span>
+        </a>
+      </div>
+      
+      <div class="flex items-center space-x-6 text-sm font-semibold text-gray-400">
+        <a href="index.html" class="hover:text-white transition-colors" data-i18n="navHome">Inicio / Tier List</a>
+        <a href="index.html#comps-container" class="hover:text-white transition-colors" data-i18n="navComps">Composiciones</a>
+        <a href="set17.html" class="text-amber-400 hover:text-white transition-colors" data-i18n="navSet17">Set 17</a>
+        <a href="aprender.html" class="hover:text-amber-400 transition-colors" data-i18n="navLearn">Aprender TFT</a>
+        
+        <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR -->
+        <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
+          <span>🌐</span>
+          <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none">
+            <option value="es" class="bg-[#17181a] text-white">🇪🇸 Español</option>
+            <option value="en" class="bg-[#17181a] text-white">🇺🇸 English</option>
+            <option value="pt" class="bg-[#17181a] text-white">🇧🇷 Português</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Layout Principal (Escritorio: Grid 2 Columnas Izq Guía / Der Sidebar Sticky | Móvil: 1 Columna) -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-[1fr_300px] gap-8 items-start">
+      
+      <!-- COLUMNA PRINCIPAL DE CONTENIDO (Artículo de la Guía) -->
+      <div class="w-full space-y-8">
+        
+        <!-- Encabezado Principal -->
+        <header>
+          <h1 class="text-3xl md:text-4xl font-black text-white tracking-tight mb-2">
+            Set 17 TFT: Dioses del Espacio
+          </h1>
+          <p class="text-gray-400 text-sm sm:text-base leading-relaxed">
+            Descubre todas las novedades, bendiciones estelares, nuevos campeones y mecánicas celestiales que llegan a Teamfight Tactics con el Set 17.
+          </p>
+        </header>
+
+        <!-- Tarjetas de Acceso Rápido -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+          <a href="aprender.html" class="p-4 rounded-3xl bg-[#17181a] border border-[#26282c] hover:border-amber-500/50 transition-all flex items-center space-x-4 shadow-xl group">
+            <div class="w-12 h-12 rounded-2xl bg-amber-500/10 border border-amber-500/30 flex items-center justify-center text-amber-400 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white group-hover:text-amber-400 transition-colors" data-i18n="cardSetTipsTitle">Consejos del Set TFT</h3>
+              <p class="text-xs text-gray-400" data-i18n="cardSetTipsDesc">Guías básicas y recomendaciones estratégicas.</p>
+            </div>
+          </a>
+
+          <a href="index.html" class="p-4 rounded-3xl bg-[#17181a] border border-[#26282c] hover:border-amber-500/50 transition-all flex items-center space-x-4 shadow-xl group">
+            <div class="w-12 h-12 rounded-2xl bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-purple-400 group-hover:scale-110 transition-transform">
+              <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"></path>
+              </svg>
+            </div>
+            <div>
+              <h3 class="text-sm font-bold text-white group-hover:text-amber-400 transition-colors" data-i18n="cardBestCompsTitle">Mejores Composiciones</h3>
+              <p class="text-xs text-gray-400" data-i18n="cardBestCompsDesc">Explora la Tier List actualizada del meta.</p>
+            </div>
+          </a>
+        </div>
+
+        <hr class="border-[#26282c]" />
+
+        <!-- Sección 1: ¿Qué es el Set 17 de TFT? -->
+        <section id="que-es-set17" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl space-y-3">
+          <h2 class="text-xl font-extrabold text-white flex items-center gap-2" data-i18n="sec1Title">
+            1. ¿Qué es el Set 17 de TFT?
+          </h2>
+          <p class="text-sm text-gray-300 leading-relaxed" data-i18n="sec1Text">
+            El Set 17 de Teamfight Tactics, titulado "Dioses del Espacio", introduce un cosmos temático donde las entidades celestiales y divinidades intergalácticas toman el control de las arenas. Los jugadores tendrán la oportunidad de invocar el favor divino de 8 Dioses Espaciales supremos que alteran de forma dinámica las reglas del juego durante la partida.
+          </p>
+        </section>
+
+        <!-- Sección 2: Mecánica del Set -->
+        <section id="mecanica-set" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl space-y-3">
+          <h2 class="text-xl font-extrabold text-white flex items-center gap-2" data-i18n="sec2Title">
+            2. Mecánica del Set: El Reino de los Dioses
+          </h2>
+          <p class="text-sm text-gray-300 leading-relaxed" data-i18n="sec2Text">
+            La mecánica principal del Set 17 revoluciona el flujo tradicional de las rondas de carrusel. Los carruseles clásicos son reemplazados por intervenciones divinas en las etapas clave (Fase 2-4, 3-4, 4-4). Durante estas intervenciones, los jugadores ingresan al Reino de los Dioses para seleccionar bendiciones exclusivas, artefactos astrales o misiones celestiales personalizadas.
+          </p>
+        </section>
+
+        <!-- Sección 3: ¿Qué hace cada Dios Espacial? -->
+        <section id="dioses-espaciales" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl space-y-6">
+          <h2 class="text-xl font-extrabold text-white flex items-center gap-2" data-i18n="sec3Title">
+            3. ¿Qué hace cada Dios Espacial en TFT Set 17?
+          </h2>
+          <p class="text-sm text-gray-300 leading-relaxed" data-i18n="sec3Sub">
+            Cada Dios Espacial otorga pasivas únicas, misiones celestiales y modificaciones de recompensas según la estrategia elegida:
+          </p>
+
+          <div class="space-y-4">
+            
+            <!-- Ahri -->
+            <div id="dios-ahri" class="p-4 rounded-2xl bg-[#0b0d0f] border border-[#26282c]">
+              <h3 class="text-base font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <span class="text-amber-400">♦</span> Ahri - La Sacerdotisa Astral
+              </h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Otorga amplificación de Poder de Habilidad (AP) acumulativo a todo el equipo por cada habilidad lanzada durante la batalla. Sus bendiciones benefician enormemente a composiciones mágicas de lanzamiento rápido.
+              </p>
+            </div>
+
+            <!-- Aurelion Sol -->
+            <div id="dios-aurelion-sol" class="p-4 rounded-2xl bg-[#0b0d0f] border border-[#26282c]">
+              <h3 class="text-base font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <span class="text-amber-400">♦</span> Aurelion Sol - El Forjador Estelar
+              </h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Ofrece un sistema de <strong>6 misiones siderales</strong> progresivas. Al completar hitos como acumular 50 de oro o ganar 3 rondas consecutivas, Aurelion Sol forja estrellas que otorgan componentes radiantes y campeones de coste 5.
+              </p>
+            </div>
+
+            <!-- Ekko -->
+            <div id="dios-ekko" class="p-4 rounded-2xl bg-[#0b0d0f] border border-[#26282c]">
+              <h3 class="text-base font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <span class="text-amber-400">♦</span> Ekko - El Guardián del Tiempo Sideral
+              </h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Proporciona recompensas a largo plazo mediante la acumulación de "paradojas temporales". Cada 5 rondas, duplica los duplicadores de campeones pequeños y otorga oro acumulativo ideal para estrategias de reroll.
+              </p>
+            </div>
+
+            <!-- Evelynn -->
+            <div id="dios-evelynn" class="p-4 rounded-2xl bg-[#0b0d0f] border border-[#26282c]">
+              <h3 class="text-base font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <span class="text-amber-400">♦</span> Evelynn - La Sombra Cósmica
+              </h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Aumenta el daño de impacto crítico y otorga efecto de sigilo a los carries de línea trasera durante los primeros 4 segundos de cada combate.
+              </p>
+            </div>
+
+            <!-- Kayle -->
+            <div id="dios-kayle" class="p-4 rounded-2xl bg-[#0b0d0f] border border-[#26282c]">
+              <h3 class="text-base font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <span class="text-amber-400">♦</span> Kayle - La Juicio Divino
+              </h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Otorga una espada celestial a tu carry con más velocidad de ataque, haciendo que sus ataques inflijan daño verdadero en área tras cada 3 impactos.
+              </p>
+            </div>
+
+            <!-- Thresh -->
+            <div id="dios-thresh" class="p-4 rounded-2xl bg-[#0b0d0f] border border-[#26282c]">
+              <h3 class="text-base font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <span class="text-amber-400">♦</span> Thresh - El Carcelero Astral
+              </h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Utiliza un <strong>sistema de dados místico</strong>. Al inicio de cada fase, lanzas los dados celestiales para determinar el modificador de la ronda (bonus de armadura, orbes de botín o experiencia adicional).
+              </p>
+            </div>
+
+            <!-- Varus -->
+            <div id="dios-varus" class="p-4 rounded-2xl bg-[#0b0d0f] border border-[#26282c]">
+              <h3 class="text-base font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <span class="text-amber-400">♦</span> Varus - El Arquero Cósmico
+              </h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Otorga penetración de armadura (AD) y velocidad de ataque a todos los tiradores y asesinos de tu alineación.
+              </p>
+            </div>
+
+            <!-- Yasuo -->
+            <div id="dios-yasuo" class="p-4 rounded-2xl bg-[#0b0d0f] border border-[#26282c]">
+              <h3 class="text-base font-bold text-amber-300 mb-2 flex items-center gap-2">
+                <span class="text-amber-400">♦</span> Yasuo - El Viento Estelar
+              </h3>
+              <p class="text-sm text-gray-300 leading-relaxed">
+                Genera escudos temporales al inicio de la batalla a las unidades que no tengan aliados adyacentes, favoreciendo posiciones dispersas en el tablero.
+              </p>
+            </div>
+
+          </div>
+        </section>
+
+        <!-- Sección 4: Tabla de Fechas del Set -->
+        <section id="fechas-set" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl space-y-4">
+          <h2 class="text-xl font-extrabold text-white flex items-center gap-2">
+            <span class="text-amber-400">4.</span> Fechas del Set 17 de TFT
+          </h2>
+          <p class="text-sm text-gray-300 leading-relaxed">
+            Consulta el calendario oficial previsto para el despliegue del Set 17 en el servidor de pruebas (PBE) y servidores oficiales a nivel mundial:
+          </p>
+
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-sm">
+              <thead>
+                <tr class="border-b border-gray-700">
+                  <th class="py-3 px-4 text-amber-400 font-bold">Evento / Hito</th>
+                  <th class="py-3 px-4 text-amber-400 font-bold">Fecha Estimada</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-[#26282c] text-gray-300">
+                <tr class="hover:bg-[#0b0d0f]/50">
+                  <td class="py-3 px-4 font-semibold">Lanzamiento PBE (Pruebas)</td>
+                  <td class="py-3 px-4 text-amber-300">31 de Marzo 2026</td>
+                </tr>
+                <tr class="hover:bg-[#0b0d0f]/50">
+                  <td class="py-3 px-4 font-semibold">Lanzamiento Servidor Oficial</td>
+                  <td class="py-3 px-4 text-amber-300">15 de Abril 2026</td>
+                </tr>
+                <tr class="hover:bg-[#0b0d0f]/50">
+                  <td class="py-3 px-4 font-semibold">Fin Estimado del Set</td>
+                  <td class="py-3 px-4">15 de Agosto 2026</td>
+                </tr>
+                <tr class="hover:bg-[#0b0d0f]/50">
+                  <td class="py-3 px-4 font-semibold">Duración Aproximada</td>
+                  <td class="py-3 px-4">4 Meses</td>
+                </tr>
+                <tr class="hover:bg-[#0b0d0f]/50">
+                  <td class="py-3 px-4 font-semibold">Siguiente Set (Set 18) Estimado</td>
+                  <td class="py-3 px-4">16 de Agosto 2026</td>
+                </tr>
+              </tbody>
+            </table>
+          </div>
+        </section>
+
+      </div>
+
+      <!-- SIDEBAR INTERACTIVO EN ESCRITORIO (300px) STICKY top-20 (Oculto en móvil < 1024px) -->
+      <aside class="hidden lg:block w-[300px] space-y-6 sticky top-20">
+        
+        <!-- Tabla de Contenidos Wiki -->
+        <div class="bg-[#17181a] border border-amber-500/30 rounded-3xl p-5 shadow-2xl">
+          <h3 class="text-xs font-black text-amber-400 uppercase tracking-widest mb-4 pb-2 border-b border-[#26282c] flex items-center gap-2">
+            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            Contenido
+          </h3>
+          
+          <nav class="space-y-3 text-xs">
+            <div>
+              <a href="#que-es-set17" class="text-gray-300 hover:text-amber-400 font-semibold block py-1 transition-colors">
+                1. ¿Qué es el Set 17 de TFT?
+              </a>
+            </div>
+
+            <div>
+              <a href="#mecanica-set" class="text-gray-300 hover:text-amber-400 font-semibold block py-1 transition-colors">
+                2. Mecánica del Set
+              </a>
+            </div>
+
+            <div>
+              <a href="#dioses-espaciales" class="text-gray-300 hover:text-amber-400 font-semibold block py-1 transition-colors">
+                3. Dioses Espaciales en Set 17
+              </a>
+              <ul class="pl-3 mt-1 space-y-1 border-l border-[#26282c] text-gray-400">
+                <li><a href="#dios-ahri" class="hover:text-amber-300 transition-colors block py-0.5">▪ Ahri</a></li>
+                <li><a href="#dios-aurelion-sol" class="hover:text-amber-300 transition-colors block py-0.5">▪ Aurelion Sol</a></li>
+                <li><a href="#dios-ekko" class="hover:text-amber-300 transition-colors block py-0.5">▪ Ekko</a></li>
+                <li><a href="#dios-evelynn" class="hover:text-amber-300 transition-colors block py-0.5">▪ Evelynn</a></li>
+                <li><a href="#dios-kayle" class="hover:text-amber-300 transition-colors block py-0.5">▪ Kayle</a></li>
+                <li><a href="#dios-thresh" class="hover:text-amber-300 transition-colors block py-0.5">▪ Thresh</a></li>
+                <li><a href="#dios-varus" class="hover:text-amber-300 transition-colors block py-0.5">▪ Varus</a></li>
+                <li><a href="#dios-yasuo" class="hover:text-amber-300 transition-colors block py-0.5">▪ Yasuo</a></li>
+              </ul>
+            </div>
+
+            <div>
+              <a href="#fechas-set" class="text-gray-300 hover:text-amber-400 font-semibold block py-1 transition-colors">
+                4. Fechas del Set 17
+              </a>
+            </div>
+          </nav>
+        </div>
+
+        <!-- Ad Slot Publicitario Sidebar -->
+        <div class="w-[300px] h-[250px] mx-auto border-2 border-dashed border-[#26282c] bg-[#121316] rounded-3xl flex flex-col items-center justify-center gap-2 text-xs font-black text-gray-500 tracking-widest shadow-xl">
+          <span>PUBLICIDAD</span>
+          <span class="text-[10px] font-normal text-gray-600">300 x 250</span>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <footer class="border-t border-[#26282c] bg-[#17181a] py-6 mt-12">
+    <div class="max-w-7xl mx-auto px-4 text-center text-xs text-gray-400">
+      © 2026 TFT Tactics Meta. Guía informativa del Set 17 Dioses del Espacio.
+    </div>
+  </footer>
+  <script>
+    const set17I18n = {
+      es: {
+        title: "Set 17 TFT: Dioses del Espacio",
+        subtitle: "Descubre todas las novedades, bendiciones estelares, nuevos campeones y mecánicas celestiales que llegan a Teamfight Tactics con el Set 17.",
+        navHome: "Inicio / Tier List",
+        navComps: "Composiciones",
+        navSet17: "Set 17",
+        navLearn: "Aprender TFT",
+        cardSetTipsTitle: "Consejos del Set TFT",
+        cardSetTipsDesc: "Guías básicas y recomendaciones estratégicas.",
+        cardBestCompsTitle: "Mejores Composiciones",
+        cardBestCompsDesc: "Explora la Tier List actualizada del meta.",
+        sec1Title: "1. ¿Qué es el Set 17 de TFT?",
+        sec1Text: "El Set 17 de Teamfight Tactics, titulado 'Dioses del Espacio', introduce un cosmos temático donde las entidades celestiales y divinidades intergalácticas toman el control de las arenas. Los jugadores tendrán la oportunidad de invocar el favor divino de 8 Dioses Espaciales supremos que alteran de forma dinámica las reglas del juego durante la partida.",
+        sec2Title: "2. Mecánica del Set: El Reino de los Dioses",
+        sec2Text: "La mecánica principal del Set 17 revoluciona el flujo tradicional de las rondas de carrusel. Los carruseles clásicos son reemplazados por intervenciones divinas en las etapas clave (Fase 2-4, 3-4, 4-4). Durante estas intervenciones, los jugadores ingresan al Reino de los Dioses para seleccionar bendiciones exclusivas, artefactos astrales o misiones celestiales personalizadas.",
+        sec3Title: "3. ¿Qué hace cada Dios Espacial en TFT Set 17?",
+        sec3Sub: "Cada Dios Espacial otorga pasivas únicas, misiones celestiales y modificaciones de recompensas según la estrategia elegida:",
+        tocHeader: "CONTENIDO"
+      },
+      en: {
+        title: "TFT Set 17: Space Gods",
+        subtitle: "Discover all news, star blessings, new champions and celestial mechanics coming to Teamfight Tactics Set 17.",
+        navHome: "Home / Tier List",
+        navComps: "Compositions",
+        navSet17: "Set 17",
+        navLearn: "Learn TFT",
+        cardSetTipsTitle: "TFT Set Tips",
+        cardSetTipsDesc: "Basic guides and strategic recommendations.",
+        cardBestCompsTitle: "Best Compositions",
+        cardBestCompsDesc: "Explore the updated meta Tier List.",
+        sec1Title: "1. What is TFT Set 17?",
+        sec1Text: "Teamfight Tactics Set 17, titled 'Space Gods', introduces a thematic cosmos where celestial entities and intergalactic divinities take control of the arenas. Players will have the opportunity to invoke the divine favor of 8 supreme Space Gods that dynamically alter match rules.",
+        sec2Title: "2. Set Mechanic: Realm of the Gods",
+        sec2Text: "The main mechanic of Set 17 revolves around divine interventions during key carousel stages (Phase 2-4, 3-4, 4-4). During these interventions, players enter the Realm of the Gods to choose exclusive blessings, astral artifacts, or custom celestial quests.",
+        sec3Title: "3. What does each Space God do in Set 17?",
+        sec3Sub: "Each Space God grants unique passives, celestial quests, and reward modifications based on your chosen strategy:",
+        tocHeader: "TABLE OF CONTENTS"
+      },
+      pt: {
+        title: "TFT Conjunto 17: Deuses do Espaço",
+        subtitle: "Descubra todas as novidades, bênçãos estelares, novos campeões e mecânicas celestiais do Conjunto 17.",
+        navHome: "Início / Lista de Níveis",
+        navComps: "Composições",
+        navSet17: "Conjunto 17",
+        navLearn: "Aprender TFT",
+        cardSetTipsTitle: "Dicas do Conjunto TFT",
+        cardSetTipsDesc: "Guias básicos e recomendações estratégicas.",
+        cardBestCompsTitle: "Melhores Composições",
+        cardBestCompsDesc: "Explore a Lista de Níveis atualizada do meta.",
+        sec1Title: "1. O que é o Conjunto 17 de TFT?",
+        sec1Text: "O Conjunto 17 de Teamfight Tactics, intitulado 'Deuses do Espaço', introduz um cosmos temático onde entidades celestiais assumem o controle das arenas. Os jogadores poderão invocar o favor divino de 8 Deuses do Espaço supremos.",
+        sec2Title: "2. Mecânica do Conjunto: Reino dos Deuses",
+        sec2Text: "A mecânica principal do Conjunto 17 substitui os carrosséis tradicionais por intervenções divinas em fases chave (Fase 2-4, 3-4, 4-4). Durante essas intervenções, os jogadores entram no Reino dos Deuses para escolher bênçãos exclusivas.",
+        sec3Title: "3. O que faz cada Deus do Espaço no Conjunto 17?",
+        sec3Sub: "Cada Deus do Espaço concede passivas únicas, missões celestiais e modificações de recompensas de acordo com a estratégia escolhida:",
+        tocHeader: "CONTEÚDO"
+      }
+    };
+
+    function changeLanguage(lang) {
+      localStorage.setItem('tft_lang', lang);
+      const t = set17I18n[lang] || set17I18n.es;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerText = t[key];
+      });
+      const titleEl = document.querySelector('h1');
+      if (titleEl) titleEl.innerText = t.title;
+      const subEl = document.querySelector('header p');
+      if (subEl) subEl.innerText = t.subtitle;
+
+      // Sincronizar select
+      const select = document.getElementById('lang-select');
+      if (select) select.value = lang;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('tft_lang') || 'es';
+      changeLanguage(savedLang);
+    });
+  </script>
+</body>
+</html>

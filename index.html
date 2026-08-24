@@ -1,0 +1,1325 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>TFT Meta Comps Tier List</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgDark: '#0b0d0f',
+            cardDark: '#17181a',
+            borderDark: '#26282c',
+            tierS: '#fe3e4b',
+            tierA: '#eea402',
+            tierB: '#3b82f6',
+            cost1: '#a1a1aa',
+            cost2: '#10b981',
+            cost3: '#3b82f6',
+            cost4: '#8b5cf6',
+            cost5: '#eab308'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0b0d0f;
+      color: #f3f4f6;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+
+    /* 1. Tablero Hexagonal Prominente y Estético (Estilo Exacto TFTAcademy) */
+    .board-grid {
+      display: grid;
+      grid-template-columns: repeat(7, minmax(70px, 105px));
+      grid-template-rows: repeat(4, minmax(75px, 110px));
+      gap: 0px 8px;
+      justify-content: center;
+      position: relative;
+      padding: 24px 36px;
+      background-color: #0b0d12;
+      border-radius: 1.5rem;
+    }
+    
+    .hex-cell {
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      width: 100%;
+      height: 100%;
+      aspect-ratio: 1 / 1.15;
+      position: relative;
+      background-color: #151822;
+      margin-bottom: -18%;
+      transition: transform 0.2s ease, filter 0.2s ease;
+    }
+    .hex-cell:hover {
+      filter: brightness(1.2);
+      z-index: 30;
+    }
+    /* Borde nítido para celdas vacías */
+    .hex-border-overlay {
+      position: absolute;
+      inset: 0;
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      pointer-events: none;
+      box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12);
+    }
+    /* Desplazamiento escalonado (filas pares: celdas 8-14 y 22-28) */
+    .hex-row-even {
+      transform: translateX(50%);
+    }
+
+    /* Sinergias (Traits) Estilos Oficiales */
+    .trait-badge {
+      clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
+      width: 28px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 900;
+      font-size: 11px;
+      box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.5);
+    }
+    .bronze { background-color: #92400e; color: #fef3c7; }
+    .silver { background-color: #94a3b8; color: #020617; }
+    .gold { background-color: #eab308; color: #422006; }
+    .prismatic { background: linear-gradient(135deg, #22d3ee, #a855f7, #ec4899); color: #ffffff; }
+
+    html {
+      scroll-behavior: smooth;
+    }
+
+    .border-tft-gold {
+      border-color: #eea402 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Menú de navegación superior -->
+  <nav class="border-b border-[#26282c] bg-[#17181a]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="flex items-center space-x-3">
+          <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-red-600 to-amber-500 flex items-center justify-center font-black text-white shadow-lg shadow-red-500/20">
+            TFT
+          </div>
+          <span class="font-extrabold text-lg tracking-wider bg-gradient-to-r from-red-400 via-amber-300 to-purple-400 bg-clip-text text-transparent">
+            META COMPS TIER LIST
+          </span>
+        </a>
+      </div>
+      
+      <div class="flex items-center space-x-6 text-sm font-semibold text-gray-400">
+        <a href="index.html" class="text-amber-400 hover:text-white transition-colors">Inicio / Tier List</a>
+        <a href="index.html#comps-container" class="hover:text-white transition-colors">Composiciones</a>
+        <a href="set17.html" class="hover:text-amber-400 transition-colors">Set 17</a>
+        <a href="aprender.html" class="hover:text-amber-400 transition-colors">Aprender TFT</a>
+        
+        <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR -->
+        <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
+          <span>🌐</span>
+          <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none">
+            <option value="es" class="bg-[#17181a] text-white">🇪🇸 Español</option>
+            <option value="en" class="bg-[#17181a] text-white">🇺🇸 English</option>
+            <option value="pt" class="bg-[#17181a] text-white">🇧🇷 Português</option>
+          </select>
+        </div>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Layout Principal -->
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+    <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
+      
+      <!-- COLUMNA PRINCIPAL DE CONTENIDO (75% en desktop) -->
+      <div class="lg:col-span-3 w-full space-y-6">
+        <header class="mb-6">
+          <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-2">TFT Meta Comps Tier List</h1>
+          <p class="text-gray-400 text-sm sm:text-base">Estrategias óptimas, posicionamiento hexagonal, aumentos y builds recomendadas para ganar partidas.</p>
+        </header>
+
+        <!-- Filtros Rápidos -->
+        <div class="p-4 bg-[#17181a] border border-[#26282c] rounded-2xl flex flex-wrap items-center gap-2 shadow-xl">
+          <span class="text-xs font-bold uppercase text-gray-400 mr-2 tracking-wider">Filtrar:</span>
+          <button onclick="filtrarComps('ALL')" id="filter-btn-ALL" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-amber-500 text-black border-2 border-tft-gold shadow-md">TODOS</button>
+          <button onclick="filtrarComps('S')" id="filter-btn-S" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white">TIER S</button>
+          <button onclick="filtrarComps('A')" id="filter-btn-A" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white">TIER A</button>
+          <button onclick="filtrarComps('FISICO')" id="filter-btn-FISICO" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white">DAÑO FÍSICO (AD)</button>
+          <button onclick="filtrarComps('MAGICO')" id="filter-btn-MAGICO" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white">DAÑO MÁGICO (AP)</button>
+        </div>
+
+        <!-- Contenedor Dinámico de Composiciones -->
+        <div id="comps-container" class="space-y-8">
+          <!-- Inyectado dinámicamente -->
+        </div>
+      </div>
+
+      <!-- SIDEBAR INTERACTIVO EN ESCRITORIO (25% en desktop lg) -->
+      <aside class="hidden lg:block lg:col-span-1 w-full space-y-6 sticky top-20">
+        
+        <div class="bg-[#17181a] border border-[#26282c] rounded-3xl p-5 shadow-2xl">
+          <h3 class="text-xs font-black text-gray-300 uppercase tracking-widest mb-4 pb-2 border-b border-[#26282c] flex items-center gap-2">
+            <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+            </svg>
+            Navegación de Comps
+          </h3>
+          
+          <nav id="sidebar-toc" class="space-y-4">
+            <!-- Inyectado dinámicamente -->
+          </nav>
+        </div>
+
+        <!-- Ad Slot Publicitario Sidebar -->
+        <div class="w-[300px] h-[250px] mx-auto border-2 border-dashed border-[#26282c] bg-[#121316] rounded-3xl flex flex-col items-center justify-center gap-2 text-xs font-black text-gray-500 tracking-widest shadow-xl">
+          <span>PUBLICIDAD</span>
+          <span class="text-[10px] font-normal text-gray-600">300 x 250</span>
+        </div>
+
+      </aside>
+
+    </div>
+  </main>
+
+  <!-- Script Vanilla JavaScript Interactivo -->
+  <script>
+    // Base de Datos de Composiciones TFT
+    const tftData = [
+      {
+        "id": "ahri-ashe-meta",
+        "tier": "S",
+        "nombre": "Ahri & Ashe Dual Carry",
+        "dificultad": "Fácil",
+        "categoria": "Reroll",
+        "tipoDeDano": "AP",
+        "earlyGame": ["Sett", "Yorick", "Vi", "Gnar"],
+        "prioridadCarrusel": ["lagrima", "vara", "cinto", "malla"],
+        "campeones": [
+          { "nombre": "Sett", "coste": 4, "items": ["gargola", "armadura_warmog", "cota_espinas"] },
+          { "nombre": "Yorick", "coste": 1, "items": [] },
+          { "nombre": "Vi", "coste": 2, "items": [] },
+          { "nombre": "Gnar", "coste": 3, "items": ["capa_fuego_solar"] },
+          { "nombre": "Ashe", "coste": 3, "items": ["lanza_shojin", "guantelete_joyado", "ultimo_suspiro"] },
+          { "nombre": "Ahri", "coste": 4, "items": ["lanza_shojin", "guantelete_joyado", "sombrero_rabadon"] },
+          { "nombre": "Sivir", "coste": 4, "items": [] },
+          { "nombre": "Karma", "coste": 1, "items": [] }
+        ],
+        "sinergias": [
+          { "nombre": "Blossom", "nivel": 5, "tipo": "gold", "escala": "3 > 5 > 7 > 9 > 11" },
+          { "nombre": "Brawler", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
+          { "nombre": "Hunter", "nivel": 2, "tipo": "bronze", "escala": "2 > 3 > 4 > 5" },
+          { "nombre": "Spellweaver", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
+          { "nombre": "Juggernaut", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
+          { "nombre": "Primal", "nivel": 2, "tipo": "bronze", "escala": "2 > 4" },
+          { "nombre": "Elderwood", "nivel": 1, "tipo": "silver", "escala": "3 > 5 > 7 > 9 > 11" }
+        ],
+        "aumentos": [
+          { "nombre": "Primal Augment", "tipo": "Prismático" },
+          { "nombre": "Jeweled Lotus", "tipo": "Dorado" },
+          { "nombre": "Healing Orbs", "tipo": "Plata" }
+        ],
+        "tablero": [
+          { "campeon": "Sett", "fila": 1, "col": 2 },
+          { "campeon": "Yorick", "fila": 1, "col": 4 },
+          { "campeon": "Vi", "fila": 1, "col": 6 },
+          { "campeon": "Gnar", "fila": 2, "col": 1 },
+          { "campeon": "Ashe", "fila": 4, "col": 1 },
+          { "campeon": "Ahri", "fila": 4, "col": 4 },
+          { "campeon": "Sivir", "fila": 4, "col": 6 },
+          { "campeon": "Karma", "fila": 4, "col": 8 }
+        ],
+        "mejoresBuilds": [
+          {
+            "campeon": "Ahri",
+            "coste": 4,
+            "items": ["lanza_shojin", "guantelete_joyado", "sombrero_rabadon"]
+          },
+          {
+            "campeon": "Ashe",
+            "coste": 3,
+            "items": ["lanza_shojin", "guantelete_joyado", "ultimo_suspiro"]
+          }
+        ]
+      },
+      {
+        "id": "nidalee-morgana",
+        "tier": "S",
+        "nombre": "Nidalee & Morgana Carry",
+        "dificultad": "Media",
+        "categoria": "Fast 8",
+        "tipoDeDano": "Híbrido",
+        "earlyGame": ["Camille", "Rakan", "Caitlyn", "Elise"],
+        "prioridadCarrusel": ["espadon", "arco", "lagrima", "vara"],
+        "campeones": [
+          { "nombre": "Hecarim", "coste": 2, "items": [] },
+          { "nombre": "Sentinel", "coste": 3, "items": ["chispa_ionica", "morellonomicon", "gargola"] },
+          { "nombre": "Vi", "coste": 2, "items": [] },
+          { "nombre": "Taric", "coste": 5, "items": ["capa_fuego_solar"] },
+          { "nombre": "Rakan", "coste": 1, "items": [] },
+          { "nombre": "Morgana", "coste": 4, "items": ["morellonomicon", "lanza_shojin", "sombrero_rabadon"] },
+          { "nombre": "Nidalee", "coste": 4, "items": ["guinsoo", "filo_infinito", "sable_pistola"] },
+          { "nombre": "KogMaw", "coste": 2, "items": [] }
+        ],
+        "sinergias": [
+          { "nombre": "Caustic", "nivel": 1, "tipo": "gold", "escala": "1" },
+          { "nombre": "Emerald Aspect", "nivel": 1, "tipo": "gold", "escala": "1" },
+          { "nombre": "Vanguard", "nivel": 4, "tipo": "silver", "escala": "2 > 4 > 6" },
+          { "nombre": "Invoker", "nivel": 3, "tipo": "silver", "escala": "2 > 3 > 4 > 5" },
+          { "nombre": "Adaptor", "nivel": 2, "tipo": "bronze", "escala": "2 > 3 > 4" },
+          { "nombre": "Juggernaut", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
+          { "nombre": "Primal", "nivel": 2, "tipo": "bronze", "escala": "2 > 4" }
+        ],
+        "aumentos": [
+          { "nombre": "Ascension", "tipo": "Dorado" },
+          { "nombre": "Wand Overflow", "tipo": "Prismático" },
+          { "nombre": "Second Wind", "tipo": "Plata" }
+        ],
+        "tablero": [
+          { "campeon": "Hecarim", "fila": 1, "col": 1 },
+          { "campeon": "Sentinel", "fila": 1, "col": 3 },
+          { "campeon": "Vi", "fila": 1, "col": 4 },
+          { "campeon": "Taric", "fila": 1, "col": 5 },
+          { "campeon": "Rakan", "fila": 1, "col": 7 },
+          { "campeon": "Morgana", "fila": 2, "col": 3 },
+          { "campeon": "Nidalee", "fila": 4, "col": 1 },
+          { "campeon": "KogMaw", "fila": 4, "col": 3 }
+        ],
+        "mejoresBuilds": [
+          {
+            "campeon": "Nidalee",
+            "coste": 4,
+            "items": ["guinsoo", "filo_infinito", "sable_pistola"]
+          },
+          {
+            "campeon": "Morgana",
+            "coste": 4,
+            "items": ["morellonomicon", "lanza_shojin", "sombrero_rabadon"]
+          }
+        ]
+      },
+      {
+        "id": "yi-kogmaw",
+        "tier": "S",
+        "nombre": "Master Yi & Kog'Maw Carry (3 Estrellas Reroll)",
+        "dificultad": "Fácil",
+        "categoria": "Reroll",
+        "tipoDeDano": "Híbrido",
+        "earlyGame": ["Yorick", "Krug", "Gromp", "Vi"],
+        "prioridadCarrusel": ["arco", "vara", "espadon", "guante"],
+        "campeones": [
+          { "nombre": "Sett", "coste": 4, "items": [] },
+          { "nombre": "Krug", "coste": 3, "items": [] },
+          { "nombre": "Vi", "coste": 3, "items": ["armadura_warmog", "cota_espinas", "garra_dragon"] },
+          { "nombre": "Yorick", "coste": 1, "items": [] },
+          { "nombre": "Gromp", "coste": 2, "items": [] },
+          { "nombre": "MasterYi", "coste": 3, "items": ["verdugo_gigantes", "guinsoo", "sombrero_rabadon"] },
+          { "nombre": "Nidalee", "coste": 4, "items": ["guinsoo", "lanza_shojin", "sombrero_rabadon"] },
+          { "nombre": "KogMaw", "coste": 3, "items": ["lanza_shojin", "sombrero_rabadon", "guantelete_joyado"] }
+        ],
+        "sinergias": [
+          { "nombre": "Adaptor", "nivel": 4, "tipo": "gold", "escala": "2 > 3 > 4" },
+          { "nombre": "Caustic", "nivel": 1, "tipo": "gold", "escala": "1" },
+          { "nombre": "Blossom", "nivel": 3, "tipo": "bronze", "escala": "3 > 5 > 7 > 9 > 11" },
+          { "nombre": "Brawler", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
+          { "nombre": "Juggernaut", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
+          { "nombre": "Primal", "nivel": 2, "tipo": "bronze", "escala": "2 > 4" },
+          { "nombre": "Riftbeast", "nivel": 2, "tipo": "silver", "escala": "3 > 5 > 7 > 10" }
+        ],
+        "aumentos": [
+          { "nombre": "Trade Sector", "tipo": "Plata" },
+          { "nombre": "Heroic Grab Bag", "tipo": "Dorado" },
+          { "nombre": "Prismatic Ticket", "tipo": "Prismático" }
+        ],
+        "tablero": [
+          { "campeon": "Sett", "fila": 1, "col": 1 },
+          { "campeon": "Krug", "fila": 1, "col": 2, "es3Estrellas": true },
+          { "campeon": "Vi", "fila": 1, "col": 6, "es3Estrellas": true },
+          { "campeon": "Yorick", "fila": 3, "col": 1 },
+          { "campeon": "Gromp", "fila": 4, "col": 4 },
+          { "campeon": "MasterYi", "fila": 3, "col": 7, "es3Estrellas": true },
+          { "campeon": "Nidalee", "fila": 4, "col": 6 },
+          { "campeon": "KogMaw", "fila": 4, "col": 7, "es3Estrellas": true }
+        ],
+        "mejoresBuilds": [
+          {
+            "campeon": "MasterYi",
+            "coste": 3,
+            "items": ["verdugo_gigantes", "guinsoo", "sombrero_rabadon"]
+          },
+          {
+            "campeon": "KogMaw",
+            "coste": 3,
+            "items": ["lanza_shojin", "sombrero_rabadon", "guantelete_joyado"]
+          }
+        ]
+      },
+      {
+        "id": "malphite-soraka",
+        "tier": "S",
+        "nombre": "Malphite & Soraka (Coven Invoker Wall)",
+        "dificultad": "Media",
+        "categoria": "Fast 8",
+        "tipoDeDano": "AP",
+        "earlyGame": ["Malphite", "Kennen", "Shen", "Zyra"],
+        "prioridadCarrusel": ["vara", "lagrima", "cinto", "malla"],
+        "campeones": [
+          { "nombre": "Malphite", "coste": 4, "items": ["gargola", "armadura_warmog", "garra_dragon"] },
+          { "nombre": "Kennen", "coste": 5, "items": ["morellonomicon"] },
+          { "nombre": "Shen", "coste": 2, "items": [] },
+          { "nombre": "Fiddlesticks", "coste": 3, "items": [] },
+          { "nombre": "Azir", "coste": 3, "items": [] },
+          { "nombre": "Ezreal", "coste": 4, "items": ["morellonomicon"] },
+          { "nombre": "Zyra", "coste": 4, "items": ["lanza_shojin", "sombrero_rabadon", "chispa_ionica"] },
+          { "nombre": "Soraka", "coste": 4, "items": ["baston_arcangel", "sombrero_rabadon", "guantelete_joyado"] }
+        ],
+        "sinergias": [
+          { "nombre": "Executioner", "nivel": 4, "tipo": "gold", "escala": "2 > 3 > 4" },
+          { "nombre": "Flora Fatalis", "nivel": 2, "tipo": "gold", "escala": "1 > 2" },
+          { "nombre": "Monolith", "nivel": 1, "tipo": "gold", "escala": "1" },
+          { "nombre": "Thornmaiden", "nivel": 1, "tipo": "gold", "escala": "1" },
+          { "nombre": "Blackthorn", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
+          { "nombre": "Defender", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
+          { "nombre": "Inferno", "nivel": 2, "tipo": "bronze", "escala": "2 > 3 > 5 > 7" }
+        ],
+        "aumentos": [
+          { "nombre": "Flora Augment", "tipo": "Dorado" },
+          { "nombre": "Cluttered Mind", "tipo": "Plata" },
+          { "nombre": "Barons Lair", "tipo": "Prismático" }
+        ],
+        "tablero": [
+          { "campeon": "Malphite", "fila": 1, "col": 4 },
+          { "campeon": "Kennen", "fila": 3, "col": 2 },
+          { "campeon": "Shen", "fila": 3, "col": 4 },
+          { "campeon": "Fiddlesticks", "fila": 3, "col": 6 },
+          { "campeon": "Azir", "fila": 4, "col": 1 },
+          { "campeon": "Ezreal", "fila": 4, "col": 3 },
+          { "campeon": "Zyra", "fila": 4, "col": 5 },
+          { "campeon": "Soraka", "fila": 4, "col": 7 }
+        ],
+        "mejoresBuilds": [
+          {
+            "campeon": "Soraka",
+            "coste": 4,
+            "items": ["baston_arcangel", "sombrero_rabadon", "guantelete_joyado"]
+          },
+          {
+            "campeon": "Malphite",
+            "coste": 4,
+            "items": ["gargola", "armadura_warmog", "garra_dragon"]
+          }
+        ]
+      }
+    ];
+
+    let currentLang = 'es';
+    let currentFilterCriterio = 'ALL';
+
+    // Diccionarios Multilenguaje para Interfaz (ES / EN / PT)
+    const uiTranslations = {
+      es: {
+        title: "TFT Meta Comps Tier List",
+        subtitle: "Estrategias óptimas, posicionamiento hexagonal, aumentos y builds recomendadas para ganar partidas.",
+        filter: "Filtrar:",
+        all: "TODOS",
+        tierS: "TIER S",
+        tierA: "TIER A",
+        ad: "DAÑO FÍSICO (AD)",
+        ap: "DAÑO MÁGICO (AP)",
+        details: "Detalles",
+        earlyGame: "Mejoras Salida de Campeones Early",
+        opConditions: "Condiciones OP (Early)",
+        carousel: "Prioridad en Carrusel",
+        augments: "Aumentos Recomendados",
+        keyChamps: "Campeones Clave"
+      },
+      en: {
+        title: "TFT Meta Comps Tier List",
+        subtitle: "Optimal strategies, hexagonal positioning, augments and recommended builds to win games.",
+        filter: "Filter:",
+        all: "ALL",
+        tierS: "TIER S",
+        tierA: "TIER A",
+        ad: "PHYSICAL DAMAGE (AD)",
+        ap: "MAGIC DAMAGE (AP)",
+        details: "Details",
+        earlyGame: "Early Game Champions",
+        opConditions: "OP Conditions (Early)",
+        carousel: "Carousel Priority",
+        augments: "Recommended Augments",
+        keyChamps: "Key Champions"
+      },
+      pt: {
+        title: "TFT Meta Comps Lista de Níveis",
+        subtitle: "Estratégias ideais, posicionamento hexagonal, aprimoramentos e builds recomendadas para vencer.",
+        filter: "Filtrar:",
+        all: "TODOS",
+        tierS: "NÍVEL S",
+        tierA: "NÍVEL A",
+        ad: "DANO FÍSICO (AD)",
+        ap: "DANO MÁGICO (AP)",
+        details: "Detalhes",
+        earlyGame: "Campeões do Início do Jogo",
+        opConditions: "Condições OP (Início)",
+        carousel: "Prioridade no Carrossel",
+        augments: "Aprimoramentos Recomendados",
+        keyChamps: "Campeões Chave"
+      }
+    };
+
+    // Diccionarios Multilenguaje para Objetos
+    const itemTooltipDB_EN = {
+      'guinsoo': { nombre: "Guinsoo's Rageblade", stats: "⚔️ +15% AP ⚡ +15% AS", desc: "Attacks grant +5% stacking Attack Speed for the rest of combat.", receta: ['arco', 'vara'] },
+      'filo_infinito': { nombre: "Infinity Edge", stats: "⚔️ +35% AD 💥 +15% Crit", desc: "Abilities can Critically Strike. Grants +10% Critical Strike Damage.", receta: ['espadon', 'guante'] },
+      'sable_pistola': { nombre: "Hextech Gunblade", stats: "⚔️ +15% AD ✨ +15% AP", desc: "Omnivamp 20%. Heals lowest percent Health ally for 20% of damage dealt.", receta: ['espadon', 'vara'] },
+      'morellonomicon': { nombre: "Morellonomicon", stats: "✨ +25% AP ❤️ +150 HP", desc: "Abilities burn targets for 1% max HP true damage per sec and reduce healing by 33%.", receta: ['vara', 'cinto'] },
+      'lanza_shojin': { nombre: "Spear of Shojin", stats: "⚔️ +15% AD 💧 +15 Mana", desc: "Attacks restore 5 additional Mana.", receta: ['espadon', 'lagrima'] },
+      'sombrero_rabadon': { nombre: "Rabadon's Deathcap", stats: "✨ +50% AP", desc: "Grants 20% bonus Ability Power damage.", receta: ['vara', 'vara'] },
+      'gargola': { nombre: "Gargoyle Stoneplate", stats: "🛡️ +30 Armor 🔮 +30 MR", desc: "Grants +10 Armor and Magic Resist for each enemy targeting holder.", receta: ['malla', 'capa'] },
+      'chispa_ionica': { nombre: "Ionic Spark", stats: "✨ +15% AP 🔮 +25 MR", desc: "Enemies within 2 hexes have 30% Magic Resist reduced.", receta: ['vara', 'capa'] },
+      'capa_fuego_solar': { nombre: "Sunfire Cape", stats: "🛡️ +20 Armor ❤️ +250 HP", desc: "Every 2 seconds, a random enemy within 2 hexes is burned for 10% max HP.", receta: ['malla', 'cinto'] },
+      'mejora_azul': { nombre: "Blue Buff", stats: "💧 +30 Mana ✨ +10% AP", desc: "Reduces max Mana by 10. Takedowns grant 10 bonus Mana.", receta: ['lagrima', 'lagrima'] }
+    };
+
+    const itemTooltipDB_PT = {
+      'guinsoo': { nombre: "Lâmina da Fúria de Guinsoo", stats: "⚔️ +15% AP ⚡ +15% AS", desc: "Ataques concedem +5% de Velocidade de Ataque acumulável.", receta: ['arco', 'vara'] },
+      'filo_infinito': { nombre: "Gume da Infinidade", stats: "⚔️ +35% AD 💥 +15% Crit", desc: "Habilidades podem causar acertos críticos.", receta: ['espadon', 'guante'] },
+      'sable_pistola': { nombre: "Pistola Lamina Hextec", stats: "⚔️ +15% AD ✨ +15% AP", desc: "Vampirismo de 20%. Cura o aliado com menor vida.", receta: ['espadon', 'vara'] },
+      'morellonomicon': { nombre: "Morellonomicon", stats: "✨ +25% AP ❤️ +150 HP", desc: "Habilidades queimam alvos causando 1% da vida máxima como dano verdadeiro.", receta: ['vara', 'cinto'] },
+      'lanza_shojin': { nombre: "Lança de Shojin", stats: "⚔️ +15% AD 💧 +15 Mana", desc: "Ataques restauram 5 de Mana adicional.", receta: ['espadon', 'lagrima'] },
+      'sombrero_rabadon': { nombre: "Capuz da Morte de Rabadon", stats: "✨ +50% AP", desc: "Concede 20% de dano de Poder de Habilidade bônus.", receta: ['vara', 'vara'] },
+      'gargola': { nombre: "Armadura de Gargula", stats: "🛡️ +30 Armadura 🔮 +30 MR", desc: "Concede +10 de Armadura e MR para cada inimigo mirando o portador.", receta: ['malla', 'capa'] },
+      'chispa_ionica': { nombre: "Faísca Iônica", stats: "✨ +15% AP 🔮 +25 MR", desc: "Inimigos a 2 hexes têm Resistência Mágica reduzida em 30%.", receta: ['vara', 'capa'] },
+      'capa_fuego_solar': { nombre: "Capa do Fogo Solar", stats: "🛡️ +20 Armadura ❤️ +250 HP", desc: "A cada 2s, queima um inimigo causando 10% da vida máxima.", receta: ['malla', 'cinto'] },
+      'mejora_azul': { nombre: "Azul Bônus", stats: "💧 +30 Mana ✨ +10% AP", desc: "Reduz Mana Máximo em 10. Abates concedem 10 de Mana.", receta: ['lagrima', 'lagrima'] }
+    };
+
+    // Diccionarios Multilenguaje para Campeones
+    const champTooltipDB_EN = {
+      'Vi': { rol: 'Attack Tank', coste: 3, sinergias: ['Primal', 'Juggernaut'], habilidad: 'Furious Fists', mana: '60', desc: 'Passive: On attack, restore 2% Health. Active: Unleash a primal roar restoring Health and gaining Attack Speed.' },
+      'Nidalee': { rol: 'Magic Carry', coste: 4, sinergias: ['Wild', 'Invoker'], habilidad: 'Cougar Form', mana: '40', desc: 'Transforms into Cougar form, gaining +30% Movement Speed and striking for Magic Damage.' },
+      'Morgana': { rol: 'AP Carry', coste: 4, sinergias: ['Coven', 'Invoker'], habilidad: 'Soul Shackles', mana: '80', desc: 'Lashes dark chains to 3 nearby enemies dealing Magic Damage and stunning them.' },
+      'Hecarim': { rol: 'Frontline Tank', coste: 2, sinergias: ['Vanguard', 'Juggernaut'], habilidad: 'Onslaught of Shadows', mana: '90', desc: 'Charges forward dealing Magic Damage and healing HP.' },
+      'Taric': { rol: 'Main Tank', coste: 5, sinergias: ['Emerald Aspect', 'Vanguard'], habilidad: 'Cosmic Radiance', mana: '100', desc: 'Grants invulnerability to all adjacent allies for 3 seconds.' },
+      'Rakan': { rol: 'Support Tank', coste: 1, sinergias: ['Invocation', 'Vanguard'], habilidad: 'Grand Entrance', mana: '50', desc: 'Dashes to target enemy, knocking up foes and shielding allies.' },
+      'Sentinel': { rol: 'Shield Tank', coste: 3, sinergias: ['Vanguard'], habilidad: 'Shield Wall', mana: '60', desc: 'Gains Shield and increases Armor for 4 seconds.' },
+      'KogMaw': { rol: 'Ranged AD', coste: 2, sinergias: ['Caustic', 'Adaptor'], habilidad: 'Bio-Arcane Barrage', mana: '30', desc: 'Gains infinite Range and deals bonus Max HP Magic Damage.' }
+    };
+
+    // Base de datos de Tooltips en Español por defecto
+    const itemTooltipDB_ES = {
+      'guinsoo': { nombre: "Espada Furia de Guinsoo", stats: "⚔️ +15% AP ⚡ +15% AS", desc: "Los ataques otorgan +5% de Velocidad de Ataque acumulable durante el resto del combate.", receta: ['arco', 'vara'] },
+      'filo_infinito': { nombre: "Filo del Infinito", stats: "⚔️ +35% AD 💥 +15% Crítico", desc: "Las habilidades pueden asestar golpes críticos. Otorga +10% de Daño Crítico.", receta: ['espadon', 'guante'] },
+      'sable_pistola': { nombre: "Sable-Pistola Hextech", stats: "⚔️ +15% AD ✨ +15% AP", desc: "Vampirismo 20%. Cura al aliado con menor porcentaje de vida un 20% del daño infligido.", receta: ['espadon', 'vara'] },
+      'morellonomicon': { nombre: "Morellonomicón", stats: "✨ +25% AP ❤️ +150 HP", desc: "Las habilidades queman al objetivo haciendo 1% de Vida Máxima como daño verdadero y reducen la curación un 33%.", receta: ['vara', 'cinto'] },
+      'lanza_shojin': { nombre: "Lanza de Shojin", stats: "⚔️ +15% AD 💧 +15 Maná", desc: "Los ataques restauran 5 de Maná adicional.", receta: ['espadon', 'lagrima'] },
+      'sombrero_rabadon': { nombre: "Sombrero Mortal de Rabadon", stats: "✨ +50% AP", desc: "Otorga un 20% de daño de Poder de Habilidad adicional.", receta: ['vara', 'vara'] },
+      'gargola': { nombre: "Gárgola de Piedra", stats: "🛡️ +30 Armadura 🔮 +30 MR", desc: "Otorga +10 de Armadura y Resistencia Mágica por cada enemigo que tenga como objetivo al portador.", receta: ['malla', 'capa'] },
+      'chispa_ionica': { nombre: "Chispa Iónica", stats: "✨ +15% AP 🔮 +25 MR", desc: "Los enemigos a 2 hexágonos reducen su Resistencia Mágica un 30%. Reciben una descarga al lanzar habilidades.", receta: ['vara', 'capa'] },
+      'capa_fuego_solar': { nombre: "Capa de Fuego Solar", stats: "🛡️ +20 Armadura ❤️ +250 HP", desc: "Cada 2 segundos, quema a un enemigo a 2 hexágonos causando 10% de su Vida Máxima como daño.", receta: ['malla', 'cinto'] },
+      'mejora_azul': { nombre: "Mejora Azul", stats: "💧 +30 Maná ✨ +10% AP", desc: "Reduce el Maná Máximo en 10. Las eliminaciones otorgan 10 de Maná adicional.", receta: ['lagrima', 'lagrima'] }
+    };
+
+    const champTooltipDB_ES = {
+      'Soraka': { rol: 'AP Carry', coste: 4, sinergias: ['Invoker', 'Coven'], habilidad: 'Invocación Estelar', mana: '40', desc: 'Invoca una lluvia de meteoros cósmicos que infligen Daño Mágico en área y curan a los aliados con menos vida.' },
+      'Malphite': { rol: 'Tanque Principal', coste: 4, sinergias: ['Vanguard', 'Coven'], habilidad: 'Fuerza Imparable', mana: '80', desc: 'Embestida hacia el grupo más denso de enemigos derribándolos e incrementando su Armadura un +60 por 5s.' },
+      'Kennen': { rol: 'Disruptor / Crowd Control', coste: 5, sinergias: ['Invoker'], habilidad: 'Tempestad Cercana', mana: '60', desc: 'Desata una tormenta eléctrica a su alrededor aturdiendo a todos los enemigos cercanos por 2s.' },
+      'Shen': { rol: 'Frontline Shield', coste: 2, sinergias: ['Vanguard'], habilidad: 'Refugio Espiritual', mana: '50', desc: 'Crea una zona protectora que bloquea todos los ataques básicos recibidos durante 3s.' },
+      'Fiddlesticks': { rol: 'Crowd Control Tank', coste: 3, sinergias: ['Coven'], habilidad: 'Tormenta de Cuervos', mana: '70', desc: 'Canaliza una bandada de cuervos que inflige daño mágico continuo a los enemigos adyacentes.' },
+      'Azir': { rol: 'AP Backline', coste: 3, sinergias: ['Invoker'], habilidad: 'Surgimiento Arcano', mana: '40', desc: 'Invoca soldados de arena que atacan a los enemigos lejanos e infligen daño mágico.' },
+      'Ezreal': { rol: 'AD/AP Sub-Carry', coste: 4, sinergias: ['Invoker'], habilidad: 'Disparo Místico', mana: '30', desc: 'Dispara una onda de energía lineal que atraviesa enemigos reduciendo su resistencia mágica.' },
+      'Zyra': { rol: 'Utility Sub-Carry', coste: 4, sinergias: ['Coven', 'Invoker'], habilidad: 'Espinas Vengativas', mana: '50', desc: 'Hace brotar enredaderas de espinas que inmovilizan a la línea trasera enemiga.' },
+      'MasterYi': { rol: 'Hyper Carry', coste: 3, sinergias: ['Adaptor', 'Juggernaut'], habilidad: 'Estilo Wuju', mana: '30', desc: 'Gana Velocidad de Ataque y hace que sus ataques inflijan Daño Verdadero adicional por impacto.' },
+      'Krug': { rol: 'Tanque Rocoso', coste: 3, sinergias: ['Vanguard'], habilidad: 'Piel de Piedra', mana: '60', desc: 'Gana Armadura y Resistencia Mágica masiva y escuda a los aliados adyacentes.' },
+      'Gromp': { rol: 'Disruptor Frontal', coste: 2, sinergias: ['Vanguard', 'Adaptor'], habilidad: 'Pisotón Venenoso', mana: '50', desc: 'Escupe veneno en área reduciendo el daño de los enemigos adyacentes un 25% por 3s.' },
+      'Ahri': { rol: 'AP Carry', coste: 4, sinergias: ['Invoker', 'Primal'], habilidad: 'Orbe del Engaño', mana: '40', desc: 'Lanza un orbe cósmico infligiendo 450/675/1200 de Daño Mágico al atravesar enemigos y curando a sus aliados.' },
+      'Sett': { rol: 'Tanque Principal', coste: 4, sinergias: ['Juggernaut', 'Primal'], habilidad: 'El Gran Salto', mana: '80', desc: 'Agarra al enemigo con más vida y lo estrella contra el suelo, infligiendo daño físico en área e incrementando su Armadura.' },
+      'Ashe': { rol: 'AD Carry / Debuffer', coste: 3, sinergias: ['Invoker', 'Adaptor'], habilidad: 'Flecha Cristalina', mana: '50', desc: 'Dispara una flecha helada que inflige Daño Mágico y reduce la Velocidad de Ataque enemiga un 40% por 4s.' },
+      'Gnar': { rol: 'Tanque Secundario', coste: 3, sinergias: ['Juggernaut', 'Primal'], habilidad: '¡GNAR!', mana: '60', desc: 'Se transforma aumentando su Vida y lanzando a los enemigos adyacentes contra la pared.' },
+      'Sivir': { rol: 'Utility Support', coste: 4, sinergias: ['Invoker'], habilidad: 'Ricochét Celestial', mana: '40', desc: 'Otorga un 35% de Velocidad de Ataque acumulable a los aliados adyacentes durante 5s.' },
+      'Karma': { rol: 'Soporte Mágico', coste: 1, sinergias: ['Invoker'], habilidad: 'Llama Focalizada', mana: '30', desc: 'Dispara un estallido astral que inflige daño mágico al objetivo y escuda al aliado más cercano.' },
+      'Yorick': { rol: 'Tanque Frontal', coste: 1, sinergias: ['Vanguard'], habilidad: 'Invocación de Espectros', mana: '50', desc: 'Invoca un espectro que absorbe el 20% del daño entrante y aumenta su resistencia por 4s.' },
+      'Vi': { rol: 'Tanque Físico', coste: 3, sinergias: ['Primal', 'Juggernaut'], habilidad: 'Puños Furiosos', mana: '60', desc: 'Pasiva: Al atacar, restaura 2% de Vida. Activa: Lanza un rugido primario, restaurando 200/250/350 de Vida. Gana 85%/100%/125% de Velocidad de Ataque y 15% de Durabilidad por 3s.' },
+      'Nidalee': { rol: 'Mago Carry', coste: 4, sinergias: ['Wild', 'Invoker'], habilidad: 'Forma de Felino', mana: '40', desc: 'Se transforma en felino, ganando +30% de Velocidad de Movimiento e infligiendo 350/500/900 de Daño Mágico.' },
+      'Morgana': { rol: 'Carry Mágico', coste: 4, sinergias: ['Coven', 'Invoker'], habilidad: 'Cadenas del Alma', mana: '80', desc: 'Lanza cadenas oscuras a 3 enemigos cercanos infligiendo 300/450/800 de Daño Mágico y aturdiéndolos por 1.5s.' },
+      'Hecarim': { rol: 'Tanque Frontal', coste: 2, sinergias: ['Vanguard', 'Juggernaut'], habilidad: 'Embestida de Sombras', mana: '90', desc: 'Carga hacia adelante infligiendo 250/350/550 de Daño Mágico y curándose 200 de Vida.' },
+      'Taric': { rol: 'Tanque Principal', coste: 5, sinergias: ['Emerald Aspect', 'Vanguard'], habilidad: 'Radiancia Cósmica', mana: '100', desc: 'Tras 1s de demora, otorga invulnerabilidad a todos los aliados adyacentes durante 3 segundos.' },
+      'Rakan': { rol: 'Soporte Frontal', coste: 1, sinergias: ['Invocation', 'Vanguard'], habilidad: 'Gran Entrada', mana: '50', desc: 'Se abalanza sobre el objetivo derribando a los enemigos adyacentes y escudando a aliados por 150/220/300 HP.' },
+      'Sentinel': { rol: 'Tanque de Escudo', coste: 3, sinergias: ['Vanguard'], habilidad: 'Muro de Escudos', mana: '60', desc: 'Gana 300/400/600 de Escudo y aumenta su Armadura en +40 durante 4s.' },
+      'KogMaw': { rol: 'Tirador a Distancia', coste: 2, sinergias: ['Caustic', 'Adaptor'], habilidad: 'Andanada Bio-Arcana', mana: '30', desc: 'Gana Alcance infinito e inflige un 4% de Vida Máxima adicional como Daño Mágico por impacto.' }
+    };
+
+    const champTooltipDB_PT = {
+      'Vi': { rol: 'Tanque Físico', coste: 3, sinergias: ['Primal', 'Juggernaut'], habilidad: 'Punhos Furiosos', mana: '60', desc: 'Passiva: Ao atacar, restaura 2% de Vida. Ativa: Lança um rugido primordial restaurando Vida.' },
+      'Nidalee': { rol: 'Mago Carry', coste: 4, sinergias: ['Wild', 'Invoker'], habilidad: 'Forma de Felino', mana: '40', desc: 'Transforma-se em felino, ganhando +30% de Velocidade de Movimento e causando Dano Mágico.' },
+      'Morgana': { rol: 'Carry Mágico', coste: 4, sinergias: ['Coven', 'Invoker'], habilidad: 'Gilhotina da Alma', mana: '80', desc: 'Lança correntes sombrias em 3 inimigos próximos causando Dano Mágico e atordoando-os.' },
+      'Hecarim': { rol: 'Tanque Frontal', coste: 2, sinergias: ['Vanguard', 'Juggernaut'], habilidad: 'Massacre de Sombras', mana: '90', desc: 'Avança causando Dano Mágico e curando Vida.' },
+      'Taric': { rol: 'Tanque Principal', coste: 5, sinergias: ['Emerald Aspect', 'Vanguard'], habilidad: 'Radiança Cósmica', mana: '100', desc: 'Concede invulnerabilidade a todos os aliados adjacentes por 3 segundos.' },
+      'Rakan': { rol: 'Suporte Frontal', coste: 1, sinergias: ['Invocation', 'Vanguard'], habilidad: 'Entrada Triunfal', mana: '50', desc: 'Avança no alvo derrubando inimigos adjacentes e concedendo escudo.' },
+      'Sentinel': { rol: 'Tanque de Escudo', coste: 3, sinergias: ['Vanguard'], habilidad: 'Muralha de Escudos', mana: '60', desc: 'Ganha Escudo e aumenta Armadura por 4s.' },
+      'KogMaw': { rol: 'Atirador', coste: 2, sinergias: ['Caustic', 'Adaptor'], habilidad: 'BARRAGEM BIO-ARCANA', mana: '30', desc: 'Ganha Alcance infinito e causa dano mágico com base na Vida Máxima.' }
+    };
+
+    function changeLanguage(lang) {
+      currentLang = lang;
+      localStorage.setItem('tft_lang', lang);
+      console.log("Cambiando idioma a:", lang);
+      
+      // Actualizar interfaz principal
+      const t = uiTranslations[lang] || uiTranslations.es;
+      const titleEl = document.querySelector('h1');
+      if (titleEl) titleEl.innerText = t.title;
+      const subEl = document.querySelector('header p');
+      if (subEl) subEl.innerText = t.subtitle;
+
+      // Actualizar Botones de Filtro
+      const btnAll = document.getElementById('filter-btn-ALL');
+      if (btnAll) btnAll.innerText = t.all;
+      const btnS = document.getElementById('filter-btn-S');
+      if (btnS) btnS.innerText = t.tierS;
+      const btnA = document.getElementById('filter-btn-A');
+      if (btnA) btnA.innerText = t.tierA;
+      const btnAD = document.getElementById('filter-btn-FISICO');
+      if (btnAD) btnAD.innerText = t.ad;
+      const btnAP = document.getElementById('filter-btn-MAGICO');
+      if (btnAP) btnAP.innerText = t.ap;
+
+      const select = document.getElementById('lang-select');
+      if (select) select.value = lang;
+
+      renderTierList(tftData);
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('tft_lang') || 'es';
+      changeLanguage(savedLang);
+      renderSidebarTOC();
+
+      // Cerrar tooltip emergente en móviles al tocar en cualquier punto de la pantalla fuera del tooltip
+      document.addEventListener('click', (e) => {
+        const tooltip = document.getElementById('global-tooltip');
+        if (tooltip && !e.target.closest('.group\\/champ') && !e.target.closest('.hex-clip')) {
+          hideGlobalTooltip();
+        }
+      });
+    });
+
+    // Base de datos de Tooltips para Objetos (Recetas y Stats)
+    const itemTooltipDB = {
+      'guinsoo': { nombre: "Guinsoo's Rageblade", stats: "⚔️ +15% AP ⚡ +15% AS", desc: "Attacks grant +5% stacking Attack Speed for the rest of combat.", receta: ['arco', 'vara'] },
+      'filo_infinito': { nombre: "Infinity Edge", stats: "⚔️ +35% AD 💥 +15% Crit", desc: "Abilities can Critically Strike. Grants +10% Critical Strike Damage.", receta: ['espadon', 'guante'] },
+      'sable_pistola': { nombre: "Hextech Gunblade", stats: "⚔️ +15% AD ✨ +15% AP", desc: "Omnivamp 20%. Heals the lowest percent Health ally for 20% of damage dealt.", receta: ['espadon', 'vara'] },
+      'morellonomicon': { nombre: "Morellonomicon", stats: "✨ +25% AP ❤️ +150 HP", desc: "Abilities burn targets for 1% max HP true damage per sec and reduce healing by 33%.", receta: ['vara', 'cinto'] },
+      'lanza_shojin': { nombre: "Spear of Shojin", stats: "⚔️ +15% AD 💧 +15 Mana", desc: "Attacks restore 5 additional Mana.", receta: ['espadon', 'lagrima'] },
+      'sombrero_rabadon': { nombre: "Rabadon's Deathcap", stats: "✨ +50% AP", desc: "Grants 20% bonus Ability Power damage.", receta: ['vara', 'vara'] },
+      'gargola': { nombre: "Gargoyle Stoneplate", stats: "🛡️ +30 Armor 🔮 +30 MR", desc: "Grants +10 Armor and Magic Resist for each enemy targeting the holder.", receta: ['malla', 'capa'] },
+      'chispa_ionica': { nombre: "Ionic Spark", stats: "✨ +15% AP 🔮 +25 MR", desc: "Enemies within 2 hexes have 30% Magic Resist reduced. Zap enemies casting abilities.", receta: ['vara', 'capa'] },
+      'capa_fuego_solar': { nombre: "Sunfire Cape", stats: "🛡️ +20 Armor ❤️ +250 HP", desc: "Every 2 seconds, a random enemy within 2 hexes is burned for 10% max HP.", receta: ['malla', 'cinto'] },
+      'mejora_azul': { nombre: "Blue Buff", stats: "💧 +30 Mana ✨ +10% AP", desc: "Reduces max Mana by 10. Takedowns grant 10 bonus Mana.", receta: ['lagrima', 'lagrima'] },
+      'guantelete_joyado': { nombre: "Jeweled Gauntlet", stats: "✨ +35% AP 💥 +15% Crit", desc: "Abilities can Critically Strike. Grants +15% Critical Strike Damage.", receta: ['vara', 'guante'] },
+      'ultimo_suspiro': { nombre: "Last Whisper", stats: "⚔️ +15% AD 💥 +20% Crit", desc: "Physical damage reduces target's Armor by 30% for 3 seconds.", receta: ['arco', 'guante'] },
+      'armadura_warmog': { nombre: "Warmog's Armor", stats: "❤️ +800 HP", desc: "Grants 8% max Health.", receta: ['cinto', 'cinto'] },
+      'garra_dragon': { nombre: "Dragon's Claw", stats: "🔮 +65 MR", desc: "Grants 5% max HP heal every 2 seconds.", receta: ['capa', 'capa'] },
+      'capa_mercurial': { nombre: "Quicksilver", stats: "💥 +20% Crit 🔮 +20 MR", desc: "Immune to crowd control for 18 seconds in combat.", receta: ['capa', 'guante'] },
+      'valor_titanico': { nombre: "Titan's Resolve", stats: "⚡ +10% AS 🛡️ +20 Armor", desc: "Gain AD and AP when taking damage or dealing critical strikes. At 25 stacks, gain Armor & MR.", receta: ['malla', 'arco'] },
+      'diente_nashor': { nombre: "Nashor's Tooth", stats: "✨ +30% AP ⚡ +10% AS", desc: "After casting an ability, gain 40% Attack Speed for 5 seconds.", receta: ['cinto', 'arco'] },
+      'baston_arcangel': { nombre: "Archangel's Staff", stats: "✨ +20% AP 💧 +15 Mana", desc: "Gain +20 AP every 5 seconds in combat.", receta: ['vara', 'lagrima'] },
+      'cota_espinas': { nombre: "Bramble Vest", stats: "🛡️ +55 Armor", desc: "Negates bonus damage from incoming critical strikes. Deal magic damage to attackers.", receta: ['malla', 'malla'] },
+      'verdugo_gigantes': { nombre: "Giant Slayer", stats: "⚔️ +15% AD ✨ +15% AP", desc: "Deal 25% more damage to enemies with over 1600 max Health.", receta: ['espadon', 'arco'] },
+      'sanguinaria': { nombre: "Bloodthirster", stats: "⚔️ +20% AD 🔮 +20 MR", desc: "Omnivamp 20%. Once per combat at 40% HP, gain a shield.", receta: ['espadon', 'capa'] }
+    };
+
+    // Base de datos de Tooltips para Campeones (Habilidad y Stats)
+    const champTooltipDB = {
+      'Vi': { rol: 'Attack Tank', coste: 3, sinergias: ['Primal', 'Juggernaut'], habilidad: 'Furious Fists', mana: '60', desc: 'Passive: On attack, restore 2% Health. Active: Unleash a primal roar, restoring 200/250/350 Health. Then gain 85%/100%/125% Attack Speed and 15% Durability.' },
+      'Nidalee': { rol: 'Magic Carry', coste: 4, sinergias: ['Wild', 'Invoker'], habilidad: 'Primal Cougar', mana: '40', desc: 'Transforms into Cougar form, gaining +30% Movement Speed and striking the target for 350/500/900 Magic Damage.' },
+      'Morgana': { rol: 'AP Carry', coste: 4, sinergias: ['Coven', 'Invoker'], habilidad: 'Soul Shackles', mana: '80', desc: 'Lashes dark chains to 3 nearby enemies dealing 300/450/800 Magic Damage and stunning them for 1.5s.' },
+      'Hecarim': { rol: 'Tank', coste: 2, sinergias: ['Vanguard', 'Juggernaut'], habilidad: 'Onslaught of Shadows', mana: '90', desc: 'Charges forward dealing 250/350/550 Magic Damage and healing for 200 HP.' },
+      'Taric': { rol: 'Main Tank', coste: 5, sinergias: ['Emerald Aspect', 'Vanguard'], habilidad: 'Cosmic Radiance', mana: '100', desc: 'After a 1s delay, grants invulnerability to all adjacent allies for 3 seconds.' },
+      'Rakan': { rol: 'Frontline Support', coste: 1, sinergias: ['Invocation', 'Vanguard'], habilidad: 'Grand Entrance', mana: '50', desc: 'Dashes to target enemy, knocking up adjacent foes and shielding allies for 150/220/300 HP.' },
+      'Sentinel': { rol: 'Frontline Tank', coste: 3, sinergias: ['Vanguard'], habilidad: 'Shield Wall', mana: '60', desc: 'Gains 300/400/600 Shield and increases Armor by +40 for 4s.' },
+      'KogMaw': { rol: 'Ranged AD', coste: 2, sinergias: ['Caustic', 'Adaptor'], habilidad: 'Bio-Arcane Barrage', mana: '30', desc: 'Gains infinite Range and deals bonus 4% Max HP Magic Damage on hit.' }
+    };
+
+    // Diccionario de IDs oficiales de DataDragon para Ítems y Componentes
+    const itemDDragonIds = {
+      'guinsoo': '3124',
+      'filo_infinito': '3031',
+      'sable_pistola': '3146',
+      'morellonomicon': '3165',
+      'lanza_shojin': '3161',
+      'sombrero_rabadon': '3089',
+      'gargola': '3193',
+      'chispa_ionica': '3198',
+      'capa_fuego_solar': '3068',
+      'mejora_azul': '3040',
+      'guantelete_joyado': '3152',
+      'ultimo_suspiro': '3035',
+      'armadura_warmog': '3083',
+      'garra_dragon': '3155',
+      'capa_mercurial': '3140',
+      'valor_titanico': '3742',
+      'diente_nashor': '3115',
+      'baston_arcangel': '3003',
+      'cota_espinas': '3075',
+      'verdugo_gigantes': '3036',
+      'sanguinaria': '3072',
+      // Componentes Base DataDragon
+      'espadon': '1038',
+      'arco': '1043',
+      'lagrima': '3070',
+      'vara': '1058',
+      'malla': '1031',
+      'capa': '1033',
+      'cinto': '1011',
+      'guante': '1018'
+    };
+
+    // Mapeo exacto de nombres a los 113 archivos reales presentes en ./scr/img/
+    const localChampMap = {
+      'Hecarim': './scr/img/DA_18_Hecarim.webp',
+      'Sentinel': './scr/img/DA_Sentinel18.webp',
+      'Vi': './scr/img/DA_Vi18.webp',
+      'Taric': './scr/img/DA_Taric18.webp',
+      'Rakan': './scr/img/DA_18_Rakan.webp',
+      'Morgana': './scr/img/DA_18_Morgana.webp',
+      'Nidalee': './scr/img/DA_Nidalee18_AP.webp',
+      'KogMaw': './scr/img/DA_KogMaw18_AD.webp',
+      'Ahri': './scr/img/DA_18_Ahri.webp',
+      'Ashe': './scr/img/DA_18_Ashe.webp',
+      'Sett': './scr/img/DA_18_Sett.webp',
+      'Gnar': './scr/img/DA_18_GnarSmall.webp',
+      'Sivir': './scr/img/DA_18_Sivir.webp',
+      'Karma': './scr/img/DA_Karma18.webp',
+      'Thresh': './scr/img/DA_18_Shen.webp',
+      'MasterYi': './scr/img/DA_18_MasterYi_AD.webp',
+      'Lulu': './scr/img/DA_18_Alune.webp',
+      'Soraka': './scr/img/DA_18_Soraka.webp',
+      'Malphite': './scr/img/DA_18_Malphite.webp',
+      'Neeko': './scr/img/DA_18_Diana.webp',
+      'Janna': './scr/img/DA_18_Caitlyn.webp',
+      'Camille': './scr/img/DA_18_Camille.webp',
+      'Elise': './scr/img/DA_18_Elise.webp',
+      'Cassiopeia': './scr/img/DA_18_Cassiopeia.webp',
+      'Kobuko': './scr/img/DA_18_Kobuko.webp',
+      'RekSai': './scr/img/DA_18_RekSai.webp',
+      'Teemo': './scr/img/DA_18_Teemo.webp',
+      'Gromp': './scr/img/DA_Gromp18_AP.webp',
+      'Krug': './scr/img/DA_Krug18.webp',
+      'Yorick': './scr/img/DA_18_Yorick.webp',
+      'Amumu': './scr/img/DA_Amumu18.webp',
+      'Zyra': './scr/img/DA_18_Zyra.webp',
+      'Kennen': './scr/img/DA_18_Kennen.webp',
+      'Azir': './scr/img/DA_18_Azir.webp',
+      'Ezreal': './scr/img/DA_18_Ezreal.webp',
+      'Fiddlesticks': './scr/img/DA_Fiddlesticks18.webp',
+      'Shen': './scr/img/DA_18_Shen.webp'
+    };
+
+    const localItemMap = {
+      'guinsoo': './scr/img/DA_GuinsoosRageblade.webp',
+      'filo_infinito': './scr/img/DA_InfinityEdge.webp',
+      'sable_pistola': './scr/img/DA_HextechGunblade.webp',
+      'morellonomicon': './scr/img/DA_Morellonomicon.webp',
+      'lanza_shojin': './scr/img/DA_SpearOfShojin.webp',
+      'sombrero_rabadon': './scr/img/DA_RabadonsDeathcap.webp',
+      'gargola': './scr/img/DA_GargoyleStoneplate.webp',
+      'chispa_ionica': './scr/img/DA_IonicSpark.webp',
+      'capa_fuego_solar': './scr/img/DA_SunfireCape.webp',
+      'mejora_azul': './scr/img/DA_BlueBuff.webp',
+      'guantelete_joyado': './scr/img/DA_JeweledGauntlet.webp',
+      'ultimo_suspiro': './scr/img/DA_LastWhisper.webp',
+      'armadura_warmog': './scr/img/DA_WarmogsArmor.webp',
+      'garra_dragon': './scr/img/DA_DragonsClaw.webp',
+      'capa_mercurial': './scr/img/DA_Quicksilver.webp',
+      'valor_titanico': './scr/img/DA_TitansResolve.webp',
+      'diente_nashor': './scr/img/DA_NashorsTooth.webp',
+      'baston_arcangel': './scr/img/DA_ArchangelsStaff.webp',
+      'cota_espinas': './scr/img/DA_BrambleVest.webp',
+      'verdugo_gigantes': './scr/img/DA_GiantSlayer.webp',
+      'sanguinaria': './scr/img/DA_Bloodthirster.webp',
+      // Componentes Base Locales
+      'espadon': './scr/img/DA_Component_NeedlesslyLargeRod.webp',
+      'arco': './scr/img/DA_Component_RecurveBow.webp',
+      'lagrima': './scr/img/DA_Component_TearOfTheGoddess.webp',
+      'vara': './scr/img/DA_Component_NeedlesslyLargeRod.webp',
+      'malla': './scr/img/DA_Component_ChainVest.webp',
+      'cinto': './scr/img/DA_Component_GiantsBelt.webp',
+      'guante': './scr/img/DA_Component_SparringGloves.webp'
+    };
+
+    // Conexión directa a los 113 archivos locales guardados en ./scr/img/
+    function getChampionImage(nombre) {
+      if (localChampMap[nombre]) {
+        return localChampMap[nombre];
+      }
+      return `./scr/img/DA_18_${nombre}.webp`;
+    }
+
+    function getItemImage(nombre, isComponent = false) {
+      if (localItemMap[nombre]) {
+        return localItemMap[nombre];
+      }
+      const itemId = itemDDragonIds[nombre] || '1038';
+      return `https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/${itemId}.png`;
+    }
+
+    // Manejador de error multinivel
+    function handleChampError(imgElem, nombre) {
+      if (!imgElem.dataset.retried) {
+        imgElem.dataset.retried = '1';
+        const lolName = champLoLNames[nombre] || nombre;
+        imgElem.src = `https://ddragon.leagueoflegends.com/cdn/14.8.1/img/champion/${lolName}.png`;
+        return;
+      }
+      imgElem.onerror = null;
+      imgElem.style.display = 'none';
+      const parent = imgElem.parentElement;
+      if (parent) {
+        const fallback = document.createElement('div');
+        fallback.className = 'absolute inset-0 bg-[#0b0d0f] flex items-center justify-center text-xs font-black text-amber-400 z-0';
+        fallback.textContent = nombre.substring(0, 3).toUpperCase();
+        parent.appendChild(fallback);
+      }
+    }
+
+    const costBorderHex = {
+      1: '#a1a1aa',
+      2: '#10b981',
+      3: '#3b82f6',
+      4: '#8b5cf6',
+      5: '#eab308'
+    };
+
+    const tierBadges = {
+      S: 'bg-[#fe3e4b] text-white',
+      A: 'bg-[#eea402] text-black',
+      B: 'bg-[#3b82f6] text-white'
+    };
+
+    const augmentTierBg = {
+      Plata: 'bg-slate-700 text-slate-200 border-slate-500',
+      Dorado: 'bg-amber-600 text-amber-100 border-amber-400',
+      Prismático: 'bg-purple-700 text-purple-100 border-purple-400'
+    };
+
+    function renderTierList(data) {
+      const container = document.getElementById('comps-container');
+      if (!container) return;
+
+      let html = '';
+
+      data.forEach((comp, idx) => {
+        // Campeones clave principales en encabezado
+        const champsHTML = comp.campeones.map(ch => {
+          const borderColor = costBorderHex[ch.coste] || '#a1a1aa';
+          
+          // 4. Posicionamiento de Objetos en Fila Horizontal (bottom-[-6px])
+          const itemsHTML = (ch.items && ch.items.length > 0) ? `
+            <div class="absolute bottom-[-6px] left-1/2 -translate-x-1/2 flex gap-0.5 z-20">
+              ${ch.items.slice(0, 3).map(itemKey => `
+                <div class="w-3.5 h-3.5 rounded-sm border border-gray-900 overflow-hidden bg-[#0b0d0f] p-0.5 shadow-md">
+                  <img src="${getItemImage(itemKey)}" title="${itemKey}" alt="${itemKey}" class="w-full h-full object-cover" onerror="this.parentElement.className+=' bg-indigo-900/40';" />
+                </div>
+              `).join('')}
+            </div>
+          ` : '';
+
+          return `
+            <div class="relative group">
+              <div class="w-14 h-14 md:w-16 md:h-16 rounded-2xl bg-[#121316] border-2 overflow-hidden shadow-lg flex items-center justify-center relative" style="border-color: ${borderColor};">
+                <img src="${getChampionImage(ch.nombre)}" alt="${ch.nombre}" class="w-full h-full object-cover aspect-square" onerror="handleChampError(this, '${ch.nombre}')" />
+              </div>
+              ${itemsHTML}
+            </div>
+          `;
+        }).join('');
+
+        // 3. Sinergias (Traits) con insignias hex de nivel y escalas activas
+        const traitsHTML = comp.sinergias ? comp.sinergias.map(tr => {
+          const traitClass = tr.tipo || 'bronze';
+          const escalaHTML = tr.escala ? `<div class="text-[9px] font-medium text-gray-500">${tr.escala}</div>` : '';
+          return `
+            <div class="flex items-center gap-2 bg-[#0b0d0f] px-2.5 py-1 rounded-xl border border-[#26282c]">
+              <div class="trait-badge ${traitClass}">
+                ${tr.nivel}
+              </div>
+              <div>
+                <div class="text-xs font-black text-white tracking-wide">${tr.nombre}</div>
+                ${escalaHTML}
+              </div>
+            </div>
+          `;
+        }).join('') : '';
+
+        // Early Game
+        const earlyGameHTML = (comp.earlyGame || ["Camille", "Rakan", "Caitlyn", "Elise"]).map((eName) => `
+          <div class="w-8 h-8 rounded-lg bg-[#0b0d0f] border border-gray-600 overflow-hidden flex items-center justify-center relative" title="${eName}">
+            <img src="${getChampionImage(eName)}" alt="${eName}" class="w-full h-full object-cover" onerror="handleChampError(this, '${eName}')" />
+          </div>
+        `).join('');
+
+        // Carrusel
+        const carouselPriorityHTML = (comp.prioridadCarrusel || ["espadon", "arco", "lagrima", "vara"]).map((itemKey, i, arr) => `
+          <div class="flex items-center gap-1">
+            <div class="w-7 h-7 rounded-lg border border-indigo-900/40 bg-[#0b0d0f] p-1 flex items-center justify-center">
+              <img src="${getItemImage(itemKey, true)}" title="${itemKey}" alt="${itemKey}" class="w-full h-full object-cover" onerror="this.parentElement.className+=' bg-amber-500/20';" />
+            </div>
+            ${i < arr.length - 1 ? '<span class="text-gray-500 font-bold text-xs px-0.5">></span>' : ''}
+          </div>
+        `).join('');
+
+        // Aumentos
+        const augmentsStackedHTML = (comp.aumentos || []).map(aug => {
+          const style = augmentTierBg[aug.tipo] || 'bg-gray-800 text-gray-200 border-gray-600';
+          return `
+            <div class="w-10 h-10 rounded-md border ${style} flex items-center justify-center text-xs font-black shadow-md cursor-help" title="${aug.nombre} (${aug.tipo})">
+              ★
+            </div>
+          `;
+        }).join('');
+
+        // 1 & 3. Renderizado del Tablero Hexagonal (.board-grid 4x7 sin desbordamiento horizontal)
+        let boardCells = '';
+        let cellIndex = 1;
+        for (let r = 1; r <= 4; r++) {
+          for (let c = 1; c <= 7; c++) {
+            const isRowEven = (r % 2 === 0);
+            const rowEvenClass = isRowEven ? 'hex-row-even' : '';
+            const placed = comp.tablero.find(t => t.fila === r && t.col === c);
+            
+            if (placed) {
+              const champObj = comp.campeones.find(ch => ch.nombre === placed.campeon) || { coste: 1, items: [] };
+              const borderColor = costBorderHex[champObj.coste] || '#a1a1aa';
+              const itemsToRender = (placed.items && placed.items.length > 0) ? placed.items : (champObj.items || []);
+
+              // 3 Micro-Hexágonos de Objetos con Tooltip Global en Hover
+              const boardItemsHTML = (itemsToRender.length > 0) ? `
+                <div class="absolute -bottom-3.5 left-1/2 -translate-x-1/2 flex items-center justify-center -space-x-1 z-50">
+                  ${itemsToRender.slice(0, 3).map(itemKey => {
+                    return `
+                      <div class="w-6 h-7 hex-clip flex items-center justify-center p-[2px] shadow-2xl relative cursor-pointer" 
+                           style="background-color: ${borderColor};"
+                           onmouseenter="showItemTooltip(event, '${itemKey}')" 
+                           onmouseleave="hideGlobalTooltip()">
+                        <div class="w-full h-full hex-clip bg-[#0b0d0f] flex items-center justify-center overflow-hidden">
+                          <img src="${getItemImage(itemKey)}" title="${itemKey}" alt="${itemKey}" class="w-full h-full object-cover" />
+                        </div>
+                      </div>
+                    `;
+                  }).join('')}
+                </div>
+              ` : '';
+
+              // Insignia de 3 Estrellas (★★★ TFTAcademy Style)
+              const starBadgeHTML = (placed.es3Estrellas || champObj.es3Estrellas) ? `
+                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#0b0d0f] border border-amber-400/80 px-2 py-0.5 rounded-full shadow-lg z-30 flex items-center justify-center gap-0.5">
+                  <span class="text-[10px] font-black text-amber-400 tracking-tighter leading-none">★★★</span>
+                </div>
+              ` : '';
+
+              boardCells += `
+                <div class="relative ${rowEvenClass} w-full h-full flex flex-col items-center justify-center group/champ cursor-pointer z-10 hover:z-50"
+                     onmouseenter="showChampTooltip(event, '${placed.campeon}', ${champObj.coste || 1})" 
+                     onmouseleave="hideGlobalTooltip()">
+                  
+                  ${starBadgeHTML}
+
+                  <!-- Contenedor Hexagonal del Campeón -->
+                  <div class="w-full h-full relative overflow-hidden flex items-center justify-center" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
+                    <img src="${getChampionImage(placed.campeon)}" alt="${placed.campeon}" class="w-full h-full object-cover" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);" onerror="handleChampError(this, '${placed.campeon}')" />
+                    
+                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-black text-white tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,1)] pointer-events-none z-20 whitespace-nowrap">
+                      ${placed.campeon}
+                    </div>
+
+                    <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 115" preserveAspectRatio="none">
+                      <polygon points="50,2.5 97.5,26.5 97.5,88.5 50,112.5 2.5,88.5 2.5,26.5" fill="none" stroke="${borderColor}" stroke-width="5.5" stroke-linejoin="round" />
+                    </svg>
+                  </div>
+
+                  <!-- Objetos -->
+                  ${boardItemsHTML}
+                </div>
+              `;
+            } else {
+              // Celdas vacías claramente visibles con fondo oscuro y contorno hexagonal nítido
+              boardCells += `
+                <div class="hex-cell ${rowEvenClass} relative opacity-80">
+                  <div class="hex-border-overlay" style="box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.08); bg-color: #171a24;"></div>
+                </div>
+              `;
+            }
+            cellIndex++;
+          }
+        }
+
+        // 5. Fila Inferior (Mejores Builds con Objetos Posicionados en Fila 2x2 o Horizontal)
+        const bestBuildsCardsHTML = (comp.mejoresBuilds || comp.campeones.slice(0,2)).map(b => {
+          const bCost = b.coste || 4;
+          const bBorder = costBorderHex[bCost] || '#a1a1aa';
+          const bItems = b.items || ["guinsoo", "filo_infinito", "sable_pistola"];
+
+          return `
+            <div class="w-48 bg-[#17181a] border-2 rounded-2xl p-3 flex flex-col items-center shadow-xl relative" style="border-color: ${bBorder};">
+              <h5 class="text-xs font-black text-white mb-2 uppercase tracking-wider">${b.campeon}</h5>
+              <div class="w-20 h-20 rounded-xl overflow-hidden mb-4 border border-gray-700 bg-[#0b0d0f] relative">
+                <img src="${getChampionImage(b.campeon)}" alt="${b.campeon}" class="w-full h-full object-cover" onerror="handleChampError(this, '${b.campeon}')" />
+              </div>
+              
+              <!-- 4. Objetos posicionados en fila horizontal ajustada -->
+              <div class="flex gap-1 justify-center w-full mt-1">
+                ${bItems.slice(0,3).map(itKey => `
+                  <div class="w-7 h-7 rounded-md bg-[#0b0d0f] border border-gray-800 p-0.5 flex items-center justify-center">
+                    <img src="${getItemImage(itKey)}" title="${itKey}" alt="${itKey}" class="w-full h-full object-cover" />
+                  </div>
+                `).join('')}
+              </div>
+            </div>
+          `;
+        }).join('');
+
+        // Estructura Final con Acordeón Fluido
+        html += `
+          <article id="${comp.id}" class="comp-card bg-[#17181a] border border-indigo-900/50 rounded-3xl overflow-hidden shadow-2xl transition-all duration-300">
+            
+            <!-- Encabezado de Tarjeta -->
+            <div onclick="toggleCompCard('${comp.id}')" class="p-5 border-b border-indigo-900/50 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 cursor-pointer hover:bg-[#1f2024]/50 transition-colors">
+              <div class="flex items-center space-x-4">
+                <div class="${tierBadges[comp.tier] || 'bg-gray-600 text-white'} px-4 py-2 rounded-2xl font-black text-2xl shadow-inner">
+                  ${comp.tier}
+                </div>
+                <div>
+                  <h2 class="text-xl font-extrabold text-white tracking-wide flex items-center gap-2">
+                    ${comp.nombre}
+                  </h2>
+                  <div class="flex items-center space-x-2 mt-1">
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-amber-500/10 text-amber-400 border border-amber-500/20 uppercase">
+                      ${comp.dificultad}
+                    </span>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-500/10 text-purple-400 border border-purple-500/20 uppercase">
+                      ${comp.categoria}
+                    </span>
+                    <span class="px-2.5 py-0.5 rounded-full text-xs font-extrabold ${comp.tipoDeDano === 'AD' ? 'bg-amber-500/20 text-amber-300' : comp.tipoDeDano === 'AP' ? 'bg-blue-500/20 text-blue-300' : 'bg-green-500/20 text-green-300'} uppercase">
+                      ${comp.tipoDeDano}
+                    </span>
+                  </div>
+                </div>
+              </div>
+
+              <!-- Flecha Interactiva -->
+              <div class="flex items-center gap-2 text-xs font-bold text-amber-400 self-end sm:self-center">
+                <span>Detalles</span>
+                <span id="arrow-${comp.id}" class="inline-block transition-transform duration-300 font-black text-sm">v</span>
+              </div>
+            </div>
+
+            <!-- Fila de Campeones Principales -->
+            <div class="p-5 bg-[#121316] border-b border-indigo-900/50">
+              <h4 class="text-xs font-bold text-gray-400 uppercase tracking-wider mb-3">Campeones Clave</h4>
+              <div class="flex flex-wrap gap-4 items-center">
+                ${champsHTML}
+              </div>
+            </div>
+
+            <!-- PANEL DE DETALLES EXPANDIDOS -->
+            <div id="details-${comp.id}" class="detalles-expandidos max-h-0 overflow-hidden opacity-0 transition-[max-height,opacity] duration-500 ease-in-out border-t border-indigo-900/50 bg-[#0b0d0f]/90">
+              
+              <div class="p-5 sm:p-6 space-y-6">
+                <!-- Fila Superior -->
+                <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
+                  
+                  <div class="rounded-xl border border-indigo-900/40 p-3 bg-[#12121c] shadow-inner">
+                    <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-wider mb-2">Mejoras Salida de Campeones Early</h4>
+                    <div class="flex items-center gap-2">
+                      ${earlyGameHTML}
+                    </div>
+                  </div>
+
+                  <div class="rounded-xl border border-indigo-900/40 p-3 bg-[#12121c] shadow-inner flex flex-col justify-between">
+                    <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-wider mb-1">Condiciones OP (Early)</h4>
+                    <div class="flex items-center justify-center text-purple-500 py-1">
+                      <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
+                        <path d="M12 2L15 9H22L16.5 13.5L18.5 21L12 16.5L5.5 21L7.5 13.5L2 9H9L12 2Z" />
+                      </svg>
+                    </div>
+                  </div>
+
+                  <div class="rounded-xl border border-indigo-900/40 p-3 bg-[#12121c] shadow-inner">
+                    <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-wider mb-2">Prioridad de Objetos</h4>
+                    <div class="flex items-center gap-1.5 flex-wrap">
+                      ${carouselPriorityHTML}
+                    </div>
+                  </div>
+
+                </div>
+
+                <!-- Layout Principal (Tablero Hexagonal a ancho completo) -->
+                <div class="w-full">
+                  
+                  <div class="rounded-xl border border-indigo-900/40 p-4 bg-[#12121c] shadow-inner flex flex-col items-center w-full">
+                    
+                    <!-- 3. Barra de Sinergias (Traits) Centrada con estilos oficiales -->
+                    <div class="w-full flex flex-wrap items-center justify-center gap-2 mb-4 pb-3 border-b border-indigo-900/30">
+                      ${traitsHTML}
+                    </div>
+
+                    <!-- 1. TABLERO HEXAGONAL (.board-grid sin desbordamientos horizontales) -->
+                    <div class="w-full flex justify-center overflow-hidden py-2">
+                      <div class="board-grid">
+                        ${boardCells}
+                      </div>
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <!-- Fila Inferior: Mejores Builds -->
+                <div class="border-t border-indigo-900/40 pt-4 flex flex-col items-center">
+                  <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider mb-4">Mejores Builds/Objetos para Carry y Tanque</h4>
+                  <div class="flex flex-wrap items-center justify-center gap-6">
+                    ${bestBuildsCardsHTML}
+                  </div>
+                </div>
+              </div>
+
+            </div>
+
+          </article>
+        `;
+
+        if (idx === 0) {
+          html += `
+            <div class="block lg:hidden my-6 flex justify-center">
+              <div class="w-[320px] h-[50px] border-2 border-dashed border-indigo-900/50 bg-[#121316] rounded-2xl flex items-center justify-center text-xs font-bold text-gray-500 tracking-widest shadow-lg">
+                PUBLICIDAD MÓVIL (320x50)
+              </div>
+            </div>
+          `;
+        }
+      });
+
+      container.innerHTML = html;
+    }
+
+    // Toggle Acordeón Fluido
+    function toggleCompCard(id) {
+      const details = document.getElementById(`details-${id}`);
+      const arrow = document.getElementById(`arrow-${id}`);
+      if (!details || !arrow) return;
+
+      const isClosed = details.classList.contains('max-h-0');
+      if (isClosed) {
+        details.classList.remove('max-h-0', 'opacity-0');
+        details.classList.add('max-h-[2000px]', 'opacity-100');
+        arrow.classList.add('rotate-180');
+      } else {
+        details.classList.remove('max-h-[2000px]', 'opacity-100');
+        details.classList.add('max-h-0', 'opacity-0');
+        arrow.classList.remove('rotate-180');
+      }
+    }
+
+    // Filtros por Criterio
+    function filtrarComps(criterio) {
+      currentFilterCriterio = criterio;
+
+      document.querySelectorAll('.filter-pill').forEach(btn => {
+        btn.classList.remove('bg-amber-500', 'text-black', 'border-tft-gold', 'shadow-md');
+        btn.classList.add('bg-[#0b0d0f]', 'text-gray-300', 'border-[#26282c]');
+      });
+
+      const activeBtn = document.getElementById(`filter-btn-${criterio}`);
+      if (activeBtn) {
+        activeBtn.classList.remove('bg-[#0b0d0f]', 'text-gray-300', 'border-[#26282c]');
+        activeBtn.classList.add('bg-amber-500', 'text-black', 'border-tft-gold', 'shadow-md');
+      }
+
+      tftData.forEach(comp => {
+        const cardElem = document.getElementById(comp.id);
+        if (!cardElem) return;
+
+        let match = false;
+        if (criterio === 'ALL') {
+          match = true;
+        } else if (criterio === 'S' || criterio === 'A' || criterio === 'B') {
+          match = comp.tier === criterio;
+        } else if (criterio === 'FISICO') {
+          match = comp.tipoDeDano === 'AD' || comp.tipoDeDano === 'Híbrido';
+        } else if (criterio === 'MAGICO') {
+          match = comp.tipoDeDano === 'AP' || comp.tipoDeDano === 'Híbrido';
+        }
+
+        if (match) {
+          cardElem.classList.remove('hidden');
+        } else {
+          cardElem.classList.add('hidden');
+        }
+      });
+    }
+
+    // Sidebar TOC Dinámico
+    function renderSidebarTOC() {
+      const toc = document.getElementById('sidebar-toc');
+      if (!toc) return;
+
+      const tiers = ['S', 'A', 'B'];
+
+      toc.innerHTML = tiers.map(t => {
+        const list = tftData.filter(c => c.tier === t);
+        if (list.length === 0) return '';
+
+        const items = list.map(c => `
+          <li>
+            <a href="#${c.id}" class="text-xs text-gray-400 hover:text-amber-400 flex items-center gap-2 py-1 transition-colors">
+              <span class="w-1.5 h-1.5 rounded-full bg-amber-500"></span>
+              ${c.nombre}
+            </a>
+          </li>
+        `).join('');
+
+        return `
+          <div>
+            <div class="text-xs font-black text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-sm ${t === 'S' ? 'bg-[#fe3e4b]' : 'bg-[#eea402]'} inline-block"></span>
+              Tier ${t}
+            </div>
+            <ul class="pl-3 space-y-1 border-l border-[#26282c]">
+              ${items}
+            </ul>
+          </div>
+        `;
+      }).join('');
+    }
+
+    // Funciones Globales para Tooltips Flotantes Multilenguaje
+    function showItemTooltip(event, itemKey) {
+      const tooltip = document.getElementById('global-tooltip');
+      if (!tooltip) return;
+
+      let db = itemTooltipDB_ES;
+      if (currentLang === 'en') db = itemTooltipDB_EN;
+      if (currentLang === 'pt') db = itemTooltipDB_PT;
+
+      const itemInfo = db[itemKey] || itemTooltipDB_ES[itemKey] || { nombre: itemKey, stats: "⚔️ Estadísticas Meta", desc: "Objeto recomendado de TFT", receta: ['espadon', 'arco'] };
+      const r1 = itemInfo.receta ? itemInfo.receta[0] : 'espadon';
+      const r2 = itemInfo.receta ? itemInfo.receta[1] : 'arco';
+
+      tooltip.innerHTML = `
+        <div class="w-64 bg-[#111319] border border-gray-700 rounded-xl p-3 shadow-2xl text-left">
+          <div class="flex items-center gap-2.5 mb-2">
+            <img src="${getItemImage(itemKey)}" class="w-8 h-8 rounded border border-gray-800 object-cover" />
+            <div>
+              <h5 class="text-xs font-black text-white">${itemInfo.nombre}</h5>
+              <div class="text-[10px] text-gray-400 font-bold">${itemInfo.stats}</div>
+            </div>
+          </div>
+          <div class="border-t border-gray-800 pt-2 mb-2">
+            <p class="text-[10px] text-gray-300 leading-tight font-medium">${itemInfo.desc}</p>
+          </div>
+          <div class="flex items-center gap-1.5 pt-1 border-t border-gray-800/60">
+            <div class="w-5 h-5 rounded bg-[#0b0d0f] border border-gray-700 p-0.5"><img src="${getItemImage(r1, true)}" class="w-full h-full object-cover" /></div>
+            <span class="text-xs font-bold text-gray-500">+</span>
+            <div class="w-5 h-5 rounded bg-[#0b0d0f] border border-gray-700 p-0.5"><img src="${getItemImage(r2, true)}" class="w-full h-full object-cover" /></div>
+          </div>
+        </div>
+      `;
+
+      positionGlobalTooltip(event, tooltip);
+    }
+
+    function showChampTooltip(event, champName, coste) {
+      const tooltip = document.getElementById('global-tooltip');
+      if (!tooltip) return;
+
+      let db = champTooltipDB_ES;
+      if (currentLang === 'en') db = champTooltipDB_EN;
+      if (currentLang === 'pt') db = champTooltipDB_PT;
+
+      const cInfo = db[champName] || champTooltipDB_ES[champName] || { rol: 'Tanque / Carry', coste: coste || 3, sinergias: ['Invoker'], habilidad: 'Habilidad Especial', mana: '50', desc: 'Despliega una habilidad destructiva en combate.' };
+      const champTraitsHTML = cInfo.sinergias.map(s => `<div class="text-[10px] font-bold text-gray-300">🛡️ ${s}</div>`).join('');
+
+      tooltip.innerHTML = `
+        <div class="w-64 bg-[#111319] border-2 border-sky-500/80 rounded-2xl p-3.5 shadow-2xl text-left">
+          <div class="flex items-center justify-between border-b border-gray-800 pb-2 mb-2">
+            <div>
+              <h4 class="text-sm font-black text-white tracking-wide">${champName}</h4>
+              <div class="flex items-center gap-2 mt-0.5">
+                ${champTraitsHTML}
+              </div>
+            </div>
+            <div class="flex flex-col items-end">
+              <span class="px-2 py-0.5 rounded-full text-[9px] font-bold bg-gray-800 text-gray-300">${cInfo.rol}</span>
+              <span class="text-xs font-black text-amber-400 mt-1">🪙 ${cInfo.coste}</span>
+            </div>
+          </div>
+          
+          <div class="bg-[#0b0d0f] p-2.5 rounded-xl border border-gray-800 mb-2">
+            <div class="flex items-center justify-between text-xs font-bold text-sky-400 mb-1">
+              <span>⚡ ${cInfo.habilidad}</span>
+              <span class="text-[10px] text-sky-300">💧 ${cInfo.mana}</span>
+            </div>
+            <p class="text-[10px] text-gray-300 leading-tight font-medium">${cInfo.desc}</p>
+          </div>
+        </div>
+      `;
+
+      positionGlobalTooltip(event, tooltip);
+    }
+
+    function positionGlobalTooltip(event, tooltip) {
+      const rect = event.currentTarget.getBoundingClientRect();
+      
+      // Calculamos la posición fija basada en el viewport actual (fixed positioning)
+      let top = rect.top - tooltip.offsetHeight - 12;
+      let left = rect.left + (rect.width / 2) - 128;
+
+      // Si la ficha está muy arriba (filas 1 o 2), desplegar inmediatamente debajo de la ficha
+      if (rect.top < 180) {
+        top = rect.bottom + 12;
+      }
+
+      // Asegurar límites horizontales de la pantalla
+      if (left < 10) left = 10;
+      if (left + 260 > window.innerWidth) left = window.innerWidth - 270;
+
+      tooltip.style.top = `${top}px`;
+      tooltip.style.left = `${left}px`;
+      tooltip.style.opacity = '1';
+      tooltip.style.transform = 'scale(1)';
+    }
+
+    function hideGlobalTooltip() {
+      const tooltip = document.getElementById('global-tooltip');
+      if (tooltip) {
+        tooltip.style.opacity = '0';
+        tooltip.style.transform = 'scale(0.95)';
+      }
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      renderTierList(tftData);
+      renderSidebarTOC();
+
+      // Cerrar tooltip emergente en móviles al tocar en cualquier punto de la pantalla fuera del tooltip
+      document.addEventListener('click', (e) => {
+        const tooltip = document.getElementById('global-tooltip');
+        if (tooltip && !e.target.closest('.group\\/champ') && !e.target.closest('.hex-clip')) {
+          hideGlobalTooltip();
+        }
+      });
+    });
+  </script>
+
+  <!-- CONTENEDOR GLOBAL DE TOOLTIP EN LA RAÍZ DEL DOCUMENTO (NUNCA RE CORTADO) -->
+  <div id="global-tooltip" class="fixed opacity-0 pointer-events-none transition-all duration-200 z-[9999] transform scale-95 origin-bottom"></div>
+
+</body>
+</html>
