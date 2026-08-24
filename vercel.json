@@ -1,9 +1,9 @@
 {
   "version": 2,
   "cleanUrls": true,
-  "routes": [
+  "redirects": [
     {
-      "src": "/(.*)",
+      "source": "/(.*)",
       "has": [
         {
           "type": "header",
@@ -11,11 +11,13 @@
           "value": "http"
         }
       ],
-      "redirect": "https://aslandevstudio.com/$1",
-      "status": 308
-    },
-    { "src": "/", "dest": "/index.html" },
-    { "src": "/set17", "dest": "/set17.html" },
-    { "src": "/aprender", "dest": "/aprender.html" }
+      "destination": "https://aslandevstudio.com/$1",
+      "permanent": true
+    }
+  ],
+  "rewrites": [
+    { "source": "/", "destination": "/index.html" },
+    { "source": "/set17", "destination": "/set17.html" },
+    { "source": "/aprender", "destination": "/aprender.html" }
   ]
 }
