@@ -2,6 +2,18 @@
   "version": 2,
   "cleanUrls": true,
   "routes": [
+    {
+      "src": "/(.*)",
+      "has": [
+        {
+          "type": "header",
+          "key": "x-forwarded-proto",
+          "value": "http"
+        }
+      ],
+      "redirect": "https://aslandevstudio.com/$1",
+      "status": 308
+    },
     { "src": "/", "dest": "/index.html" },
     { "src": "/set17", "dest": "/set17.html" },
     { "src": "/aprender", "dest": "/aprender.html" }
