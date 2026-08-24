@@ -106,6 +106,25 @@
       background-color: #0b0d12;
       border-radius: 1.5rem;
     }
+
+    /* Adaptación Responsiva Móvil del Tablero Hexagonal */
+    @media (max-width: 767px) {
+      .board-wrapper {
+        width: 100%;
+        overflow-x: auto;
+        -webkit-overflow-scrolling: touch;
+        padding-bottom: 12px;
+      }
+      .board-grid {
+        grid-template-columns: repeat(7, minmax(44px, 52px));
+        grid-template-rows: repeat(4, minmax(48px, 56px));
+        gap: 0px 3px;
+        padding: 12px 18px;
+        border-radius: 1rem;
+        min-width: 340px;
+        margin: 0 auto;
+      }
+    }
     
     .hex-cell {
       clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);
@@ -170,19 +189,20 @@
           <div class="w-10 h-10 transition-transform group-hover:scale-105">
             <img src="./scr/img/logo.svg" alt="TFT Meta Comps Logo" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(238,164,2,0.3)]" />
           </div>
-          <span class="font-extrabold text-lg tracking-wider bg-gradient-to-r from-red-400 via-amber-300 to-purple-400 bg-clip-text text-transparent">
+          <span class="font-extrabold text-base sm:text-lg tracking-wider bg-gradient-to-r from-red-400 via-amber-300 to-purple-400 bg-clip-text text-transparent">
             META COMPS TIER LIST
           </span>
         </a>
       </div>
       
-      <div class="flex items-center space-x-6 text-sm font-semibold text-gray-400">
+      <!-- NAVEGACIÓN DESKTOP (Intacta para pantallas md y superiores) -->
+      <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-gray-400">
         <a href="index.html" class="text-amber-400 hover:text-white transition-colors">Inicio / Tier List</a>
         <a href="index.html#comps-container" class="hover:text-white transition-colors">Composiciones</a>
         <a href="set17.html" class="hover:text-amber-400 transition-colors">Set 17</a>
         <a href="aprender.html" class="hover:text-amber-400 transition-colors">Aprender TFT</a>
         
-        <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR -->
+        <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR DESKTOP -->
         <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
           <span>🌐</span>
           <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none">
@@ -192,28 +212,83 @@
           </select>
         </div>
       </div>
+
+      <!-- BOTÓN MENÚ HAMBURGUESA MÓVIL (Solo visible en pantallas móviles < md) -->
+      <div class="flex md:hidden items-center gap-3">
+        <!-- Selector Idioma Móvil Compacto -->
+        <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2 py-1 text-xs font-bold text-gray-300 gap-1">
+          <select id="lang-select-mobile" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none text-xs">
+            <option value="es" class="bg-[#17181a] text-white">🇪🇸 ES</option>
+            <option value="en" class="bg-[#17181a] text-white">🇺🇸 EN</option>
+            <option value="pt" class="bg-[#17181a] text-white">🇧🇷 PT</option>
+          </select>
+        </div>
+
+        <button onclick="toggleMobileMenu()" aria-label="Abrir Menú" class="p-2 rounded-xl bg-[#121316] border border-[#26282c] text-amber-400 hover:text-white focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
 
+  <!-- MENÚ DESLIZANTE MÓVIL (MOBILE DRAWER) -->
+  <div id="mobile-menu-drawer" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[999] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden flex justify-end">
+    <div class="w-4/5 max-w-sm bg-[#121316] border-l border-[#26282c] h-full p-6 flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300" id="mobile-menu-content">
+      <div class="space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-[#26282c]">
+          <div class="flex items-center space-x-2">
+            <img src="./scr/img/logo.svg" alt="TFT Logo" class="w-7 h-7" />
+            <span class="font-black text-sm text-white">NAVEGACIÓN</span>
+          </div>
+          <button onclick="toggleMobileMenu()" class="text-gray-400 hover:text-white p-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <nav class="flex flex-col space-y-4 text-sm font-bold text-gray-300">
+          <a href="index.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">Inicio / Tier List</a>
+          <a href="index.html#comps-container" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Composiciones Meta</a>
+          <a href="set17.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Set 17 Dioses del Espacio</a>
+          <a href="aprender.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Aprender TFT (Guía ELO)</a>
+        </nav>
+      </div>
+
+      <div class="pt-6 border-t border-[#26282c] space-y-4 text-xs text-gray-400">
+        <div class="flex items-center justify-around">
+          <a href="privacy.html" class="hover:text-amber-400">Privacidad</a>
+          <span>•</span>
+          <a href="terms.html" class="hover:text-amber-400">Términos</a>
+        </div>
+        <div class="text-center font-semibold text-gray-500">© 2026 Aslan Dev Studio</div>
+      </div>
+    </div>
+  </div>
+
   <!-- Layout Principal -->
-  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
+  <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-6 sm:py-8">
     <div class="grid grid-cols-1 lg:grid-cols-4 gap-8 items-start">
       
       <!-- COLUMNA PRINCIPAL DE CONTENIDO (75% en desktop) -->
       <div class="lg:col-span-3 w-full space-y-6">
-        <header class="mb-6">
-          <h1 class="text-3xl sm:text-4xl font-black text-white tracking-tight mb-2">TFT Meta Comps Tier List</h1>
-          <p class="text-gray-400 text-sm sm:text-base">Estrategias óptimas, posicionamiento hexagonal, aumentos y builds recomendadas para ganar partidas.</p>
+        <header class="mb-4 sm:mb-6">
+          <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight mb-2">TFT Meta Comps Tier List</h1>
+          <p class="text-gray-400 text-xs sm:text-base">Estrategias óptimas, posicionamiento hexagonal, aumentos y builds recomendadas para ganar partidas.</p>
         </header>
 
-        <!-- Filtros Rápidos -->
-        <div class="p-4 bg-[#17181a] border border-[#26282c] rounded-2xl flex flex-wrap items-center gap-2 shadow-xl">
-          <span class="text-xs font-bold uppercase text-gray-400 mr-2 tracking-wider">Filtrar:</span>
-          <button onclick="filtrarComps('ALL')" id="filter-btn-ALL" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-amber-500 text-black border-2 border-tft-gold shadow-md">TODOS</button>
-          <button onclick="filtrarComps('S')" id="filter-btn-S" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white">TIER S</button>
-          <button onclick="filtrarComps('A')" id="filter-btn-A" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white">TIER A</button>
-          <button onclick="filtrarComps('FISICO')" id="filter-btn-FISICO" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white">DAÑO FÍSICO (AD)</button>
-          <button onclick="filtrarComps('MAGICO')" id="filter-btn-MAGICO" class="filter-pill px-4 py-1.5 rounded-full text-xs font-bold transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white">DAÑO MÁGICO (AP)</button>
+        <!-- Filtros Rápidos (Desplazamiento Horizontal táctil sin saltos en móviles) -->
+        <div class="p-3 sm:p-4 bg-[#17181a] border border-[#26282c] rounded-2xl shadow-xl">
+          <div class="flex items-center gap-2 overflow-x-auto no-scrollbar scroll-smooth py-1 px-0.5">
+            <span class="text-xs font-bold uppercase text-gray-400 mr-1 tracking-wider whitespace-nowrap hidden sm:inline">Filtrar:</span>
+            <button onclick="filtrarComps('ALL')" id="filter-btn-ALL" class="filter-pill px-4 py-2 rounded-xl text-xs font-black transition-all bg-amber-500 text-black border-2 border-tft-gold whitespace-nowrap shadow-md">TODOS</button>
+            <button onclick="filtrarComps('S')" id="filter-btn-S" class="filter-pill px-4 py-2 rounded-xl text-xs font-black transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white whitespace-nowrap">TIER S</button>
+            <button onclick="filtrarComps('A')" id="filter-btn-A" class="filter-pill px-4 py-2 rounded-xl text-xs font-black transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white whitespace-nowrap">TIER A</button>
+            <button onclick="filtrarComps('FISICO')" id="filter-btn-FISICO" class="filter-pill px-4 py-2 rounded-xl text-xs font-black transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white whitespace-nowrap">DAÑO FÍSICO (AD)</button>
+            <button onclick="filtrarComps('MAGICO')" id="filter-btn-MAGICO" class="filter-pill px-4 py-2 rounded-xl text-xs font-black transition-all bg-[#0b0d0f] text-gray-300 border-2 border-[#26282c] hover:border-tft-gold hover:text-white whitespace-nowrap">DAÑO MÁGICO (AP)</button>
+          </div>
         </div>
 
         <!-- Contenedor Dinámico de Composiciones -->
@@ -683,7 +758,6 @@
     function changeLanguage(lang) {
       currentLang = lang;
       localStorage.setItem('tft_lang', lang);
-      console.log("Cambiando idioma a:", lang);
       
       // Actualizar interfaz principal
       const t = uiTranslations[lang] || uiTranslations.es;
@@ -706,6 +780,8 @@
 
       const select = document.getElementById('lang-select');
       if (select) select.value = lang;
+      const selectMobile = document.getElementById('lang-select-mobile');
+      if (selectMobile) selectMobile.value = lang;
 
       renderTierList(tftData);
     }
@@ -1185,7 +1261,7 @@
                     </div>
 
                     <!-- 1. TABLERO HEXAGONAL (.board-grid sin desbordamientos horizontales) -->
-                    <div class="w-full flex justify-center overflow-hidden py-2">
+                    <div class="w-full flex justify-center board-wrapper py-2">
                       <div class="board-grid">
                         ${boardCells}
                       </div>
@@ -1224,8 +1300,11 @@
         if (idx === 0) {
           html += `
             <div class="block lg:hidden my-6 flex justify-center">
-              <div class="w-[320px] h-[50px] border-2 border-dashed border-indigo-900/50 bg-[#121316] rounded-2xl flex items-center justify-center text-xs font-bold text-gray-500 tracking-widest shadow-lg">
-                PUBLICIDAD MÓVIL (320x50)
+              <div class="w-[320px] h-[50px] border border-[#26282c] bg-[#121316] rounded-2xl overflow-hidden shadow-lg flex items-center justify-center">
+                <ins class="adsbygoogle"
+                     style="display:inline-block;width:320px;height:50px"
+                     data-ad-client="ca-pub-1862247020827439"
+                     data-ad-slot="auto"></ins>
               </div>
             </div>
           `;
@@ -1323,6 +1402,22 @@
           </div>
         `;
       }).join('');
+    }
+
+    // Funciones del Menú Hamburguesa Móvil (Mobile Drawer)
+    function toggleMobileMenu() {
+      const drawer = document.getElementById('mobile-menu-drawer');
+      const content = document.getElementById('mobile-menu-content');
+      if (!drawer || !content) return;
+
+      const isOpen = !drawer.classList.contains('opacity-0');
+      if (isOpen) {
+        content.classList.add('translate-x-full');
+        drawer.classList.add('opacity-0', 'pointer-events-none');
+      } else {
+        drawer.classList.remove('opacity-0', 'pointer-events-none');
+        content.classList.remove('translate-x-full');
+      }
     }
 
     // Funciones Globales para Tooltips Flotantes Multilenguaje
@@ -1430,18 +1525,7 @@
       }
     }
 
-    document.addEventListener('DOMContentLoaded', () => {
-      renderTierList(tftData);
-      renderSidebarTOC();
-
-      // Cerrar tooltip emergente en móviles al tocar en cualquier punto de la pantalla fuera del tooltip
-      document.addEventListener('click', (e) => {
-        const tooltip = document.getElementById('global-tooltip');
-        if (tooltip && !e.target.closest('.group\\/champ') && !e.target.closest('.hex-clip')) {
-          hideGlobalTooltip();
-        }
-      });
-    });
+    // changeLanguage unificado arriba
   </script>
 
   <!-- CONTENEDOR GLOBAL DE TOOLTIP EN LA RAÍZ DEL DOCUMENTO (NUNCA RE CORTADO) -->

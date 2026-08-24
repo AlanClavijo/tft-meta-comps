@@ -62,19 +62,20 @@
           <div class="w-10 h-10 transition-transform group-hover:scale-105">
             <img src="./scr/img/logo.svg" alt="TFT Meta Comps Logo" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(238,164,2,0.3)]" />
           </div>
-          <span class="font-extrabold text-lg tracking-wider bg-gradient-to-r from-red-400 via-amber-300 to-purple-400 bg-clip-text text-transparent">
+          <span class="font-extrabold text-base sm:text-lg tracking-wider bg-gradient-to-r from-red-400 via-amber-300 to-purple-400 bg-clip-text text-transparent">
             META COMPS TIER LIST
           </span>
         </a>
       </div>
       
-      <div class="flex items-center space-x-6 text-sm font-semibold text-gray-400">
+      <!-- NAVEGACIÓN DESKTOP -->
+      <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-gray-400">
         <a href="index.html" class="hover:text-white transition-colors" data-i18n="navHome">Inicio / Tier List</a>
         <a href="index.html#comps-container" class="hover:text-white transition-colors" data-i18n="navComps">Composiciones</a>
         <a href="set17.html" class="text-amber-400 hover:text-white transition-colors" data-i18n="navSet17">Set 17</a>
         <a href="aprender.html" class="hover:text-amber-400 transition-colors" data-i18n="navLearn">Aprender TFT</a>
         
-        <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR -->
+        <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR DESKTOP -->
         <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
           <span>🌐</span>
           <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none">
@@ -84,8 +85,60 @@
           </select>
         </div>
       </div>
+
+      <!-- BOTÓN MENÚ HAMBURGUESA MÓVIL (Solo visible en pantallas < md) -->
+      <div class="flex md:hidden items-center gap-3">
+        <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2 py-1 text-xs font-bold text-gray-300 gap-1">
+          <select id="lang-select-mobile" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none text-xs">
+            <option value="es" class="bg-[#17181a] text-white">🇪🇸 ES</option>
+            <option value="en" class="bg-[#17181a] text-white">🇺🇸 EN</option>
+            <option value="pt" class="bg-[#17181a] text-white">🇧🇷 PT</option>
+          </select>
+        </div>
+
+        <button onclick="toggleMobileMenu()" aria-label="Abrir Menú" class="p-2 rounded-xl bg-[#121316] border border-[#26282c] text-amber-400 hover:text-white focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
     </div>
   </nav>
+
+  <!-- MENÚ DESLIZANTE MÓVIL (MOBILE DRAWER) -->
+  <div id="mobile-menu-drawer" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[999] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden flex justify-end">
+    <div class="w-4/5 max-w-sm bg-[#121316] border-l border-[#26282c] h-full p-6 flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300" id="mobile-menu-content">
+      <div class="space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-[#26282c]">
+          <div class="flex items-center space-x-2">
+            <img src="./scr/img/logo.svg" alt="TFT Logo" class="w-7 h-7" />
+            <span class="font-black text-sm text-white">NAVEGACIÓN</span>
+          </div>
+          <button onclick="toggleMobileMenu()" class="text-gray-400 hover:text-white p-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <nav class="flex flex-col space-y-4 text-sm font-bold text-gray-300">
+          <a href="index.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Inicio / Tier List</a>
+          <a href="index.html#comps-container" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Composiciones Meta</a>
+          <a href="set17.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">Set 17 Dioses del Espacio</a>
+          <a href="aprender.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Aprender TFT (Guía ELO)</a>
+        </nav>
+      </div>
+
+      <div class="pt-6 border-t border-[#26282c] space-y-4 text-xs text-gray-400">
+        <div class="flex items-center justify-around">
+          <a href="privacy.html" class="hover:text-amber-400">Privacidad</a>
+          <span>•</span>
+          <a href="terms.html" class="hover:text-amber-400">Términos</a>
+        </div>
+        <div class="text-center font-semibold text-gray-500">© 2026 Aslan Dev Studio</div>
+      </div>
+    </div>
+  </div>
 
   <!-- Layout Principal (Escritorio: Grid 2 Columnas Izq Guía / Der Sidebar Sticky | Móvil: 1 Columna) -->
   <main class="flex-grow max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8">
@@ -464,6 +517,21 @@
       }
     };
 
+    function toggleMobileMenu() {
+      const drawer = document.getElementById('mobile-menu-drawer');
+      const content = document.getElementById('mobile-menu-content');
+      if (!drawer || !content) return;
+
+      const isOpen = !drawer.classList.contains('opacity-0');
+      if (isOpen) {
+        content.classList.add('translate-x-full');
+        drawer.classList.add('opacity-0', 'pointer-events-none');
+      } else {
+        drawer.classList.remove('opacity-0', 'pointer-events-none');
+        content.classList.remove('translate-x-full');
+      }
+    }
+
     function changeLanguage(lang) {
       localStorage.setItem('tft_lang', lang);
       const t = set17I18n[lang] || set17I18n.es;
@@ -479,6 +547,8 @@
       // Sincronizar select
       const select = document.getElementById('lang-select');
       if (select) select.value = lang;
+      const selectMobile = document.getElementById('lang-select-mobile');
+      if (selectMobile) selectMobile.value = lang;
     }
 
     document.addEventListener('DOMContentLoaded', () => {
