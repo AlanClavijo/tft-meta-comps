@@ -1,0 +1,50 @@
+<svg viewBox="0 0 680 340" class="w-full h-auto max-w-xl mx-auto" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <!-- Fondo compacto del tablero -->
+  <rect width="680" height="340" rx="16" fill="#0b0d0f" stroke="#252a34" stroke-width="2"/>
+  
+  <g fill="#13151b" stroke="#222731" stroke-width="2">
+    <!-- Fila 1 (7 hexágonos) -->
+    <g transform="translate(30, 20)">
+      <path d="M30 0L55 15V45L30 60L5 45V15L30 0Z" />
+      <path d="M120 0L145 15V45L120 60L95 45V15L120 0Z" />
+      <path d="M210 0L235 15V45L210 60L185 45V15L210 0Z" />
+      <path d="M300 0L325 15V45L300 60L275 45V15L300 0Z" />
+      <path d="M390 0L415 15V45L390 60L365 45V15L390 0Z" />
+      <path d="M480 0L505 15V45L480 60L455 45V15L480 0Z" />
+      <path d="M570 0L595 15V45L570 60L545 45V15L570 0Z" />
+    </g>
+
+    <!-- Fila 2 (7 hexágonos - Desplazados a la derecha) -->
+    <g transform="translate(75, 92)">
+      <path d="M30 0L55 15V45L30 60L5 45V15L30 0Z" />
+      <path d="M120 0L145 15V45L120 60L95 45V15L120 0Z" />
+      <path d="M210 0L235 15V45L210 60L185 45V15L210 0Z" />
+      <path d="M300 0L325 15V45L300 60L275 45V15L300 0Z" />
+      <path d="M390 0L415 15V45L390 60L365 45V15L390 0Z" />
+      <path d="M480 0L505 15V45L480 60L455 45V15L480 0Z" />
+      <path d="M570 0L595 15V45L570 60L545 45V15L570 0Z" />
+    </g>
+
+    <!-- Fila 3 (7 hexágonos) -->
+    <g transform="translate(30, 164)">
+      <path d="M30 0L55 15V45L30 60L5 45V15L30 0Z" />
+      <path d="M120 0L145 15V45L120 60L95 45V15L120 0Z" />
+      <path d="M210 0L235 15V45L210 60L185 45V15L210 0Z" />
+      <path d="M300 0L325 15V45L300 60L275 45V15L300 0Z" />
+      <path d="M390 0L415 15V45L390 60L365 45V15L390 0Z" />
+      <path d="M480 0L505 15V45L480 60L455 45V15L480 0Z" />
+      <path d="M570 0L595 15V45L570 60L545 45V15L570 0Z" />
+    </g>
+
+    <!-- Fila 4 (7 hexágonos - Desplazados a la derecha) -->
+    <g transform="translate(75, 236)">
+      <path d="M30 0L55 15V45L30 60L5 45V15L30 0Z" />
+      <path d="M120 0L145 15V45L120 60L95 45V15L120 0Z" />
+      <path d="M210 0L235 15V45L210 60L185 45V15L210 0Z" />
+      <path d="M300 0L325 15V45L300 60L275 45V15L300 0Z" />
+      <path d="M390 0L415 15V45L390 60L365 45V15L390 0Z" />
+      <path d="M480 0L505 15V45L480 60L455 45V15L480 0Z" />
+      <path d="M570 0L595 15V45L570 60L545 45V15L570 0Z" />
+    </g>
+  </g>
+</svg>

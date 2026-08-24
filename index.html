@@ -97,12 +97,12 @@
     /* 1. Tablero Hexagonal Prominente y Estético (Estilo Exacto TFTAcademy) */
     .board-grid {
       display: grid;
-      grid-template-columns: repeat(7, minmax(70px, 105px));
-      grid-template-rows: repeat(4, minmax(75px, 110px));
-      gap: 0px 8px;
+      grid-template-columns: repeat(7, minmax(70px, 95px));
+      grid-template-rows: repeat(4, minmax(65px, 90px));
+      gap: 12px 14px;
       justify-content: center;
       position: relative;
-      padding: 24px 36px;
+      padding: 32px 48px;
       background-color: #0b0d12;
       border-radius: 1.5rem;
     }
@@ -116,10 +116,10 @@
         padding-bottom: 12px;
       }
       .board-grid {
-        grid-template-columns: repeat(7, minmax(44px, 52px));
-        grid-template-rows: repeat(4, minmax(48px, 56px));
-        gap: 0px 3px;
-        padding: 12px 18px;
+        grid-template-columns: repeat(7, minmax(42px, 50px));
+        grid-template-rows: repeat(4, minmax(44px, 52px));
+        gap: 8px 8px;
+        padding: 16px 24px;
         border-radius: 1rem;
         min-width: 340px;
         margin: 0 auto;
@@ -133,7 +133,6 @@
       aspect-ratio: 1 / 1.15;
       position: relative;
       background-color: #151822;
-      margin-bottom: -18%;
       transition: transform 0.2s ease, filter 0.2s ease;
     }
     .hex-cell:hover {
@@ -148,7 +147,7 @@
       pointer-events: none;
       box-shadow: inset 0 0 0 2px rgba(255, 255, 255, 0.12);
     }
-    /* Desplazamiento escalonado (filas pares: celdas 8-14 y 22-28) */
+    /* Desplazamiento escalonado (filas pares 2 y 4) */
     .hex-row-even {
       transform: translateX(50%);
     }
@@ -1145,80 +1144,8 @@
           `;
         }).join('');
 
-        // 1 & 3. Renderizado del Tablero Hexagonal (.board-grid 4x7 sin desbordamiento horizontal)
-        let boardCells = '';
-        let cellIndex = 1;
-        for (let r = 1; r <= 4; r++) {
-          for (let c = 1; c <= 7; c++) {
-            const isRowEven = (r % 2 === 0);
-            const rowEvenClass = isRowEven ? 'hex-row-even' : '';
-            const placed = comp.tablero.find(t => t.fila === r && t.col === c);
-            
-            if (placed) {
-              const champObj = comp.campeones.find(ch => ch.nombre === placed.campeon) || { coste: 1, items: [] };
-              const borderColor = costBorderHex[champObj.coste] || '#a1a1aa';
-              const itemsToRender = (placed.items && placed.items.length > 0) ? placed.items : (champObj.items || []);
-
-              // 3 Micro-Hexágonos de Objetos con Tooltip Global en Hover
-              const boardItemsHTML = (itemsToRender.length > 0) ? `
-                <div class="absolute -bottom-3.5 left-1/2 -translate-x-1/2 flex items-center justify-center -space-x-1 z-50">
-                  ${itemsToRender.slice(0, 3).map(itemKey => {
-                    return `
-                      <div class="w-6 h-7 hex-clip flex items-center justify-center p-[2px] shadow-2xl relative cursor-pointer" 
-                           style="background-color: ${borderColor};"
-                           onmouseenter="showItemTooltip(event, '${itemKey}')" 
-                           onmouseleave="hideGlobalTooltip()">
-                        <div class="w-full h-full hex-clip bg-[#0b0d0f] flex items-center justify-center overflow-hidden">
-                          <img src="${getItemImage(itemKey)}" title="${itemKey}" alt="${itemKey}" class="w-full h-full object-cover" />
-                        </div>
-                      </div>
-                    `;
-                  }).join('')}
-                </div>
-              ` : '';
-
-              // Insignia de 3 Estrellas (★★★ TFTAcademy Style)
-              const starBadgeHTML = (placed.es3Estrellas || champObj.es3Estrellas) ? `
-                <div class="absolute -top-3.5 left-1/2 -translate-x-1/2 bg-[#0b0d0f] border border-amber-400/80 px-2 py-0.5 rounded-full shadow-lg z-30 flex items-center justify-center gap-0.5">
-                  <span class="text-[10px] font-black text-amber-400 tracking-tighter leading-none">★★★</span>
-                </div>
-              ` : '';
-
-              boardCells += `
-                <div class="relative ${rowEvenClass} w-full h-full flex flex-col items-center justify-center group/champ cursor-pointer z-10 hover:z-50"
-                     onmouseenter="showChampTooltip(event, '${placed.campeon}', ${champObj.coste || 1})" 
-                     onmouseleave="hideGlobalTooltip()">
-                  
-                  ${starBadgeHTML}
-
-                  <!-- Contenedor Hexagonal del Campeón -->
-                  <div class="w-full h-full relative overflow-hidden flex items-center justify-center" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);">
-                    <img src="${getChampionImage(placed.campeon)}" alt="${placed.campeon}" class="w-full h-full object-cover" style="clip-path: polygon(50% 0%, 100% 25%, 100% 75%, 50% 100%, 0% 75%, 0% 25%);" onerror="handleChampError(this, '${placed.campeon}')" />
-                    
-                    <div class="absolute bottom-3 left-1/2 -translate-x-1/2 text-[10px] font-black text-white tracking-tight drop-shadow-[0_2px_4px_rgba(0,0,0,1)] pointer-events-none z-20 whitespace-nowrap">
-                      ${placed.campeon}
-                    </div>
-
-                    <svg class="absolute inset-0 w-full h-full pointer-events-none z-10" viewBox="0 0 100 115" preserveAspectRatio="none">
-                      <polygon points="50,2.5 97.5,26.5 97.5,88.5 50,112.5 2.5,88.5 2.5,26.5" fill="none" stroke="${borderColor}" stroke-width="5.5" stroke-linejoin="round" />
-                    </svg>
-                  </div>
-
-                  <!-- Objetos -->
-                  ${boardItemsHTML}
-                </div>
-              `;
-            } else {
-              // Celdas vacías claramente visibles con fondo oscuro y contorno hexagonal nítido
-              boardCells += `
-                <div class="hex-cell ${rowEvenClass} relative opacity-80">
-                  <div class="hex-border-overlay" style="box-shadow: inset 0 0 0 1.5px rgba(255, 255, 255, 0.08); bg-color: #171a24;"></div>
-                </div>
-              `;
-            }
-            cellIndex++;
-          }
-        }
+        // 1, 3 & 4. Renderizado del Tablero Hexagonal Vectorial SVG (Estilo Exacto TFTAcademy)
+        const boardSVG = renderSVGHexBoard(comp);
 
         // 5. Fila Inferior (Mejores Builds con Objetos Posicionados en Fila 2x2 o Horizontal)
         const bestBuildsCardsHTML = (comp.mejoresBuilds || comp.campeones.slice(0,2)).map(b => {
@@ -1330,11 +1257,9 @@
                       ${traitsHTML}
                     </div>
 
-                    <!-- 1. TABLERO HEXAGONAL (.board-grid sin desbordamientos horizontales) -->
+                    <!-- 1. TABLERO HEXAGONAL VECTORIAL SVG (Estilo Exacto TFTAcademy) -->
                     <div class="w-full flex justify-center board-wrapper py-2">
-                      <div class="board-grid">
-                        ${boardCells}
-                      </div>
+                      ${boardSVG}
                     </div>
 
                   </div>
@@ -1472,6 +1397,138 @@
           </div>
         `;
       }).join('');
+    }
+
+    // MOTOR DE RENDERIZADO TABLERO HEXAGONAL VECTORIAL SVG (Estilo Exacto TFTAcademy)
+    function renderSVGHexBoard(comp) {
+      const hexWidth = 82;
+      const hexHeight = 94;
+      const gapX = 14;
+      const gapY = 28;
+      const startX = 64;
+      const startY = 75;
+      
+      const width = 760;
+      const height = 480;
+
+      // Hexágono base relativo escalado (Puntos SVG)
+      const hw = hexWidth / 2;
+      const hh = hexHeight / 2;
+      const hq = hexHeight * 0.25;
+      const basePoints = `${hw},0 ${hexWidth},${hq} ${hexWidth},${hexHeight - hq} ${hw},${hexHeight} 0,${hexHeight - hq} 0,${hq}`;
+
+      let defsClips = '';
+      let boardCellsGroup = '';
+      let overlayBadgesGroup = '';
+
+      for (let r = 1; r <= 4; r++) {
+        for (let c = 1; c <= 7; c++) {
+          const isRowEven = (r % 2 === 0);
+          const offsetX = isRowEven ? (hexWidth + gapX) / 2 : 0;
+          
+          const cx = startX + (c - 1) * (hexWidth + gapX) + offsetX;
+          const cy = startY + (r - 1) * (hexHeight * 0.75 + gapY);
+
+          const cellId = `cell-${comp.id}-${r}-${c}`;
+          const clipId = `clip-${comp.id}-${r}-${c}`;
+
+          const placed = comp.tablero.find(t => t.fila === r && t.col === c);
+
+          if (placed) {
+            const champObj = comp.campeones.find(ch => ch.nombre === placed.campeon) || { coste: 1, items: [] };
+            const borderColor = costBorderHex[champObj.coste] || '#a1a1aa';
+            const itemsToRender = (placed.items && placed.items.length > 0) ? placed.items : (champObj.items || []);
+            const champImg = getChampionImage(placed.campeon);
+
+            // ClipPath para imagen del Campeón dentro del Hexágono
+            defsClips += `
+              <clipPath id="${clipId}">
+                <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" />
+              </clipPath>
+            `;
+
+            // CAPA 1: Ficha del Campeón
+            boardCellsGroup += `
+              <g class="hex-group group/champ cursor-pointer" 
+                 onmouseenter="showChampTooltip(event, '${placed.campeon}', ${champObj.coste || 1})" 
+                 onmouseleave="hideGlobalTooltip()">
+                
+                <!-- Fondo Celda Oscura -->
+                <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" fill="#151822" />
+                
+                <!-- Imagen del Campeón -->
+                <image href="${champImg}" x="${cx - hw}" y="${cy - hh}" width="${hexWidth}" height="${hexHeight}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${clipId})" onerror="handleChampError(this, '${placed.campeon}')" />
+
+                <!-- Borde de Coste Vectorial Nítido -->
+                <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" fill="none" stroke="${borderColor}" stroke-width="4.5" stroke-linejoin="round" />
+                
+                <!-- Etiqueta Nombre Campeón -->
+                <rect x="${cx - 34}" y="${cy + 14}" width="68" height="15" rx="4" fill="rgba(11, 13, 18, 0.9)" />
+                <text x="${cx}" y="${cy + 25}" text-anchor="middle" fill="#ffffff" font-size="9.5" font-weight="900" font-family="system-ui">${placed.campeon}</text>
+              </g>
+            `;
+
+            // CAPA 2 (SUPERIOR): Insignia de 3 Estrellas (★★★)
+            if (placed.es3Estrellas || champObj.es3Estrellas) {
+              overlayBadgesGroup += `
+                <g class="pointer-events-none">
+                  <rect x="${cx - 22}" y="${cy - hh - 10}" width="44" height="15" rx="7" fill="#0b0d0f" stroke="#eea402" stroke-width="1.5" />
+                  <text x="${cx}" y="${cy - hh + 1}" text-anchor="middle" fill="#eea402" font-size="9.5" font-weight="900">★★★</text>
+                </g>
+              `;
+            }
+
+            // CAPA 2 (SUPERIOR): 3 Micro-Objetos Vectoriales
+            if (itemsToRender.length > 0) {
+              const itemsCount = Math.min(itemsToRender.length, 3);
+              const itemWidth = 19;
+              const itemGap = 2;
+              const totalItemsWidth = itemsCount * itemWidth + (itemsCount - 1) * itemGap;
+              const startItemX = cx - totalItemsWidth / 2;
+              const itemY = cy + hh - 14;
+
+              itemsToRender.slice(0, 3).forEach((itemKey, itemIdx) => {
+                const ix = startItemX + itemIdx * (itemWidth + itemGap);
+                const itemImg = getItemImage(itemKey);
+
+                overlayBadgesGroup += `
+                  <g class="cursor-pointer z-50" 
+                     onmouseenter="showItemTooltip(event, '${itemKey}')" 
+                     onmouseleave="hideGlobalTooltip()">
+                    <rect x="${ix}" y="${itemY}" width="${itemWidth}" height="${itemWidth}" rx="4" fill="#0b0d0f" stroke="${borderColor}" stroke-width="1.5" />
+                    <image href="${itemImg}" x="${ix + 1}" y="${itemY + 1}" width="${itemWidth - 2}" height="${itemWidth - 2}" preserveAspectRatio="xMidYMid slice" />
+                  </g>
+                `;
+              });
+            }
+
+          } else {
+            // Celda vacía con diseño hexagonal limpio estilo TFTAcademy
+            boardCellsGroup += `
+              <g class="hex-empty opacity-70 hover:opacity-100 transition-opacity">
+                <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" fill="#11131a" stroke="rgba(255, 255, 255, 0.1)" stroke-width="2" stroke-linejoin="round" />
+              </g>
+            `;
+          }
+        }
+      }
+
+      return `
+        <svg viewBox="0 0 ${width} ${height}" class="w-full h-auto max-w-[760px] mx-auto select-none" preserveAspectRatio="xMidYMid meet">
+          <defs>
+            ${defsClips}
+          </defs>
+          <rect width="100%" height="100%" rx="24" fill="#0b0d12" />
+          <!-- CAPA INFERIOR: CELDAS Y FICHAS -->
+          <g class="board-cells-layer">
+            ${boardCellsGroup}
+          </g>
+          <!-- CAPA SUPERIOR: OBJETOS Y ESTRELLAS (SIEMPRE POR ENCIMA) -->
+          <g class="board-overlays-layer">
+            ${overlayBadgesGroup}
+          </g>
+        </svg>
+      `;
     }
 
     // Funciones del Menú Hamburguesa Móvil (Mobile Drawer)
