@@ -392,21 +392,20 @@
         "campeones": [
           { "nombre": "Sett", "coste": 4, "items": ["gargola", "armadura_warmog", "cota_espinas"] },
           { "nombre": "Yorick", "coste": 1, "items": [] },
-          { "nombre": "Vi", "coste": 2, "items": [] },
-          { "nombre": "Gnar", "coste": 3, "items": ["capa_fuego_solar"] },
-          { "nombre": "Ashe", "coste": 3, "items": ["lanza_shojin", "guantelete_joyado", "ultimo_suspiro"] },
-          { "nombre": "Ahri", "coste": 4, "items": ["lanza_shojin", "guantelete_joyado", "sombrero_rabadon"] },
+          { "nombre": "Vi", "coste": 2, "es3Estrellas": true, "items": ["gargola", "armadura_warmog", "garra_dragon"] },
+          { "nombre": "Gnar", "coste": 3, "es3Estrellas": true, "items": ["guantelete_joyado"] },
+          { "nombre": "Ashe", "coste": 3, "es3Estrellas": true, "items": ["lanza_shojin", "guinsoo", "ultimo_suspiro"] },
+          { "nombre": "Ahri", "coste": 4, "items": ["lanza_shojin", "guantelete_joyado", "bufo_azul"] },
           { "nombre": "Sivir", "coste": 4, "items": [] },
           { "nombre": "Karma", "coste": 1, "items": [] }
         ],
         "sinergias": [
-          { "nombre": "Blossom", "nivel": 5, "tipo": "gold", "escala": "3 > 5 > 7 > 9 > 11" },
+          { "nombre": "Blossom", "nivel": 5, "tipo": "silver", "escala": "3 > 5 > 7 > 9 > 11" },
           { "nombre": "Brawler", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
           { "nombre": "Hunter", "nivel": 2, "tipo": "bronze", "escala": "2 > 3 > 4 > 5" },
           { "nombre": "Spellweaver", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
           { "nombre": "Juggernaut", "nivel": 2, "tipo": "bronze", "escala": "2 > 4 > 6" },
-          { "nombre": "Primal", "nivel": 2, "tipo": "bronze", "escala": "2 > 4" },
-          { "nombre": "Elderwood", "nivel": 1, "tipo": "silver", "escala": "3 > 5 > 7 > 9 > 11" }
+          { "nombre": "Primal", "nivel": 2, "tipo": "bronze", "escala": "2 > 4" }
         ],
         "aumentos": [
           { "nombre": "Primal Augment", "tipo": "Prismático" },
@@ -416,23 +415,23 @@
         "tablero": [
           { "campeon": "Sett", "fila": 1, "col": 2 },
           { "campeon": "Yorick", "fila": 1, "col": 4 },
-          { "campeon": "Vi", "fila": 1, "col": 6 },
-          { "campeon": "Gnar", "fila": 2, "col": 1 },
-          { "campeon": "Ashe", "fila": 4, "col": 1 },
+          { "campeon": "Vi", "fila": 1, "col": 6, "es3Estrellas": true },
+          { "campeon": "Gnar", "fila": 2, "col": 1, "es3Estrellas": true },
+          { "campeon": "Ashe", "fila": 4, "col": 1, "es3Estrellas": true },
           { "campeon": "Ahri", "fila": 4, "col": 4 },
           { "campeon": "Sivir", "fila": 4, "col": 6 },
-          { "campeon": "Karma", "fila": 4, "col": 8 }
+          { "campeon": "Karma", "fila": 4, "col": 7 }
         ],
         "mejoresBuilds": [
           {
             "campeon": "Ahri",
             "coste": 4,
-            "items": ["lanza_shojin", "guantelete_joyado", "sombrero_rabadon"]
+            "items": ["lanza_shojin", "guantelete_joyado", "bufo_azul"]
           },
           {
             "campeon": "Ashe",
             "coste": 3,
-            "items": ["lanza_shojin", "guantelete_joyado", "ultimo_suspiro"]
+            "items": ["lanza_shojin", "guinsoo", "ultimo_suspiro"]
           }
         ]
       },
@@ -904,6 +903,7 @@
       'chispa_ionica': '3198',
       'capa_fuego_solar': '3068',
       'mejora_azul': '3040',
+      'bufo_azul': '3040',
       'guantelete_joyado': '3152',
       'ultimo_suspiro': '3035',
       'armadura_warmog': '3083',
