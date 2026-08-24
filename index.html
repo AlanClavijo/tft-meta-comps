@@ -615,13 +615,13 @@
         "earlyGame": ["Ornn", "Rakan", "Sejuani", "Leona"],
         "prioridadCarrusel": ["arco", "lagrima", "cinto", "malla"],
         "campeones": [
-          { "nombre": "Ornn", "coste": 4, "items": ["gargola", "gargola", "protector_eterno"] },
-          { "nombre": "Rakan", "coste": 4, "items": [] },
-          { "nombre": "Sejuani", "coste": 3, "items": [] },
-          { "nombre": "Hecarim", "coste": 2, "items": [] },
-          { "nombre": "Leona", "coste": 3, "items": ["capa_fuego_solar"] },
-          { "nombre": "Kayle", "coste": 1, "items": ["guinsoo", "guinsoo", "sombrero_rabadon"] },
-          { "nombre": "Xayah", "coste": 4, "items": ["guinsoo", "ultimo_suspiro", "mano_de_la_justicia"] }
+          { "nombre": "Ornn", "coste": 4, "es3Estrellas": true, "items": ["gargola", "gargola", "protector_eterno"] },
+          { "nombre": "Rakan", "coste": 4, "es3Estrellas": true, "items": [] },
+          { "nombre": "Sejuani", "coste": 3, "es3Estrellas": true, "items": [] },
+          { "nombre": "Hecarim", "coste": 2, "es3Estrellas": false, "items": [] },
+          { "nombre": "Leona", "coste": 3, "es3Estrellas": true, "items": ["capa_fuego_solar"] },
+          { "nombre": "Kayle", "coste": 1, "es3Estrellas": true, "items": ["guinsoo", "guantelete_joyado", "sombrero_rabadon"] },
+          { "nombre": "Xayah", "coste": 4, "es3Estrellas": true, "items": ["guinsoo", "ultimo_suspiro", "mano_de_la_justicia"] }
         ],
         "sinergias": [
           { "nombre": "Solar", "nivel": 3, "tipo": "gold", "escala": "3" },
@@ -639,13 +639,13 @@
         ],
         "tablero": [
           { "campeon": "Stonebark Tree", "fila": 1, "col": 1 },
-          { "campeon": "Ornn", "fila": 1, "col": 2 },
-          { "campeon": "Rakan", "fila": 1, "col": 3 },
-          { "campeon": "Sejuani", "fila": 1, "col": 4 },
+          { "campeon": "Ornn", "fila": 1, "col": 2, "es3Estrellas": true },
+          { "campeon": "Rakan", "fila": 1, "col": 3, "es3Estrellas": true },
+          { "campeon": "Sejuani", "fila": 1, "col": 4, "es3Estrellas": true },
           { "campeon": "Hecarim", "fila": 1, "col": 5 },
-          { "campeon": "Leona", "fila": 1, "col": 6 },
-          { "campeon": "Kayle", "fila": 4, "col": 2 },
-          { "campeon": "Xayah", "fila": 4, "col": 4 },
+          { "campeon": "Leona", "fila": 1, "col": 6, "es3Estrellas": true },
+          { "campeon": "Kayle", "fila": 4, "col": 2, "es3Estrellas": true },
+          { "campeon": "Xayah", "fila": 4, "col": 4, "es3Estrellas": true },
           { "campeon": "Lifebloom", "fila": 4, "col": 6 }
         ],
         "mejoresBuilds": [
@@ -916,6 +916,8 @@
       'cota_espinas': '3075',
       'verdugo_gigantes': '3036',
       'sanguinaria': '3072',
+      'protector_eterno': '3065',
+      'mano_de_la_justicia': '3070',
       // Componentes Base DataDragon
       'espadon': '1038',
       'arco': '1043',
@@ -958,6 +960,8 @@
       'Teemo': './scr/img/DA_18_Teemo.webp',
       'Gromp': './scr/img/DA_Gromp18_AP.webp',
       'Krug': './scr/img/DA_Krug18.webp',
+      'Stonebark Tree': 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/hextech-images/champion/icons/tree_gromp.png',
+      'Lifebloom': 'https://raw.communitydragon.org/latest/plugins/rcp-be-lol-game-data/global/default/v1/hextech-images/champion/icons/flower_icon.png',
       'Yorick': './scr/img/DA_18_Yorick.webp',
       'Amumu': './scr/img/DA_Amumu18.webp',
       'Zyra': './scr/img/DA_18_Zyra.webp',
@@ -1018,6 +1022,16 @@
 
     // Manejador de error multinivel
     function handleChampError(imgElem, nombre) {
+      if (nombre === 'Stonebark Tree') {
+        imgElem.onerror = null;
+        imgElem.src = 'https://raw.communitydragon.org/latest/game/assets/ux/tft/championsplashes/tft_stonebark_mobile.tft_set13.png';
+        return;
+      }
+      if (nombre === 'Lifebloom') {
+        imgElem.onerror = null;
+        imgElem.src = 'https://raw.communitydragon.org/latest/game/assets/ux/tft/championsplashes/tft13_lifebloom.png';
+        return;
+      }
       if (!imgElem.dataset.retried) {
         imgElem.dataset.retried = '1';
         const lolName = champLoLNames[nombre] || nombre;
@@ -1027,10 +1041,10 @@
       imgElem.onerror = null;
       imgElem.style.display = 'none';
       const parent = imgElem.parentElement;
-      if (parent) {
+      if (parent && !parent.querySelector('.fallback-icon')) {
         const fallback = document.createElement('div');
-        fallback.className = 'absolute inset-0 bg-[#0b0d0f] flex items-center justify-center text-xs font-black text-amber-400 z-0';
-        fallback.textContent = nombre.substring(0, 3).toUpperCase();
+        fallback.className = 'fallback-icon absolute inset-0 bg-[#151822] flex flex-col items-center justify-center text-[10px] font-black text-amber-400 z-0 p-1 text-center leading-none';
+        fallback.innerHTML = `<span class="text-xs mb-0.5">🌳</span><span>${nombre.substring(0, 4)}</span>`;
         parent.appendChild(fallback);
       }
     }
