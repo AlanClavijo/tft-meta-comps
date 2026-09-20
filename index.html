@@ -972,13 +972,24 @@
         const badgeInfo = tierBadgeStyle[t] || { bg: '#64748b', text: '#fff', label: `TIER ${t}` };
 
         const compsCardsHTML = compsInTier.map(comp => {
-          // Obtener campeones clave de esta comp
-          const champBadgesHTML = comp.campeones.map(ch => {
+          // Filtrar campeones para mostrar en la vista resumen: sólo los seleccionados en mejoresBuilds (Main Carry y Main Tanque)
+          let targetChamps = [];
+          if (comp.mejoresBuilds && comp.mejoresBuilds.length > 0) {
+            targetChamps = comp.mejoresBuilds.map(b => {
+              const matchedChamp = comp.campeones.find(ch => ch.nombre === b.campeon);
+              return matchedChamp || { nombre: b.campeon, coste: b.coste || 4, items: b.items || [] };
+            }).filter(c => c.nombre);
+          }
+          if (targetChamps.length === 0) {
+            targetChamps = comp.campeones;
+          }
+
+          const champBadgesHTML = targetChamps.map(ch => {
             const bColor = costBorderHex[ch.coste] || '#a1a1aa';
             const itemIconsHTML = (ch.items && ch.items.length > 0) ? `
               <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 flex gap-0.5 z-10">
                 ${ch.items.slice(0, 3).map(it => `
-                  <div class="w-3 h-3 rounded-sm border border-black bg-[#0b0d0f] p-0.5 overflow-hidden">
+                  <div class="w-3.5 h-3.5 rounded-sm border border-black bg-[#0b0d0f] p-0.5 overflow-hidden shadow-md">
                     <img src="${getItemImage(it)}" alt="${it}" class="w-full h-full object-cover" />
                   </div>
                 `).join('')}
@@ -986,8 +997,8 @@
             ` : '';
 
             return `
-              <div class="relative group/ch shrink-0" title="${ch.nombre}">
-                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#0b0d0f] border-2 overflow-hidden shadow-md flex items-center justify-center relative" style="border-color: ${bColor};">
+              <div class="relative group/ch shrink-0 mb-1" title="${ch.nombre}">
+                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#0b0d0f] border-2 overflow-hidden shadow-md flex items-center justify-center relative" style="border-color: ${bColor};">
                   <img src="${getChampionImage(ch.nombre)}" alt="${ch.nombre}" class="w-full h-full object-cover aspect-square" onerror="handleChampError(this, '${ch.nombre}')" />
                 </div>
                 ${itemIconsHTML}
@@ -996,12 +1007,12 @@
           }).join('');
 
           return `
-            <a href="#${comp.id}" class="bg-[#121316] hover:bg-[#1a1c22] border border-[#26282c] hover:border-amber-500/50 rounded-2xl p-2.5 flex flex-col gap-2 transition-all shadow-lg group">
+            <a href="#${comp.id}" class="bg-[#121316] hover:bg-[#1a1c22] border border-[#26282c] hover:border-amber-500/50 rounded-2xl p-3 flex flex-col gap-2 transition-all shadow-lg group">
               <div class="flex items-center justify-between gap-2">
                 <span class="text-xs font-black text-white group-hover:text-amber-400 transition-colors truncate max-w-[180px] sm:max-w-[220px]">${comp.nombre}</span>
                 <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full ${comp.tipoDeDano === 'AD' ? 'bg-amber-500/20 text-amber-300' : comp.tipoDeDano === 'AP' ? 'bg-blue-500/20 text-blue-300' : 'bg-green-500/20 text-green-300'}">${comp.tipoDeDano}</span>
               </div>
-              <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+              <div class="flex items-center gap-3 overflow-x-auto pb-1 no-scrollbar">
                 ${champBadgesHTML}
               </div>
             </a>
