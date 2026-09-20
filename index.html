@@ -1859,17 +1859,21 @@
 
     // Escuchar en tiempo real las Guías de Cloud Firestore
     db.collection("guias_tft").onSnapshot((snapshot) => {
-      if (!snapshot.empty) {
+      if (snapshot && !snapshot.empty) {
         const remoteComps = [];
         snapshot.forEach((doc) => {
           remoteComps.push({ id: doc.id, ...doc.data() });
         });
-        tftData = remoteComps;
-        renderTierList(tftData);
-        renderSidebarTOC();
+        if (remoteComps.length > 0) {
+          tftData = remoteComps;
+        }
       }
+      renderTierList(tftData);
+      renderSidebarTOC();
     }, (error) => {
-      console.warn("Firestore listener:", error);
+      console.warn("Firestore listener fallback active:", error);
+      renderTierList(tftData);
+      renderSidebarTOC();
     });
 
     function openAdminLoginModal() {
