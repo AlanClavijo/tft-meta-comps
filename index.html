@@ -1385,17 +1385,21 @@
       }
     }
 
-    // Copiar código / nombres de fichas para TFT
+    // Copiar código / nombres de fichas para TFT en formato de lista para el cliente de TFT y redes
     function copyCompCode(compId) {
       const comp = tftData.find(c => c.id === compId);
       if (!comp) return;
 
-      const champNames = (comp.campeones || []).map(ch => ch.nombre).join(', ');
-      const compCodeText = `TFT Meta Comp [Tier ${comp.tier}]: ${comp.nombre} -> Fichas: ${champNames} (vía aslandevstudio.com)`;
+      const champList = (comp.campeones || []).map(ch => {
+        const items = (ch.items && ch.items.length > 0) ? ` [${ch.items.join(', ')}]` : '';
+        return `• ${ch.nombre} (Coste ${ch.coste})${items}`;
+      }).join('\n');
+
+      const compCodeText = `🏆 TFT Meta Comp: ${comp.nombre} (Tier ${comp.tier})\n\n📌 Fichas y Posicionamiento:\n${champList}\n\n🌐 Ver guía completa en: https://aslandevstudio.com/`;
 
       if (navigator.clipboard && navigator.clipboard.writeText) {
         navigator.clipboard.writeText(compCodeText).then(() => {
-          showToast(`📋 Fichas copiadas: ${comp.nombre}`, 'success');
+          showToast(`📋 Fichas copiadas de ${comp.nombre}`, 'success');
         }).catch(() => {
           fallbackCopyText(compCodeText, comp.nombre);
         });
@@ -1411,107 +1415,129 @@
       ta.select();
       document.execCommand('copy');
       document.body.removeChild(ta);
-      showToast(`📋 Fichas copiadas: ${name}`, 'success');
+      showToast(`📋 Fichas copiadas de ${name}`, 'success');
     }
 
-    // Descargar imagen JPG estilizada con marca de agua oficial
+    // Descargar imagen JPG estilizada con marca de agua oficial (Optimizado para TikTok/Social Media)
     async function downloadCompImage(compId) {
       const comp = tftData.find(c => c.id === compId);
       const articleEl = document.getElementById(compId);
       if (!comp || !articleEl) return;
 
-      const detailsEl = document.getElementById(`details-${compId}`);
-      const arrowEl = document.getElementById(`arrow-${compId}`);
-      let originallyClosed = false;
+      showToast(`📸 Generando infografía JPG de ${comp.nombre}...`, 'info');
 
-      // Desplegar panel si está cerrado para la captura
-      if (detailsEl && detailsEl.classList.contains('max-h-0')) {
-        originallyClosed = true;
-        detailsEl.classList.remove('max-h-0', 'opacity-0');
-        detailsEl.classList.add('max-h-[2000px]', 'opacity-100');
-      }
+      // Crear tarjeta limpia de exportación estilizada tipo TikTok
+      const exportContainer = document.createElement('div');
+      exportContainer.id = `export-card-${compId}`;
+      exportContainer.style.position = 'fixed';
+      exportContainer.style.left = '-9999px';
+      exportContainer.style.top = '0';
+      exportContainer.style.width = '700px';
+      exportContainer.style.backgroundColor = '#0b0d0f';
+      exportContainer.style.color = '#ffffff';
+      exportContainer.style.fontFamily = 'system-ui, -apple-system, sans-serif';
+      exportContainer.style.border = '2px solid #eea402';
+      exportContainer.style.borderRadius = '28px';
+      exportContainer.style.padding = '24px';
+      exportContainer.style.boxSizing = 'border-box';
 
-      showToast(`📸 Generando imagen JPG de ${comp.nombre}...`, 'info');
+      // 1. Marca de Agua Encabezado Superior (Estilo TikTok Gamer)
+      const headerWM = document.createElement('div');
+      headerWM.style.display = 'flex';
+      headerWM.style.alignItems = 'center';
+      headerWM.style.justifyContent = 'space-between';
+      headerWM.style.backgroundColor = '#17181a';
+      headerWM.style.border = '1px solid #26282c';
+      headerWM.style.borderRadius = '18px';
+      headerWM.style.padding = '12px 18px';
+      headerWM.style.marginBottom = '20px';
 
-      // Crear contenedor temporal de exportación con la Marca de Agua y Estilo Gamer
+      const logoImg = document.createElement('img');
+      logoImg.src = './scr/img/logo.svg';
+      logoImg.style.width = '32px';
+      logoImg.style.height = '32px';
+
+      const brandTitle = document.createElement('span');
+      brandTitle.innerText = 'TFT META COMPS';
+      brandTitle.style.fontWeight = '900';
+      brandTitle.style.fontSize = '16px';
+      brandTitle.style.color = '#eea402';
+      brandTitle.style.letterSpacing = '1px';
+      brandTitle.style.marginLeft = '10px';
+
+      const brandLeft = document.createElement('div');
+      brandLeft.style.display = 'flex';
+      brandLeft.style.alignItems = 'center';
+      brandLeft.appendChild(logoImg);
+      brandLeft.appendChild(brandTitle);
+
+      const brandUrl = document.createElement('div');
+      brandUrl.innerText = '🌐 aslandevstudio.com';
+      brandUrl.style.fontSize = '13px';
+      brandUrl.style.fontWeight = '800';
+      brandUrl.style.color = '#38bdf8';
+
+      headerWM.appendChild(brandLeft);
+      headerWM.appendChild(brandUrl);
+      exportContainer.appendChild(headerWM);
+
+      // 2. Clonar el contenido de la tarjeta sin botones
       const clone = articleEl.cloneNode(true);
-      clone.id = `export-clone-${compId}`;
-      clone.style.position = 'fixed';
-      clone.style.left = '-9999px';
-      clone.style.top = '0';
-      clone.style.width = '780px';
-      clone.style.zIndex = '-9999';
-      clone.style.backgroundColor = '#0b0d0f';
-      clone.style.border = '2px solid #eea402';
-      clone.style.borderRadius = '24px';
-      clone.style.padding = '12px';
-
-      // Asegurar que los detalles del clon estén abiertos
+      
+      // Asegurar que las secciones desplegables estén visibles en el clon
       const cloneDetails = clone.querySelector('.detalles-expandidos');
       if (cloneDetails) {
-        cloneDetails.classList.remove('max-h-0', 'opacity-0');
         cloneDetails.style.maxHeight = 'none';
         cloneDetails.style.opacity = '1';
         cloneDetails.style.display = 'block';
       }
 
-      // Eliminar botones interactivos de la captura
-      const cloneButtons = clone.querySelectorAll('button');
-      cloneButtons.forEach(btn => btn.remove());
+      // Remover botones y flechas interactivas
+      clone.querySelectorAll('button, #arrow-' + compId, '.detalles-expandidos button').forEach(el => el.remove());
 
-      // Agregar encabezado de marca de agua oficial en la parte superior del clon
-      const headerWatermark = document.createElement('div');
-      headerWatermark.className = 'w-full bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-indigo-500/20 border border-amber-500/40 p-3 rounded-2xl mb-3 flex items-center justify-between';
-      headerWatermark.innerHTML = `
-        <div class="flex items-center gap-2">
-          <img src="./scr/img/logo.svg" style="width:28px;height:28px;" />
-          <span class="font-extrabold text-sm text-amber-400 tracking-wider">TFT META COMPS</span>
-        </div>
-        <div class="text-[11px] font-bold text-gray-300">
-          🌐 aslandevstudio.com
-        </div>
-      `;
-      clone.insertBefore(headerWatermark, clone.firstChild);
+      exportContainer.appendChild(clone);
 
-      // Agregar pie de marca de agua inferior
-      const footerWatermark = document.createElement('div');
-      footerWatermark.className = 'w-full text-center py-2 border-t border-[#26282c] mt-3 text-[10px] font-black text-amber-400/80 tracking-widest uppercase';
-      footerWatermark.innerText = '© 2026 ASLAN DEV STUDIO • GUÍAS Y TIER LIST DE TFT';
-      clone.appendChild(footerWatermark);
+      // 3. Marca de Agua Pie Inferior
+      const footerWM = document.createElement('div');
+      footerWM.innerText = '© 2026 ASLAN DEV STUDIO • GUÍAS Y TIER LIST DE TFT';
+      footerWM.style.textAlign = 'center';
+      footerWM.style.paddingTop = '16px';
+      footerWM.style.marginTop = '20px';
+      footerWM.style.borderTop = '1px solid #26282c';
+      footerWM.style.fontSize = '11px';
+      footerWM.style.fontWeight = '900';
+      footerWM.style.color = '#eea402';
+      footerWM.style.letterSpacing = '2px';
 
-      document.body.appendChild(clone);
+      exportContainer.appendChild(footerWM);
+
+      document.body.appendChild(exportContainer);
 
       try {
-        await new Promise(r => setTimeout(r, 400)); // Esperar render de imágenes
+        await new Promise(r => setTimeout(r, 600)); // Esperar carga de assets en clon
 
-        const canvas = await html2canvas(clone, {
+        const canvas = await html2canvas(exportContainer, {
           backgroundColor: '#0b0d0f',
-          scale: 2, // Alta resolución HD
+          scale: 2,
           useCORS: true,
           allowTaint: true,
           logging: false
         });
 
-        // Convertir a JPG y descargar
-        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+        const imgData = canvas.toDataURL('image/jpeg', 0.95);
         const link = document.createElement('a');
         const cleanName = comp.nombre.toLowerCase().replace(/[^a-z0-9]/g, '_');
         link.download = `tft_meta_${cleanName}.jpg`;
         link.href = imgData;
         link.click();
 
-        showToast(`✅ Imagen descargada exitosamente: tft_meta_${cleanName}.jpg`, 'success');
+        showToast(`✅ Infografía descargada: tft_meta_${cleanName}.jpg`, 'success');
       } catch (err) {
-        console.error("Error al generar imagen:", err);
-        showToast("❌ No se pudo exportar la imagen. Intenta de nuevo.", 'error');
+        console.error("Error al exportar imagen:", err);
+        showToast("❌ Error al exportar la imagen.", 'error');
       } finally {
-        // Limpieza de nodos clonados
-        if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
-
-        // Si estaba cerrado originalmente, volver a cerrarlo en la UI
-        if (originallyClosed && detailsEl) {
-          detailsEl.classList.remove('max-h-[2000px]', 'opacity-100');
-          detailsEl.classList.add('max-h-0', 'opacity-0');
+        if (exportContainer && exportContainer.parentNode) {
+          exportContainer.parentNode.removeChild(exportContainer);
         }
       }
     }
