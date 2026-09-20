@@ -404,8 +404,8 @@
 
   <!-- Script Vanilla JavaScript Interactivo -->
   <script>
-    // Base de Datos de Composiciones TFT
-    const tftData = [
+    // Base de Datos de Composiciones TFT Predeterminadas
+    const initialPresetComps = [
       {
         "id": "ahri-ashe-meta",
         "tier": "S",
@@ -686,6 +686,8 @@
         ]
       }
     ];
+
+    let tftData = [...initialPresetComps];
 
     let currentLang = 'es';
     let currentFilterCriterio = 'ALL';
@@ -1855,21 +1857,38 @@
       renderTierList(tftData);
     });
 
-    // Escuchar en tiempo real las Guías de Cloud Firestore
-    db.collection("guias_tft").onSnapshot((snapshot) => {
+    // Escuchar en tiempo real las Guías de Cloud Firestore (Única Fuente de Verdad)
+    db.collection("guias_tft").onSnapshot(async (snapshot) => {
       if (snapshot && !snapshot.empty) {
         const remoteComps = [];
         snapshot.forEach((doc) => {
           remoteComps.push({ id: doc.id, ...doc.data() });
         });
-        if (remoteComps.length > 0) {
-          tftData = remoteComps;
+        tftData = remoteComps;
+        renderTierList(tftData);
+        renderSidebarTOC();
+      } else if (snapshot && snapshot.empty && initialPresetComps.length > 0) {
+        // Si Firestore está vacío y el usuario es admin autenticado, migrar automáticamente las composiciones base a Firestore
+        tftData = [...initialPresetComps];
+        renderTierList(tftData);
+        renderSidebarTOC();
+
+        if (auth.currentUser) {
+          try {
+            const batch = db.batch();
+            initialPresetComps.forEach(comp => {
+              const ref = db.collection("guias_tft").doc(comp.id);
+              batch.set(ref, comp);
+            });
+            await batch.commit();
+            console.log("Composiciones base migradas exitosamente a Cloud Firestore");
+          } catch (e) {
+            console.warn("No se pudo migrar automáticamente a Firestore (verificar reglas):", e);
+          }
         }
       }
-      renderTierList(tftData);
-      renderSidebarTOC();
     }, (error) => {
-      console.warn("Firestore listener fallback active:", error);
+      console.warn("Firestore listener error/offline fallback:", error);
       renderTierList(tftData);
       renderSidebarTOC();
     });
