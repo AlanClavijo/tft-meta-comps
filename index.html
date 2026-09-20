@@ -1418,6 +1418,39 @@
       showToast(`📋 Fichas copiadas de ${name}`, 'success');
     }
 
+    // Convierte imágenes locales/CORS a DataURL (Base64) para render perfecto en html2canvas
+    async function convertImagesToDataURIs(element) {
+      const images = Array.from(element.querySelectorAll('img'));
+      const promises = images.map(img => {
+        return new Promise((resolve) => {
+          if (!img.src || img.src.startsWith('data:')) {
+            resolve();
+            return;
+          }
+          const tempImg = new Image();
+          tempImg.crossOrigin = 'anonymous';
+          tempImg.onload = () => {
+            try {
+              const canvas = document.createElement('canvas');
+              canvas.width = tempImg.naturalWidth || tempImg.width || 64;
+              canvas.height = tempImg.naturalHeight || tempImg.height || 64;
+              const ctx = canvas.getContext('2d');
+              ctx.drawImage(tempImg, 0, 0);
+              img.src = canvas.toDataURL('image/png');
+            } catch (e) {
+              console.warn("No se pudo convertir imagen a DataURI:", img.src);
+            }
+            resolve();
+          };
+          tempImg.onerror = () => {
+            resolve();
+          };
+          tempImg.src = img.src;
+        });
+      });
+      await Promise.all(promises);
+    }
+
     // Descargar imagen JPG estilizada con marca de agua oficial (Optimizado para TikTok/Social Media)
     async function downloadCompImage(compId) {
       const comp = tftData.find(c => c.id === compId);
@@ -1492,8 +1525,13 @@
         cloneDetails.style.display = 'block';
       }
 
-      // Remover botones y flechas interactivas
-      clone.querySelectorAll('button, #arrow-' + compId, '.detalles-expandidos button').forEach(el => el.remove());
+      // Remover botones, fallback icons previos y flechas interactivas
+      clone.querySelectorAll('button, #arrow-' + compId, '.detalles-expandidos button, .fallback-icon').forEach(el => el.remove());
+
+      // Asegurar que todas las imágenes en el clon estén visibles
+      clone.querySelectorAll('img').forEach(img => {
+        img.style.display = 'block';
+      });
 
       exportContainer.appendChild(clone);
 
@@ -1514,7 +1552,9 @@
       document.body.appendChild(exportContainer);
 
       try {
-        await new Promise(r => setTimeout(r, 600)); // Esperar carga de assets en clon
+        // Convertir previamente todas las imágenes del contenedor de exportación a Base64
+        await convertImagesToDataURIs(exportContainer);
+        await new Promise(r => setTimeout(r, 400));
 
         const canvas = await html2canvas(exportContainer, {
           backgroundColor: '#0b0d0f',
