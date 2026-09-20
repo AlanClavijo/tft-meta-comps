@@ -1779,18 +1779,18 @@
       if (user === 'aslan' && pass === '1234') {
         isAdminLoggedIn = true;
         closeAdminLoginModal();
-        alert("🔓 ¡Bienvenido al Panel Administrador!");
+        showToast("¡Bienvenido al Panel Administrador!", "success");
         renderTierList(tftData);
         openAdminBuilderModal();
       } else {
-        alert("❌ Usuario o contraseña incorrectos");
+        showToast("Usuario o contraseña incorrectos", "error");
       }
     }
 
     function logoutAdmin() {
       isAdminLoggedIn = false;
       renderTierList(tftData);
-      alert("🔒 Sesión de administrador cerrada.");
+      showToast("Sesión de administrador cerrada", "info");
     }
 
     function openAdminBuilderModal(editId = null) {
@@ -1864,7 +1864,7 @@
         if (idx !== -1) {
           tftData.splice(idx, 1);
           renderTierList(tftData);
-          alert("🗑️ Guía eliminada correctamente.");
+          showToast("Guía eliminada correctamente", "info");
         }
       }
     }
@@ -2089,7 +2089,7 @@
         if (targetBuild) {
           if (!targetBuild.items) targetBuild.items = [];
           if (targetBuild.items.length >= 3) {
-            alert("Una build destacada solo puede llevar máximo 3 objetos");
+            showToast("Una build destacada solo puede llevar máximo 3 objetos", "warning");
             return;
           }
           targetBuild.items.push(itemKey);
@@ -2102,7 +2102,7 @@
         const cell = builderBoardState[selectedCellIndex];
         if (!cell.items) cell.items = [];
         if (cell.items.length >= 3) {
-          alert("Un campeón solo puede llevar máximo 3 objetos");
+          showToast("Un campeón solo puede llevar máximo 3 objetos", "warning");
           return;
         }
         cell.items.push(itemKey);
@@ -2110,7 +2110,7 @@
         return;
       }
 
-      alert("Selecciona primero una casilla del tablero o una casilla de Mejores Builds (Main Carry / Main Tanque) para equipar el objeto.");
+      showToast("Selecciona primero una casilla del tablero o de Mejores Builds para equipar el objeto", "warning");
     }
 
     function removeItemFromBuilderCell(event, cellIdx, itemIdx) {
@@ -2373,7 +2373,7 @@
 
       renderTierList(tftData);
       closeAdminBuilderModal();
-      alert("🚀 ¡Guía Guardada y Publicada Exitosamente en la Tier List!");
+      showToast("¡Guía Guardada y Publicada Exitosamente!", "success");
     }
 
     // changeLanguage unificado arriba
@@ -2542,8 +2542,44 @@
     </div>
   </div>
 
+  <!-- CONTENEDOR GLOBAL DE NOTIFICACIONES TOAST STYLED -->
+  <div id="toast-container" class="fixed top-5 right-5 z-[10000] flex flex-col gap-2.5 pointer-events-none"></div>
+
   <!-- CONTENEDOR GLOBAL DE TOOLTIP EN LA RAÍZ DEL DOCUMENTO (NUNCA RE CORTADO) -->
   <div id="global-tooltip" class="fixed opacity-0 pointer-events-none transition-all duration-200 z-[9999] transform scale-95 origin-bottom"></div>
+
+  <script>
+    function showToast(message, type = 'info') {
+      const container = document.getElementById('toast-container');
+      if (!container) return;
+
+      const toast = document.createElement('div');
+      toast.className = `pointer-events-auto flex items-center gap-3 px-4 py-3 rounded-2xl bg-[#17181a] border-2 shadow-2xl transition-all duration-300 transform translate-x-10 opacity-0 min-w-[280px] max-w-sm ${
+        type === 'success' ? 'border-emerald-500/80 text-emerald-300' :
+        type === 'error' ? 'border-red-500/80 text-red-300' :
+        type === 'warning' ? 'border-amber-500/80 text-amber-300' :
+        'border-indigo-500/80 text-indigo-300'
+      }`;
+
+      const icon = type === 'success' ? '✅' : type === 'error' ? '❌' : type === 'warning' ? '⚠️' : 'ℹ️';
+
+      toast.innerHTML = `
+        <span class="text-base">${icon}</span>
+        <span class="text-xs font-bold text-white leading-snug flex-1">${message}</span>
+      `;
+
+      container.appendChild(toast);
+
+      requestAnimationFrame(() => {
+        toast.classList.remove('translate-x-10', 'opacity-0');
+      });
+
+      setTimeout(() => {
+        toast.classList.add('translate-x-10', 'opacity-0');
+        setTimeout(() => toast.remove(), 300);
+      }, 3500);
+    }
+  </script>
 
 </body>
 </html>
