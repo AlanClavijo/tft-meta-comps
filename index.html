@@ -1982,7 +1982,16 @@
 
     function selectBuilderCell(idx) {
       selectedCellIndex = idx;
+      selectedBuildIndex = null;
       renderBuilderGrid();
+      renderBestBuildsForm();
+    }
+
+    function selectBestBuildSlot(idx) {
+      selectedBuildIndex = idx;
+      selectedCellIndex = null;
+      renderBuilderGrid();
+      renderBestBuildsForm();
     }
 
     function updateSelectedCellInfo() {
@@ -2054,25 +2063,33 @@
     }
 
     function addItemToSelectedCell(itemKey) {
-      if (selectedCellIndex === null || !builderBoardState[selectedCellIndex]) {
-        // También permitir equipar a los objetos de la build destacada
-        const targetBuild = builderData.mejoresBuilds[selectedBuildIndex];
-        if (targetBuild) {
-          if (!targetBuild.items) targetBuild.items = [];
-          if (targetBuild.items.length < 3) targetBuild.items.push(itemKey);
-          renderBestBuildsForm();
+      if (selectedCellIndex !== null && builderBoardState[selectedCellIndex]) {
+        const cell = builderBoardState[selectedCellIndex];
+        if (!cell.items) cell.items = [];
+        if (cell.items.length >= 3) {
+          alert("Un campeón solo puede llevar máximo 3 objetos");
+          return;
         }
+        cell.items.push(itemKey);
+        renderBuilderGrid();
         return;
       }
 
-      const cell = builderBoardState[selectedCellIndex];
-      if (!cell.items) cell.items = [];
-      if (cell.items.length >= 3) {
-        alert("Un campeón solo puede llevar máximo 3 objetos");
-        return;
+      if (selectedBuildIndex !== null) {
+        const targetBuild = builderData.mejoresBuilds[selectedBuildIndex];
+        if (targetBuild) {
+          if (!targetBuild.items) targetBuild.items = [];
+          if (targetBuild.items.length >= 3) {
+            alert("Una build destacada solo puede llevar máximo 3 objetos");
+            return;
+          }
+          targetBuild.items.push(itemKey);
+          renderBestBuildsForm();
+          return;
+        }
       }
-      cell.items.push(itemKey);
-      renderBuilderGrid();
+
+      alert("Selecciona primero una casilla del tablero o una casilla de Mejores Builds (Main Carry / Main Tanque) para equipar el objeto.");
     }
 
     function removeItemFromBuilderCell(event, cellIdx, itemIdx) {
@@ -2083,7 +2100,6 @@
       }
     }
 
-    // CÁLCULO AUTOMÁTICO DE SINERGIAS (TRAITS)
     function updateCalculatedTraits() {
       const traitsContainer = document.getElementById('builder-calculated-traits');
       if (!traitsContainer) return;
@@ -2210,20 +2226,20 @@
         const isSelected = selectedBuildIndex === idx;
 
         const itemsHTML = (build.items && build.items.length > 0) ? build.items.map((itKey, itemIdx) => `
-          <div onclick="removeItemFromBestBuild(${idx}, ${itemIdx})" class="w-7 h-7 rounded bg-[#0b0d0f] border border-gray-700 p-0.5 relative group cursor-pointer" title="Hacer clic para eliminar">
+          <div onclick="event.stopPropagation(); removeItemFromBestBuild(${idx}, ${itemIdx})" class="w-7 h-7 rounded bg-[#0b0d0f] border border-gray-700 p-0.5 relative group cursor-pointer" title="Hacer clic para eliminar">
             <img src="${getItemImage(itKey)}" class="w-full h-full object-cover" />
             <div class="absolute inset-0 bg-red-600/60 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[8px] font-black text-white">✖</div>
           </div>
         `).join('') : `<span class="text-[10px] text-gray-500 italic">Sin objetos asignados</span>`;
 
         return `
-          <div onclick="selectedBuildIndex = ${idx}; renderBestBuildsForm();" class="bg-[#121316] border-2 ${isSelected ? 'border-amber-400 bg-amber-500/10' : 'border-[#26282c]'} p-3 rounded-xl space-y-2 cursor-pointer transition-all">
+          <div onclick="selectBestBuildSlot(${idx})" class="bg-[#121316] border-2 ${isSelected ? 'border-amber-400 bg-amber-500/10' : 'border-[#26282c]'} p-3 rounded-xl space-y-2 cursor-pointer transition-all">
             <div class="flex items-center justify-between">
               <label class="text-xs font-black ${isSelected ? 'text-amber-400' : 'text-gray-400'} uppercase tracking-wider">${idx === 0 ? '🏆 Main Carry' : '🛡️ Main Tanque'}</label>
               <span class="text-[9px] px-2 py-0.5 rounded ${isSelected ? 'bg-amber-500 text-black font-bold' : 'bg-gray-800 text-gray-400'}">${isSelected ? 'SELECCIONADO' : 'Seleccionar'}</span>
             </div>
             
-            <select onchange="setBestBuildChamp(${idx}, this.value)" class="w-full bg-[#0b0d0f] border border-gray-800 rounded px-2 py-1.5 text-xs text-white">
+            <select onclick="event.stopPropagation()" onchange="setBestBuildChamp(${idx}, this.value)" class="w-full bg-[#0b0d0f] border border-gray-800 rounded px-2 py-1.5 text-xs text-white">
               <option value="">-- Seleccionar Campeón --</option>
               ${Object.keys(localChampMap).map(cName => `<option value="${cName}" ${build.campeon === cName ? 'selected' : ''}>${cName}</option>`).join('')}
             </select>
