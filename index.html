@@ -801,6 +801,7 @@
       'Taric': { rol: 'Tanque Principal', coste: 5, sinergias: ['Emerald Aspect', 'Vanguard'], habilidad: 'Radiancia Cósmica', mana: '100', desc: 'Tras 1s de demora, otorga invulnerabilidad a todos los aliados adyacentes durante 3 segundos.' },
       'Rakan': { rol: 'Soporte Frontal', coste: 1, sinergias: ['Invocation', 'Vanguard'], habilidad: 'Gran Entrada', mana: '50', desc: 'Se abalanza sobre el objetivo derribando a los enemigos adyacentes y escudando a aliados por 150/220/300 HP.' },
       'Sentinel': { rol: 'Tanque de Escudo', coste: 3, sinergias: ['Vanguard'], habilidad: 'Muro de Escudos', mana: '60', desc: 'Gana 300/400/600 de Escudo y aumenta su Armadura en +40 durante 4s.' },
+      'Amumu': { rol: 'Tanque Primal', coste: 2, sinergias: ['Primal', 'Juggernaut'], habilidad: 'Maldecióm Llanto', mana: '50', desc: 'Desata un llanto desesperado en área infligiendo Daño Mágico y reduciendo la Armadura enemiga.' },
       'KogMaw': { rol: 'Tirador a Distancia', coste: 2, sinergias: ['Caustic', 'Adaptor'], habilidad: 'Andanada Bio-Arcana', mana: '30', desc: 'Gana Alcance infinito e inflige un 4% de Vida Máxima adicional como Daño Mágico por impacto.' }
     };
 
@@ -1245,17 +1246,22 @@
                   
                   <div class="rounded-xl border border-indigo-900/40 p-3 bg-[#12121c] shadow-inner">
                     <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-wider mb-2">Mejoras Salida de Campeones Early</h4>
-                    <div class="flex items-center gap-2">
+                    <div class="flex items-center gap-2 flex-wrap">
                       ${earlyGameHTML}
                     </div>
                   </div>
 
                   <div class="rounded-xl border border-indigo-900/40 p-3 bg-[#12121c] shadow-inner flex flex-col justify-between">
                     <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-wider mb-1">Condiciones OP (Early)</h4>
-                    <div class="flex items-center justify-center text-purple-500 py-1">
-                      <svg class="w-7 h-7 fill-current" viewBox="0 0 24 24">
-                        <path d="M12 2L15 9H22L16.5 13.5L18.5 21L12 16.5L5.5 21L7.5 13.5L2 9H9L12 2Z" />
-                      </svg>
+                    <div class="flex items-center justify-center gap-2 py-1">
+                      ${comp.earlyGame && comp.earlyGame.length > 0 ? `
+                        <div class="w-9 h-9 rounded-xl bg-[#0b0d0f] border-2 border-purple-500 overflow-hidden relative shadow-lg" title="${comp.earlyGame[0]}">
+                          <img src="${getChampionImage(comp.earlyGame[0])}" alt="${comp.earlyGame[0]}" class="w-full h-full object-cover" onerror="handleChampError(this, '${comp.earlyGame[0]}')" />
+                        </div>
+                      ` : ''}
+                      <div class="w-8 h-8 rounded-xl bg-purple-900/30 border border-purple-500/50 flex items-center justify-center text-purple-400 font-black text-xs">
+                        ⚜️
+                      </div>
                     </div>
                   </div>
 
@@ -2103,7 +2109,7 @@
     function renderEarlyChampsSelection() {
       const container = document.getElementById('builder-early-champs');
       if (!container) return;
-      const champs = Object.keys(localChampMap).slice(0, 16);
+      const champs = Object.keys(localChampMap);
       container.innerHTML = champs.map(c => `
         <button onclick="toggleEarlyChamp('${c}')" class="px-2.5 py-1 rounded-lg border text-xs font-bold ${builderData.earlyGame.includes(c) ? 'bg-amber-500 text-black border-amber-400' : 'bg-[#121316] text-gray-400 border-[#26282c]'}">
           ${c}
