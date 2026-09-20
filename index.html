@@ -1418,36 +1418,61 @@
       showToast(`📋 Fichas copiadas de ${name}`, 'success');
     }
 
-    // Convierte imágenes locales/CORS a DataURL (Base64) para render perfecto en html2canvas
-    async function convertImagesToDataURIs(element) {
-      const images = Array.from(element.querySelectorAll('img'));
-      const promises = images.map(img => {
+    // Copia los DataURIs o rutas resueltas de las imágenes ya cargadas en el DOM original hacia el clon
+    async function syncAndPrepareImagesForExport(originalEl, cloneEl) {
+      const origImgs = Array.from(originalEl.querySelectorAll('img'));
+      const cloneImgs = Array.from(cloneEl.querySelectorAll('img'));
+
+      const promises = origImgs.map((origImg, idx) => {
+        const cloneImg = cloneImgs[idx];
+        if (!cloneImg) return Promise.resolve();
+
         return new Promise((resolve) => {
-          if (!img.src || img.src.startsWith('data:')) {
-            resolve();
-            return;
-          }
-          const tempImg = new Image();
-          tempImg.crossOrigin = 'anonymous';
-          tempImg.onload = () => {
+          // Si la imagen original está visible y tiene dimensiones, dibujarla a DataURI
+          if (origImg.complete && origImg.naturalWidth > 0) {
             try {
               const canvas = document.createElement('canvas');
-              canvas.width = tempImg.naturalWidth || tempImg.width || 64;
-              canvas.height = tempImg.naturalHeight || tempImg.height || 64;
+              canvas.width = origImg.naturalWidth || origImg.width || 64;
+              canvas.height = origImg.naturalHeight || origImg.height || 64;
               const ctx = canvas.getContext('2d');
-              ctx.drawImage(tempImg, 0, 0);
-              img.src = canvas.toDataURL('image/png');
+              ctx.drawImage(origImg, 0, 0);
+              cloneImg.src = canvas.toDataURL('image/png');
+              cloneImg.removeAttribute('onerror');
+              cloneImg.style.display = 'block';
+              cloneImg.style.visibility = 'visible';
+              cloneImg.style.opacity = '1';
             } catch (e) {
-              console.warn("No se pudo convertir imagen a DataURI:", img.src);
+              cloneImg.src = origImg.src;
             }
             resolve();
-          };
-          tempImg.onerror = () => {
-            resolve();
-          };
-          tempImg.src = img.src;
+          } else {
+            // Si es una imagen en el DOM original que aún está cargando
+            const temp = new Image();
+            temp.onload = () => {
+              try {
+                const canvas = document.createElement('canvas');
+                canvas.width = temp.naturalWidth || 64;
+                canvas.height = temp.naturalHeight || 64;
+                const ctx = canvas.getContext('2d');
+                ctx.drawImage(temp, 0, 0);
+                cloneImg.src = canvas.toDataURL('image/png');
+              } catch (err) {
+                cloneImg.src = origImg.src;
+              }
+              cloneImg.removeAttribute('onerror');
+              cloneImg.style.display = 'block';
+              cloneImg.style.visibility = 'visible';
+              cloneImg.style.opacity = '1';
+              resolve();
+            };
+            temp.onerror = () => {
+              resolve();
+            };
+            temp.src = origImg.src;
+          }
         });
       });
+
       await Promise.all(promises);
     }
 
@@ -1525,13 +1550,8 @@
         cloneDetails.style.display = 'block';
       }
 
-      // Remover botones, fallback icons previos y flechas interactivas
+      // Remover botones, fallback icons previos y elementos interactivos
       clone.querySelectorAll('button, #arrow-' + compId, '.detalles-expandidos button, .fallback-icon').forEach(el => el.remove());
-
-      // Asegurar que todas las imágenes en el clon estén visibles
-      clone.querySelectorAll('img').forEach(img => {
-        img.style.display = 'block';
-      });
 
       exportContainer.appendChild(clone);
 
@@ -1552,9 +1572,9 @@
       document.body.appendChild(exportContainer);
 
       try {
-        // Convertir previamente todas las imágenes del contenedor de exportación a Base64
-        await convertImagesToDataURIs(exportContainer);
-        await new Promise(r => setTimeout(r, 400));
+        // Sincronizar directamente las imágenes cargadas del elemento original al clon
+        await syncAndPrepareImagesForExport(articleEl, clone);
+        await new Promise(r => setTimeout(r, 300));
 
         const canvas = await html2canvas(exportContainer, {
           backgroundColor: '#0b0d0f',
