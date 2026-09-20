@@ -1,0 +1,386 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <!-- Google AdSense Oficial Monetización -->
+  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1862247020827439" crossorigin="anonymous"></script>
+
+  <title>Consejos del Set 18 TFT: Enchanted Wilds | TFT Meta</title>
+  <meta name="description" content="Consejos esenciales, trucos, interacciones ocultas y mejores objetos para dominar el Set 18 de TFT: Enchanted Wilds.">
+  <meta name="keywords" content="consejos set 18 tft, tft set 18 consejos, trucos set 18 tft, huevo dorado tft, nova tft, artefactos set 18 tft">
+  <meta name="robots" content="index, follow, max-image-preview:large">
+  <link rel="canonical" href="https://aslandevstudio.com/consejos-set18">
+
+  <link rel="alternate" hreflang="es" href="https://aslandevstudio.com/consejos-set18">
+  <link rel="alternate" hreflang="en" href="https://aslandevstudio.com/consejos-set18">
+  <link rel="alternate" hreflang="pt" href="https://aslandevstudio.com/consejos-set18">
+
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:url" content="https://aslandevstudio.com/consejos-set18">
+  <meta property="og:title" content="Consejos del Set 18 TFT: Secretos y Estrategias | Aslan Dev Studio">
+  <meta property="og:description" content="Descubre los 7 consejos indispensables para ganar partidas en el Set 18 de Teamfight Tactics.">
+  <meta property="og:image" content="https://aslandevstudio.com/scr/img/logo.svg">
+
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            bgDark: '#0b0d0f',
+            cardDark: '#17181a',
+            borderDark: '#26282c',
+            tftGold: '#eea402',
+            tierS: '#fe3e4b'
+          }
+        }
+      }
+    }
+  </script>
+  <style>
+    body {
+      background-color: #0b0d0f;
+      color: #f3f4f6;
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+    }
+    html {
+      scroll-behavior: smooth;
+    }
+    .border-tft-gold {
+      border-color: #eea402 !important;
+    }
+  </style>
+</head>
+<body class="min-h-screen flex flex-col">
+
+  <!-- Menú de navegación superior estandarizado -->
+  <nav class="border-b border-[#26282c] bg-[#17181a]/90 backdrop-blur-md sticky top-0 z-50">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+      <div class="flex items-center space-x-3">
+        <a href="index.html" class="flex items-center space-x-3 group">
+          <div class="w-10 h-10 transition-transform group-hover:scale-105">
+            <img src="./scr/img/logo.svg" alt="TFT Meta Comps Logo" class="w-full h-full object-contain filter drop-shadow-[0_2px_8px_rgba(238,164,2,0.3)]" />
+          </div>
+          <span class="font-extrabold text-base sm:text-lg tracking-wider bg-gradient-to-r from-red-400 via-amber-300 to-purple-400 bg-clip-text text-transparent">
+            META COMPS TIER LIST
+          </span>
+        </a>
+      </div>
+      
+      <!-- NAVEGACIÓN DESKTOP -->
+      <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-gray-400">
+        <a href="index.html" class="hover:text-white transition-colors">Inicio / Tier List</a>
+        <a href="consejos-set18.html" class="text-amber-400 hover:text-white transition-colors">Consejos Set 18 TFT</a>
+        <a href="set17.html" class="hover:text-amber-400 transition-colors">Set 17</a>
+        <a href="aprender.html" class="hover:text-amber-400 transition-colors">Aprender TFT</a>
+        
+        <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR DESKTOP -->
+        <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
+          <span>🌐</span>
+          <select id="lang-select" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none">
+            <option value="es" class="bg-[#17181a] text-white">🇪🇸 Español</option>
+            <option value="en" class="bg-[#17181a] text-white">🇺🇸 English</option>
+            <option value="pt" class="bg-[#17181a] text-white">🇧🇷 Português</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- BOTÓN MENÚ HAMBURGUESA MÓVIL (Solo visible en pantallas < md) -->
+      <div class="flex md:hidden items-center gap-3">
+        <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2 py-1 text-xs font-bold text-gray-300 gap-1">
+          <select id="lang-select-mobile" onchange="changeLanguage(this.value)" class="bg-transparent text-white font-black cursor-pointer focus:outline-none text-xs">
+            <option value="es" class="bg-[#17181a] text-white">🇪🇸 ES</option>
+            <option value="en" class="bg-[#17181a] text-white">🇺🇸 EN</option>
+            <option value="pt" class="bg-[#17181a] text-white">🇧🇷 PT</option>
+          </select>
+        </div>
+
+        <button onclick="toggleMobileMenu()" aria-label="Abrir Menú" class="p-2 rounded-xl bg-[#121316] border border-[#26282c] text-amber-400 hover:text-white focus:outline-none">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </nav>
+
+  <!-- MENÚ DESLIZANTE MÓVIL (MOBILE DRAWER) -->
+  <div id="mobile-menu-drawer" class="fixed inset-0 bg-black/80 backdrop-blur-md z-[999] opacity-0 pointer-events-none transition-opacity duration-300 md:hidden flex justify-end">
+    <div class="w-4/5 max-w-sm bg-[#121316] border-l border-[#26282c] h-full p-6 flex flex-col justify-between shadow-2xl transform translate-x-full transition-transform duration-300" id="mobile-menu-content">
+      <div class="space-y-6">
+        <div class="flex items-center justify-between pb-4 border-b border-[#26282c]">
+          <div class="flex items-center space-x-2">
+            <img src="./scr/img/logo.svg" alt="TFT Logo" class="w-7 h-7" />
+            <span class="font-black text-sm text-white">NAVEGACIÓN</span>
+          </div>
+          <button onclick="toggleMobileMenu()" class="text-gray-400 hover:text-white p-1">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"></path>
+            </svg>
+          </button>
+        </div>
+
+        <nav class="flex flex-col space-y-4 text-sm font-bold text-gray-300">
+          <a href="index.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Inicio / Tier List</a>
+          <a href="consejos-set18.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">Consejos Set 18 TFT</a>
+          <a href="set17.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Set 17 Dioses del Espacio</a>
+          <a href="aprender.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Aprender TFT (Guía ELO)</a>
+        </nav>
+      </div>
+
+      <div class="pt-6 border-t border-[#26282c] space-y-4 text-xs text-gray-400">
+        <div class="flex items-center justify-around">
+          <a href="privacy.html" class="hover:text-amber-400">Privacidad</a>
+          <span>•</span>
+          <a href="terms.html" class="hover:text-amber-400">Términos</a>
+        </div>
+        <div class="text-center font-semibold text-gray-500">© 2026 Aslan Dev Studio</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Contenedor Central Principal -->
+  <main class="flex-grow max-w-5xl w-full mx-auto p-4 md:p-8">
+    
+    <!-- Encabezado Principal -->
+    <header class="mb-6">
+      <h1 class="font-black text-2xl md:text-3xl text-white tracking-tight">
+        Consejos del Set 18 TFT: Enchanted Wilds
+      </h1>
+      <p class="text-gray-400 text-sm mt-1">Estrategias avanzadas, interacciones secretas y optimización de recursos.</p>
+    </header>
+
+    <!-- Sección Superior: Grid 2 Columnas en Escritorio (Índice + Anuncio A la Derecha) / 1 Columna en Móviles -->
+    <section class="grid grid-cols-1 md:grid-cols-2 gap-8 items-start mb-8">
+      
+      <!-- Columna Izquierda: Índice Ordenado -->
+      <div class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-2xl">
+        <h2 class="text-xs font-black uppercase text-gray-400 tracking-wider mb-4 border-b border-[#26282c] pb-2 flex items-center gap-2">
+          <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
+          </svg>
+          Índice de Consejos Set 18
+        </h2>
+        <ol class="space-y-3 text-sm text-gray-300 font-medium">
+          <li>
+            <a href="#mejor-inicio" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">1.</span>
+              <span>Mejor inicio de partida</span>
+            </a>
+          </li>
+          <li>
+            <a href="#secretos-zed-shen" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">2.</span>
+              <span>Secretos de Zed y Shen</span>
+            </a>
+          </li>
+          <li>
+            <a href="#mejores-objetos-tanques" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">3.</span>
+              <span>Mejores objetos para tanques</span>
+            </a>
+          </li>
+          <li>
+            <a href="#huevo-dorado" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">4.</span>
+              <span>Cómo usar el Huevo Dorado</span>
+            </a>
+          </li>
+          <li>
+            <a href="#interacciones-secretas" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">5.</span>
+              <span>Interacciones secretas del Set</span>
+            </a>
+          </li>
+          <li>
+            <a href="#aprovechar-nova" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">6.</span>
+              <span>Cómo aprovechar Nova</span>
+            </a>
+          </li>
+          <li>
+            <a href="#dominar-set" class="hover:text-amber-400 transition-colors flex items-start gap-2">
+              <span class="text-amber-400 font-bold">7.</span>
+              <span>¿Quieres dominar el Set 17/18?</span>
+            </a>
+          </li>
+        </ol>
+      </div>
+
+      <!-- Columna Derecha: Espacio Publicitario / AdSlot Oficial Google AdSense -->
+      <div class="relative w-full rounded-3xl overflow-hidden border border-[#26282c] bg-[#121316] shadow-2xl p-4 flex items-center justify-center text-center min-h-[250px]">
+        <ins class="adsbygoogle"
+             style="display:block;width:100%"
+             data-ad-client="ca-pub-1862247020827439"
+             data-ad-slot="auto"
+             data-ad-format="auto"
+             data-full-width-responsive="true"></ins>
+        <script>
+             (adsbygoogle = window.adsbygoogle || []).push({});
+        </script>
+      </div>
+
+    </section>
+
+    <!-- Línea Separadora Sutil -->
+    <hr class="border-[#26282c] my-8" />
+
+    <!-- Sección de Contenido: Consejos del Set 18 -->
+    <div class="space-y-8">
+      
+      <!-- Bloque 1: Mejor inicio de partida -->
+      <section id="mejor-inicio" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">1.</span> Mejor inicio de partida
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Las primeras rondas del Set 17 ofrecen varias formas de generar ventaja antes de llegar al juego medio. Algunas unidades de coste 1 como Aatrox, Briar, Leona, Nasus, Rek'Sai o Talon pueden superar las rondas neutrales en solitario si les equipas un Cinturón de Gigante, permitiéndote conservar más recursos en el banco. Además, Time Breaker recompensa las derrotas con roleos gratuitos, mientras que Primordiano puede generar campeones adicionales para acelerar tu desarrollo durante el early game.
+        </p>
+      </section>
+
+      <!-- Bloque 2: Secretos de Zed y Shen -->
+      <section id="secretos-zed-shen" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">2.</span> Secretos de Zed y Shen
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          El Set 17 incluye varias interacciones ocultas entre campeones, y una de las más curiosas involucra a Zed y Shen. Si consigues jugar Zed mediante su aumento correspondiente y colocas a Shen en el mismo tablero, ambos personajes activarán una interacción especial exclusiva donde se enfrentarán entre sí. No afecta directamente a la estrategia, pero es uno de los easter eggs más interesantes del Set.
+        </p>
+      </section>
+
+      <!-- Bloque 3: Mejores objetos para tanques -->
+      <section id="mejores-objetos-tanques" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">3.</span> Mejores objetos para tanques
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Los cambios del Set 17 han consolidado algunos objetos defensivos como las opciones más consistentes para la línea frontal. Corona y Juramento del Protector destacan por ofrecer una combinación excelente de resistencia, supervivencia y utilidad en prácticamente cualquier composición. Si buscas construir un tanque sólido capaz de aguantar durante todo el combate, estos objetos deberían estar entre tus prioridades durante la partida.
+        </p>
+      </section>
+
+      <!-- Bloque 4: Cómo usar el Huevo Dorado -->
+      <section id="huevo-dorado" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">4.</span> Cómo usar el Huevo Dorado
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          El aumento prismático del Huevo Dorado puede ofrecer recompensas extremadamente poderosas si se utiliza correctamente. Una interacción poco conocida permite colocar el huevo en una ranura de clonación cuando dispones de siete Meeples. Tras completar su proceso de incubación, el juego generará una copia adicional del huevo, permitiéndote duplicar las recompensas obtenidas y aumentando considerablemente el valor del aumento.
+        </p>
+      </section>
+
+      <!-- Bloque 5: Interacciones secretas del Set -->
+      <section id="interacciones-secretas" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">5.</span> Interacciones secretas del Set
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          El Set 17 incorpora numerosas mecánicas únicas que pueden marcar la diferencia en partidas igualadas. Bardo tiene la capacidad de secuestrar al Dragón Ancestral durante las etapas 5 y 6 para incorporarlo a tu tablero como unidad de apoyo. Fiora mantiene una poderosa pasiva que la convierte en una amenaza prácticamente imbatible en situaciones de uno contra uno. Además, el nuevo sistema de rendición permite que la ronda continúe después de abandonar la partida, evitando errores relacionados con daño recibido, economía o activación de rasgos durante el combate.
+        </p>
+      </section>
+
+      <!-- Bloque 6: Cómo aprovechar Nova -->
+      <section id="aprovechar-nova" class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl">
+        <h2 class="text-lg font-extrabold text-white mb-3 flex items-center gap-2">
+          <span class="text-amber-400">6.</span> Cómo aprovechar Nova
+        </h2>
+        <p class="text-sm text-gray-300 leading-relaxed">
+          Nova es uno de los rasgos más eficientes del Set 17 gracias a las ventajas que aporta a todo el equipo. Con dos unidades Nova activas, Aatrox puede reducir la armadura y resistencia mágica de los enemigos, eliminando en muchos casos la necesidad de objetos de penetración como Último Suspiro o Rompecascos. Además, Akali proporciona precisión adicional, permitiendo que las habilidades puedan realizar golpes críticos y aumentando significativamente el daño total del equipo.
+        </p>
+      </section>
+
+      <!-- Bloque 7: CTA Dominar Set + Botón Tier List -->
+      <section id="dominar-set" class="p-6 sm:p-8 rounded-3xl bg-gradient-to-r from-amber-500/10 via-purple-500/10 to-indigo-500/10 border border-amber-500/30 text-center space-y-4">
+        <h2 class="text-xl font-black text-white">7. ¿Quieres dominar el Set 17/18?</h2>
+        <p class="text-xs text-gray-300 max-w-2xl mx-auto leading-relaxed">
+          Estos son solo algunos de los consejos más importantes del Set actual. Si buscas las composiciones más fuertes del meta, los mejores objetos, aumentos recomendados y guías completas actualizadas tras cada parche, consulta nuestra Tier List de TFT y las guías detalladas de cada composición.
+        </p>
+        <div class="pt-2">
+          <a href="index.html" class="inline-flex items-center gap-2 px-6 py-3 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-xs shadow-xl hover:brightness-110 transition-all">
+            <span>🏆</span> Ir a la Tier List de TFT
+          </a>
+        </div>
+      </section>
+
+      <!-- TARJETA DESTACADA UX/UI DE GUÍA DE ARTEFACTOS SET 18 -->
+      <div class="p-6 rounded-3xl bg-gradient-to-br from-[#1c182a] via-[#17181a] to-[#0f1118] border-2 border-purple-500/40 shadow-2xl relative overflow-hidden group">
+        <div class="absolute -right-10 -bottom-10 w-40 h-40 bg-purple-500/10 rounded-full filter blur-2xl group-hover:scale-150 transition-transform duration-500"></div>
+        
+        <div class="relative z-10 space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <span class="px-3 py-1 rounded-full text-[10px] font-black uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/40">
+              💎 Guía Especial de Artefactos
+            </span>
+            <span class="text-xs font-bold text-gray-400">Set 18: Enchanted Wilds</span>
+          </div>
+
+          <h3 class="text-xl font-black text-white">
+            Guía de Artefactos del Set 18 de TFT: Los mejores artefactos para cada campeón
+          </h3>
+
+          <p class="text-xs text-gray-300 leading-relaxed">
+            Los artefactos son de los objetos más poderosos en TFT, pero sus efectos únicos exigen asignarlos al portador adecuado. Descubre la guía detallada de combinaciones y portadores óptimos para cada campeón clasificados por coste (1 a 5 de coste).
+          </p>
+
+          <div class="pt-2 flex items-center justify-between flex-wrap gap-4">
+            <div class="flex items-center gap-2 text-xs font-bold text-amber-400">
+              <span>✨ Incluye parches 18.1 & 18.2</span>
+            </div>
+
+            <a href="artefactos.html" class="px-6 py-3 rounded-2xl bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-500 hover:to-indigo-500 text-white font-black text-xs shadow-xl transition-all flex items-center gap-2">
+              <span>📖 Ver Guía Completa de Artefactos</span>
+              <span>→</span>
+            </a>
+          </div>
+        </div>
+      </div>
+
+    </div>
+
+  </main>
+
+  <!-- FOOTER PRINCIPAL UNIFICADO CON REDES SOCIALES Y CRÉDITOS -->
+  <footer class="border-t border-[#26282c] bg-[#14161b] py-10 mt-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-6">
+      <div class="flex items-center space-x-3">
+        <img src="./scr/img/logo.svg" alt="TFT Meta Comps Logo" class="w-8 h-8 object-contain" />
+        <div>
+          <div class="text-sm font-black text-white tracking-wide">TFT META COMPS</div>
+          <div class="text-xs text-gray-400">© 2026 Aslan Dev Studio. Todos los derechos reservados.</div>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <script>
+    function toggleMobileMenu() {
+      const drawer = document.getElementById('mobile-menu-drawer');
+      const content = document.getElementById('mobile-menu-content');
+      if (!drawer || !content) return;
+
+      const isOpen = !drawer.classList.contains('opacity-0');
+      if (isOpen) {
+        content.classList.add('translate-x-full');
+        drawer.classList.add('opacity-0', 'pointer-events-none');
+      } else {
+        drawer.classList.remove('opacity-0', 'pointer-events-none');
+        content.classList.remove('translate-x-full');
+      }
+    }
+
+    function changeLanguage(lang) {
+      localStorage.setItem('tft_lang', lang);
+      const select = document.getElementById('lang-select');
+      if (select) select.value = lang;
+      const selectMobile = document.getElementById('lang-select-mobile');
+      if (selectMobile) selectMobile.value = lang;
+    }
+
+    document.addEventListener('DOMContentLoaded', () => {
+      const savedLang = localStorage.getItem('tft_lang') || 'es';
+      changeLanguage(savedLang);
+    });
+  </script>
+</body>
+</html>
