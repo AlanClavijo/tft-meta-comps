@@ -729,45 +729,73 @@
 
     // Mapeo exacto de nombres a los archivos reales presentes en ./scr/img/Champs/
     const localChampMap = {
-      'Hecarim': './scr/img/Champs/DA_18_Hecarim.webp',
-      'Sentinel': './scr/img/Champs/DA_Sentinel18.webp',
-      'Vi': './scr/img/Champs/DA_Vi18.webp',
-      'Taric': './scr/img/Champs/DA_Taric18.webp',
-      'Rakan': './scr/img/Champs/DA_18_Rakan.webp',
-      'Morgana': './scr/img/Champs/DA_18_Morgana.webp',
-      'Nidalee': './scr/img/Champs/DA_Nidalee18_AP.webp',
-      'KogMaw': './scr/img/Champs/DA_KogMaw18_AD.webp',
       'Ahri': './scr/img/Champs/DA_18_Ahri.webp',
-      'Ashe': './scr/img/Champs/DA_18_Ashe.webp',
-      'Sett': './scr/img/Champs/DA_18_Sett.webp',
-      'Gnar': './scr/img/Champs/DA_18_GnarSmall.webp',
-      'Sivir': './scr/img/Champs/DA_18_Sivir.webp',
-      'Karma': './scr/img/Champs/DA_Karma18.webp',
-      'Thresh': './scr/img/Champs/DA_18_Shen.webp',
-      'MasterYi': './scr/img/Champs/DA_18_MasterYi_AD.webp',
-      'Lulu': './scr/img/Champs/DA_18_Alune.webp',
-      'Soraka': './scr/img/Champs/DA_18_Soraka.webp',
-      'Malphite': './scr/img/Champs/DA_18_Malphite.webp',
-      'Neeko': './scr/img/Champs/DA_18_Diana.webp',
-      'Janna': './scr/img/Champs/DA_18_Caitlyn.webp',
-      'Camille': './scr/img/Champs/DA_18_Camille.webp',
-      'Elise': './scr/img/Champs/DA_18_Elise.webp',
-      'Cassiopeia': './scr/img/Champs/DA_18_Cassiopeia.webp',
-      'Kobuko': './scr/img/Champs/DA_18_Kobuko.webp',
-      'RekSai': './scr/img/Champs/DA_18_RekSai.webp',
-      'Teemo': './scr/img/Champs/DA_18_Teemo.webp',
-      'Gromp': './scr/img/Champs/DA_Gromp18_AP.webp',
-      'Krug': './scr/img/Champs/DA_Krug18.webp',
-      'Stonebark Tree': './scr/img/Champs/DA_Elderwood18_StonebarkTree.webp',
-      'Lifebloom': './scr/img/Champs/DA_Elderwood18_Lifeblossom.webp',
-      'Yorick': './scr/img/Champs/DA_18_Yorick.webp',
+      'Akali': './scr/img/Champs/DA_18_Akali_AD.webp',
+      'Alistar': './scr/img/Champs/DA_18_Alistar.webp',
+      'Alune': './scr/img/Champs/DA_18_Alune.webp',
       'Amumu': './scr/img/Champs/DA_Amumu18.webp',
-      'Zyra': './scr/img/Champs/DA_18_Zyra.webp',
-      'Kennen': './scr/img/Champs/DA_18_Kennen.webp',
+      'Aphelios': './scr/img/Champs/DA_18_Aphelios.webp',
+      'Ashe': './scr/img/Champs/DA_18_Ashe.webp',
       'Azir': './scr/img/Champs/DA_18_Azir.webp',
+      'Brambleback': './scr/img/Champs/DA_Brambleback18.webp',
+      'Caitlyn': './scr/img/Champs/DA_18_Caitlyn.webp',
+      'Camille': './scr/img/Champs/DA_18_Camille.webp',
+      'Cassiopeia': './scr/img/Champs/DA_18_Cassiopeia.webp',
+      'Cinderling': './scr/img/Champs/DA_Cinderling18.webp',
+      'Crimson Raptor': './scr/img/Champs/DA_CrimsonRaptor18.webp',
+      'Diana': './scr/img/Champs/DA_18_Diana.webp',
+      'Draven': './scr/img/Champs/DA_Draven18.webp',
+      'Elder Dragon': './scr/img/Champs/DA_18_ElderDragon.webp',
+      'Elise': './scr/img/Champs/DA_18_Elise.webp',
       'Ezreal': './scr/img/Champs/DA_18_Ezreal.webp',
       'Fiddlesticks': './scr/img/Champs/DA_Fiddlesticks18.webp',
-      'Shen': './scr/img/Champs/DA_18_Shen.webp'
+      'Gnar': './scr/img/Champs/DA_18_GnarSmall.webp',
+      'Gromp': './scr/img/Champs/DA_Gromp18_AP.webp',
+      'Hecarim': './scr/img/Champs/DA_18_Hecarim.webp',
+      'Ivern': './scr/img/Champs/DA_18_Ivern.webp',
+      'Karma': './scr/img/Champs/DA_Karma18.webp',
+      'Kayle': './scr/img/Champs/DA_18_Kayle.webp',
+      'Kennen': './scr/img/Champs/DA_18_Kennen.webp',
+      'KhaZix': './scr/img/Champs/DA_18_KhaZix.webp',
+      'Kobuko': './scr/img/Champs/DA_18_Kobuko.webp',
+      'KogMaw': './scr/img/Champs/DA_KogMaw18_AD.webp',
+      'Krug': './scr/img/Champs/DA_Krug18.webp',
+      'LeBlanc': './scr/img/Champs/DA_18_LeBlanc.webp',
+      'Leona': './scr/img/Champs/DA_18_Leona.webp',
+      'Lifeblossom': './scr/img/Champs/DA_Elderwood18_Lifeblossom.webp',
+      'Lillia': './scr/img/Champs/DA_18_Lillia.webp',
+      'Lux': './scr/img/Champs/DA_Lux18_Base.webp',
+      'Malphite': './scr/img/Champs/DA_18_Malphite.webp',
+      'Maokai': './scr/img/Champs/DA_18_Maokai.webp',
+      'MasterYi': './scr/img/Champs/DA_18_MasterYi_AD.webp',
+      'Morgana': './scr/img/Champs/DA_18_Morgana.webp',
+      'Murkwolf': './scr/img/Champs/DA_Murkwolf18.webp',
+      'Nidalee': './scr/img/Champs/DA_Nidalee18_AP.webp',
+      'Ornn': './scr/img/Champs/DA_18_Ornn.webp',
+      'Rakan': './scr/img/Champs/DA_18_Rakan.webp',
+      'Rammus': './scr/img/Champs/DA_18_Rammus.webp',
+      'RekSai': './scr/img/Champs/DA_18_RekSai.webp',
+      'Rengar': './scr/img/Champs/DA_18_Rengar.webp',
+      'Scuttle Crab': './scr/img/Champs/DA_Scuttlecrab18.webp',
+      'Sejuani': './scr/img/Champs/DA_18_Sejuani.webp',
+      'Sentinel': './scr/img/Champs/DA_Sentinel18.webp',
+      'Sentry': './scr/img/Champs/DA_18_Sentry.webp',
+      'Sett': './scr/img/Champs/DA_18_Sett.webp',
+      'Shen': './scr/img/Champs/DA_18_Shen.webp',
+      'Sivir': './scr/img/Champs/DA_18_Sivir.webp',
+      'Soraka': './scr/img/Champs/DA_18_Soraka.webp',
+      'Stonebark Tree': './scr/img/Champs/DA_Elderwood18_StonebarkTree.webp',
+      'Taric': './scr/img/Champs/DA_Taric18.webp',
+      'Teemo': './scr/img/Champs/DA_18_Teemo.webp',
+      'Tristana': './scr/img/Champs/DA_18_Tristana.webp',
+      'Varus': './scr/img/Champs/DA_18_Varus.webp',
+      'Veigar': './scr/img/Champs/DA_18_Veigar.webp',
+      'Vi': './scr/img/Champs/DA_Vi18.webp',
+      'Warwick': './scr/img/Champs/DA_18_Warwick.webp',
+      'Xayah': './scr/img/Champs/DA_18_Xayah.webp',
+      'Yorick': './scr/img/Champs/DA_18_Yorick.webp',
+      'Yunara': './scr/img/Champs/DA_18_Yunara.webp',
+      'Zyra': './scr/img/Champs/DA_18_Zyra.webp'
     };
 
     const localItemMap = {
@@ -2553,11 +2581,18 @@
       }).join('');
     }
 
-    function renderBuilderCatalog() {
+    function renderBuilderCatalog(query = '') {
       const catalog = document.getElementById('builder-champ-catalog');
       if (!catalog) return;
 
-      const champs = Object.keys(localChampMap);
+      const q = query.toLowerCase().trim();
+      const champs = Object.keys(localChampMap).filter(champ => champ.toLowerCase().includes(q));
+      
+      if (champs.length === 0) {
+        catalog.innerHTML = `<div class="w-full py-4 text-center text-xs text-gray-500 italic">No se encontraron campeones</div>`;
+        return;
+      }
+
       catalog.innerHTML = champs.map(champ => {
         const cInfo = champTooltipDB_ES[champ] || { coste: 1 };
         const borderColor = costBorderHex[cInfo.coste] || '#a1a1aa';
@@ -2572,16 +2607,31 @@
       }).join('');
     }
 
-    function renderBuilderItemCatalog() {
+    function filterBuilderChampCatalog(query) {
+      renderBuilderCatalog(query);
+    }
+
+    function renderBuilderItemCatalog(query = '') {
       const catalog = document.getElementById('builder-item-catalog');
       if (!catalog) return;
 
-      const items = Object.keys(localItemMap);
+      const q = query.toLowerCase().trim();
+      const items = Object.keys(localItemMap).filter(itemKey => itemKey.toLowerCase().includes(q));
+
+      if (items.length === 0) {
+        catalog.innerHTML = `<div class="w-full py-4 text-center text-xs text-gray-500 italic">No se encontraron objetos</div>`;
+        return;
+      }
+
       catalog.innerHTML = items.map(itemKey => `
-        <div onclick="addItemToSelectedCell('${itemKey}')" class="w-8 h-8 rounded-lg overflow-hidden border border-gray-700 bg-[#0b0d0f] cursor-pointer hover:scale-110 transition-transform p-0.5 relative group">
+        <div onclick="addItemToSelectedCell('${itemKey}')" class="w-8 h-8 rounded-lg overflow-hidden border border-gray-700 bg-[#0b0d0f] cursor-pointer hover:scale-110 transition-transform p-0.5 relative group" title="${itemKey}">
           <img src="${getItemImage(itemKey)}" alt="${itemKey}" class="w-full h-full object-cover" />
         </div>
       `).join('');
+    }
+
+    function filterBuilderItemCatalog(query) {
+      renderBuilderItemCatalog(query);
     }
 
     function renderEarlyChampsSelection() {
@@ -2905,12 +2955,18 @@
         <!-- Catálogo de Selección (Campeones e Ítems) -->
         <div class="bg-[#121316] border border-[#26282c] rounded-2xl p-4 space-y-4 max-h-[500px] overflow-y-auto">
           <div>
-            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-2">1. Seleccionar Campeón</h4>
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-xs font-black text-white uppercase tracking-wider">1. Seleccionar Campeón</h4>
+            </div>
+            <input type="text" id="builder-champ-search" oninput="filterBuilderChampCatalog(this.value)" placeholder="🔍 Buscar ficha/campeón..." class="w-full mb-2 bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:border-amber-400 focus:outline-none" />
             <div id="builder-champ-catalog" class="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto p-1 bg-[#0b0d0f] rounded-xl border border-gray-800"></div>
           </div>
 
           <div>
-            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-2">2. Equipar Objetos (Ficha / Builds)</h4>
+            <div class="flex items-center justify-between mb-2">
+              <h4 class="text-xs font-black text-white uppercase tracking-wider">2. Equipar Objetos (Ficha / Builds)</h4>
+            </div>
+            <input type="text" id="builder-item-search" oninput="filterBuilderItemCatalog(this.value)" placeholder="🔍 Buscar objeto..." class="w-full mb-2 bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white placeholder-gray-500 focus:border-amber-400 focus:outline-none" />
             <div id="builder-item-catalog" class="flex flex-wrap gap-1 max-h-36 overflow-y-auto p-1 bg-[#0b0d0f] rounded-xl border border-gray-800"></div>
           </div>
         </div>
