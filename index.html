@@ -87,6 +87,26 @@
       }
     }
   </script>
+  <!-- Firebase SDK (v10.12.0 compatibility / modular) -->
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-auth-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore-compat.js"></script>
+  <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyAu7frDptdloM7HgRqElNabulFsYwdxvxU",
+      authDomain: "guiadetft.firebaseapp.com",
+      projectId: "guiadetft",
+      storageBucket: "guiadetft.firebasestorage.app",
+      messagingSenderId: "966629095349",
+      appId: "1:966629095349:web:1e817ea5a7b7ad4d0a0bfc",
+      measurementId: "G-RFPY2ES6HM"
+    };
+
+    firebase.initializeApp(firebaseConfig);
+    const auth = firebase.auth();
+    const db = firebase.firestore();
+  </script>
+
   <style>
     body {
       background-color: #0b0d0f;
@@ -1823,6 +1843,35 @@
       ]
     };
 
+    let isAdminLoggedIn = false;
+    let editingCompId = null;
+
+    // Escuchar el estado de Autenticación de Firebase Admin
+    auth.onAuthStateChanged((user) => {
+      if (user) {
+        isAdminLoggedIn = true;
+        showToast(`Sesión activa como Admin (${user.email})`, "success");
+      } else {
+        isAdminLoggedIn = false;
+      }
+      renderTierList(tftData);
+    });
+
+    // Escuchar en tiempo real las Guías de Cloud Firestore
+    db.collection("guias_tft").onSnapshot((snapshot) => {
+      if (!snapshot.empty) {
+        const remoteComps = [];
+        snapshot.forEach((doc) => {
+          remoteComps.push({ id: doc.id, ...doc.data() });
+        });
+        tftData = remoteComps;
+        renderTierList(tftData);
+        renderSidebarTOC();
+      }
+    }, (error) => {
+      console.warn("Firestore listener:", error);
+    });
+
     function openAdminLoginModal() {
       if (isAdminLoggedIn) {
         openAdminBuilderModal();
@@ -1837,25 +1886,33 @@
       if (modal) modal.classList.add('hidden');
     }
 
-    function attemptAdminLogin() {
-      const user = document.getElementById('admin-user-input').value;
-      const pass = document.getElementById('admin-pass-input').value;
+    async function attemptAdminLogin() {
+      const email = document.getElementById('admin-user-input').value.trim();
+      const pass = document.getElementById('admin-pass-input').value.trim();
 
-      if (user === 'aslan' && pass === '1234') {
-        isAdminLoggedIn = true;
+      if (!email || !pass) {
+        showToast("Por favor ingresa tu correo y contraseña", "warning");
+        return;
+      }
+
+      try {
+        await auth.signInWithEmailAndPassword(email, pass);
         closeAdminLoginModal();
-        showToast("¡Bienvenido al Panel Administrador!", "success");
-        renderTierList(tftData);
+        showToast("¡Autenticación Administrador Exitosa!", "success");
         openAdminBuilderModal();
-      } else {
-        showToast("Usuario o contraseña incorrectos", "error");
+      } catch (err) {
+        console.error("Login Error:", err);
+        showToast("Credenciales de administrador inválidas: " + (err.message || ""), "error");
       }
     }
 
     function logoutAdmin() {
-      isAdminLoggedIn = false;
-      renderTierList(tftData);
-      showToast("Sesión de administrador cerrada", "info");
+      auth.signOut().then(() => {
+        isAdminLoggedIn = false;
+        closeAdminBuilderModal();
+        renderTierList(tftData);
+        showToast("Sesión de administrador cerrada", "info");
+      });
     }
 
     function openAdminBuilderModal(editId = null) {
@@ -1922,14 +1979,21 @@
       openAdminBuilderModal(compIdxId);
     }
 
-    function deletePublishedComp(compIdxId) {
-      if (!isAdminLoggedIn) return;
+    async function deletePublishedComp(compIdxId) {
+      if (!isAdminLoggedIn) {
+        showToast("Debes ser administrador para eliminar guías", "error");
+        return;
+      }
       if (confirm(`¿Estás seguro de que deseas eliminar permanentemente esta guía (${compIdxId})?`)) {
-        const idx = tftData.findIndex(c => c.id === compIdxId);
-        if (idx !== -1) {
-          tftData.splice(idx, 1);
+        try {
+          await db.collection("guias_tft").doc(compIdxId).delete();
+          const idx = tftData.findIndex(c => c.id === compIdxId);
+          if (idx !== -1) tftData.splice(idx, 1);
           renderTierList(tftData);
-          showToast("Guía eliminada correctamente", "info");
+          showToast("Guía eliminada permanentemente de la base de datos", "info");
+        } catch (err) {
+          console.error("Firestore Delete Error:", err);
+          showToast("Error al eliminar la guía: " + err.message, "error");
         }
       }
     }
@@ -2428,17 +2492,24 @@
         mejoresBuilds: builderData.mejoresBuilds
       };
 
-      if (editingCompId) {
-        const idx = tftData.findIndex(c => c.id === editingCompId);
-        if (idx !== -1) tftData[idx] = newComp;
-        else tftData.unshift(newComp);
-      } else {
-        tftData.unshift(newComp);
-      }
+      try {
+        await db.collection("guias_tft").doc(newComp.id).set(newComp);
 
-      renderTierList(tftData);
-      closeAdminBuilderModal();
-      showToast("¡Guía Guardada y Publicada Exitosamente!", "success");
+        if (editingCompId) {
+          const idx = tftData.findIndex(c => c.id === editingCompId);
+          if (idx !== -1) tftData[idx] = newComp;
+          else tftData.unshift(newComp);
+        } else {
+          tftData.unshift(newComp);
+        }
+
+        renderTierList(tftData);
+        closeAdminBuilderModal();
+        showToast("¡Guía Guardada y Publicada en Cloud Firestore Exitosamente!", "success");
+      } catch (err) {
+        console.error("Firestore Save Error:", err);
+        showToast("Error al guardar la guía en Firestore: " + err.message, "error");
+      }
     }
 
     // changeLanguage unificado arriba
