@@ -1522,7 +1522,33 @@
       actionButtons.forEach(btn => btn.style.visibility = 'hidden');
 
       try {
-        await new Promise(r => setTimeout(r, 500)); // Breve pausa para asegurarnos de que la tarjeta desplegada se vea limpia
+        // Pre-convertir todas las etiquetas SVG <image> del tablero a DataURI Base64 antes de llamar a html2canvas
+        const svgImages = Array.from(articleEl.querySelectorAll('svg image'));
+        await Promise.all(svgImages.map(img => {
+          return new Promise(resolve => {
+            const href = img.getAttribute('href') || img.getAttribute('xlink:href');
+            if (!href || href.startsWith('data:')) return resolve();
+            const temp = new Image();
+            temp.crossOrigin = 'anonymous';
+            temp.onload = () => {
+              try {
+                const cvs = document.createElement('canvas');
+                cvs.width = temp.naturalWidth || 80;
+                cvs.height = temp.naturalHeight || 80;
+                const ctx = cvs.getContext('2d');
+                ctx.drawImage(temp, 0, 0);
+                const dataUrl = cvs.toDataURL('image/png');
+                img.setAttribute('href', dataUrl);
+                img.setAttribute('xlink:href', dataUrl);
+              } catch (e) {}
+              resolve();
+            };
+            temp.onerror = () => resolve();
+            temp.src = href;
+          });
+        }));
+
+        await new Promise(r => setTimeout(r, 400));
 
         const canvas = await html2canvas(articleEl, {
           backgroundColor: '#0b0d0f',
@@ -1706,8 +1732,8 @@
                 <!-- Fondo Celda Oscura -->
                 <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" fill="#151822" />
                 
-                <!-- Imagen del Campeón -->
-                <image href="${champImg}" x="${cx - hw}" y="${cy - hh}" width="${hexWidth}" height="${hexHeight}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${clipId})" onerror="handleChampError(this, '${placed.campeon}')" />
+                <!-- Imagen del Campeón (Soporte Dual href y xlink:href para html2canvas) -->
+                <image href="${champImg}" xlink:href="${champImg}" x="${cx - hw}" y="${cy - hh}" width="${hexWidth}" height="${hexHeight}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${clipId})" onerror="handleChampError(this, '${placed.campeon}')" />
 
                 <!-- Borde de Coste Vectorial Nítido -->
                 <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" fill="none" stroke="${borderColor}" stroke-width="4.5" stroke-linejoin="round" />
@@ -1746,7 +1772,7 @@
                      onmouseenter="showItemTooltip(event, '${itemKey}')" 
                      onmouseleave="hideGlobalTooltip()">
                     <rect x="${ix}" y="${itemY}" width="${itemWidth}" height="${itemWidth}" rx="4" fill="#0b0d0f" stroke="${borderColor}" stroke-width="1.5" />
-                    <image href="${itemImg}" x="${ix + 1}" y="${itemY + 1}" width="${itemWidth - 2}" height="${itemWidth - 2}" preserveAspectRatio="xMidYMid slice" />
+                    <image href="${itemImg}" xlink:href="${itemImg}" x="${ix + 1}" y="${itemY + 1}" width="${itemWidth - 2}" height="${itemWidth - 2}" preserveAspectRatio="xMidYMid slice" />
                   </g>
                 `;
               });
