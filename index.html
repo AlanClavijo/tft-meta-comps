@@ -316,6 +316,19 @@
           </div>
         </div>
 
+        <!-- Vista Resumen Visual Tier List (Tier S, A, B, C, X) -->
+        <div id="tier-list-summary" class="mb-8 bg-[#17181a] border border-[#26282c] rounded-3xl p-5 shadow-2xl space-y-4">
+          <div class="flex items-center justify-between pb-3 border-b border-[#26282c]">
+            <h3 class="text-sm sm:text-base font-black text-white tracking-wide flex items-center gap-2">
+              <span>🏆</span> RESUMEN VISUAL DE TIER LIST
+            </h3>
+            <span class="text-xs font-semibold text-gray-400">Guías en directo desde Firebase</span>
+          </div>
+          <div id="tier-summary-rows" class="space-y-3">
+            <!-- Inyectado dinámicamente con filas S, A, B, C, X -->
+          </div>
+        </div>
+
         <!-- Contenedor Dinámico de Composiciones -->
         <div id="comps-container" class="space-y-8">
           <!-- Inyectado dinámicamente -->
@@ -925,7 +938,17 @@
     const tierBadges = {
       S: 'bg-[#fe3e4b] text-white',
       A: 'bg-[#eea402] text-black',
-      B: 'bg-[#3b82f6] text-white'
+      B: 'bg-[#3b82f6] text-white',
+      C: 'bg-[#a855f7] text-white',
+      X: 'bg-[#64748b] text-white'
+    };
+
+    const tierBadgeStyle = {
+      S: { bg: '#fe3e4b', text: '#ffffff', label: 'TIER S' },
+      A: { bg: '#eea402', text: '#000000', label: 'TIER A' },
+      B: { bg: '#3b82f6', text: '#ffffff', label: 'TIER B' },
+      C: { bg: '#a855f7', text: '#ffffff', label: 'TIER C' },
+      X: { bg: '#64748b', text: '#ffffff', label: 'TIER X' }
     };
 
     const augmentTierBg = {
@@ -934,7 +957,85 @@
       Prismático: 'bg-purple-700 text-purple-100 border-purple-400'
     };
 
+    // Renderiza la Vista Resumen Visual de la Tier List por Filas (Tier S, A, B, C, X)
+    function renderTierListSummary(data) {
+      const summaryContainer = document.getElementById('tier-summary-rows');
+      if (!summaryContainer) return;
+
+      const tiers = ['S', 'A', 'B', 'C', 'X'];
+      let html = '';
+
+      tiers.forEach(t => {
+        const compsInTier = data.filter(c => c.tier === t);
+        if (compsInTier.length === 0) return;
+
+        const badgeInfo = tierBadgeStyle[t] || { bg: '#64748b', text: '#fff', label: `TIER ${t}` };
+
+        const compsCardsHTML = compsInTier.map(comp => {
+          // Obtener campeones clave de esta comp
+          const champBadgesHTML = comp.campeones.map(ch => {
+            const bColor = costBorderHex[ch.coste] || '#a1a1aa';
+            const itemIconsHTML = (ch.items && ch.items.length > 0) ? `
+              <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 flex gap-0.5 z-10">
+                ${ch.items.slice(0, 3).map(it => `
+                  <div class="w-3 h-3 rounded-sm border border-black bg-[#0b0d0f] p-0.5 overflow-hidden">
+                    <img src="${getItemImage(it)}" alt="${it}" class="w-full h-full object-cover" />
+                  </div>
+                `).join('')}
+              </div>
+            ` : '';
+
+            return `
+              <div class="relative group/ch shrink-0" title="${ch.nombre}">
+                <div class="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-[#0b0d0f] border-2 overflow-hidden shadow-md flex items-center justify-center relative" style="border-color: ${bColor};">
+                  <img src="${getChampionImage(ch.nombre)}" alt="${ch.nombre}" class="w-full h-full object-cover aspect-square" onerror="handleChampError(this, '${ch.nombre}')" />
+                </div>
+                ${itemIconsHTML}
+              </div>
+            `;
+          }).join('');
+
+          return `
+            <a href="#${comp.id}" class="bg-[#121316] hover:bg-[#1a1c22] border border-[#26282c] hover:border-amber-500/50 rounded-2xl p-2.5 flex flex-col gap-2 transition-all shadow-lg group">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-black text-white group-hover:text-amber-400 transition-colors truncate max-w-[180px] sm:max-w-[220px]">${comp.nombre}</span>
+                <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full ${comp.tipoDeDano === 'AD' ? 'bg-amber-500/20 text-amber-300' : comp.tipoDeDano === 'AP' ? 'bg-blue-500/20 text-blue-300' : 'bg-green-500/20 text-green-300'}">${comp.tipoDeDano}</span>
+              </div>
+              <div class="flex items-center gap-2 overflow-x-auto pb-1 no-scrollbar">
+                ${champBadgesHTML}
+              </div>
+            </a>
+          `;
+        }).join('');
+
+        html += `
+          <div class="flex flex-col sm:flex-row items-stretch sm:items-center gap-3 bg-[#0b0d0f] p-3 rounded-2xl border border-[#26282c]">
+            <!-- Etiqueta lateral Tier -->
+            <div class="w-full sm:w-20 shrink-0 flex sm:flex-col items-center justify-center p-2 rounded-xl text-center font-black shadow-md" style="background-color: ${badgeInfo.bg}; color: ${badgeInfo.text};">
+              <span class="text-lg sm:text-2xl leading-none">${t}</span>
+              <span class="text-[9px] uppercase tracking-wider font-extrabold opacity-90 ml-2 sm:ml-0 sm:mt-0.5">TIER ${t}</span>
+            </div>
+            <!-- Lista horizontal de composiciones en esta tier -->
+            <div class="flex-1 grid grid-cols-1 sm:grid-cols-2 xl:grid-cols-3 gap-2.5 overflow-x-auto">
+              ${compsCardsHTML}
+            </div>
+          </div>
+        `;
+      });
+
+      summaryContainer.innerHTML = html;
+    }
+
     function renderTierList(data) {
+      // Ordenar composiciones por campo 'orden' si existe
+      data.sort((a, b) => {
+        const orderA = typeof a.orden === 'number' ? a.orden : 999;
+        const orderB = typeof b.orden === 'number' ? b.orden : 999;
+        return orderA - orderB;
+      });
+
+      renderTierListSummary(data);
+
       const container = document.getElementById('comps-container');
       if (!container) return;
 
@@ -1068,9 +1169,17 @@
                 </div>
               </div>
 
-              <!-- Flecha Interactiva & Controles Admin -->
-              <div class="flex items-center gap-3 self-end sm:self-center">
+              <!-- Flecha Interactiva & Controles Admin (Reordenar, Editar, Eliminar) -->
+              <div class="flex items-center gap-2 self-end sm:self-center">
                 ${isAdminLoggedIn ? `
+                  <div class="flex items-center gap-1 bg-[#0b0d0f] border border-[#26282c] rounded-xl p-1">
+                    <button onclick="event.stopPropagation(); moveCompOrder('${comp.id}', -1)" title="Subir prioridad" class="p-1 hover:bg-amber-500/20 text-amber-400 rounded font-black text-xs">
+                      ▲
+                    </button>
+                    <button onclick="event.stopPropagation(); moveCompOrder('${comp.id}', 1)" title="Bajar prioridad" class="p-1 hover:bg-amber-500/20 text-amber-400 rounded font-black text-xs">
+                      ▼
+                    </button>
+                  </div>
                   <button onclick="event.stopPropagation(); editPublishedComp('${comp.id}')" class="px-2.5 py-1 bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black rounded-lg text-xs font-black transition-colors border border-amber-500/40">
                     ✏️ Editar
                   </button>
@@ -1078,7 +1187,7 @@
                     🗑️ Eliminar
                   </button>
                 ` : ''}
-                <div class="flex items-center gap-1.5 text-xs font-bold text-amber-400">
+                <div class="flex items-center gap-1.5 text-xs font-bold text-amber-400 ml-1">
                   <span>Detalles</span>
                   <span id="arrow-${comp.id}" class="inline-block transition-transform duration-300 font-black text-sm">v</span>
                 </div>
@@ -1193,6 +1302,37 @@
       filtrarComps(currentFilterCriterio);
     }
 
+    // Mover orden de posición de composiciones y guardar en Firestore
+    async function moveCompOrder(compId, delta) {
+      const idx = tftData.findIndex(c => c.id === compId);
+      if (idx === -1) return;
+      const targetIdx = idx + delta;
+      if (targetIdx < 0 || targetIdx >= tftData.length) return;
+
+      // Intercambiar posiciones en el array
+      const temp = tftData[idx];
+      tftData[idx] = tftData[targetIdx];
+      tftData[targetIdx] = temp;
+
+      // Asignar campo orden actualizado
+      tftData.forEach((c, i) => { c.orden = i; });
+
+      renderTierList(tftData);
+
+      // Persistir el orden en Firestore
+      try {
+        const batch = db.batch();
+        const ref1 = db.collection("guias_tft").doc(tftData[idx].id);
+        const ref2 = db.collection("guias_tft").doc(tftData[targetIdx].id);
+        batch.update(ref1, { orden: idx });
+        batch.update(ref2, { orden: targetIdx });
+        await batch.commit();
+        showToast("Orden de guías actualizado", "success");
+      } catch (err) {
+        console.warn("Error guardando orden en Firestore:", err);
+      }
+    }
+
     // Toggle Acordeón Fluido
     function toggleCompCard(id) {
       const details = document.getElementById(`details-${id}`);
@@ -1233,7 +1373,7 @@
         let match = false;
         if (criterio === 'ALL') {
           match = true;
-        } else if (criterio === 'S' || criterio === 'A' || criterio === 'B') {
+        } else if (criterio === 'S' || criterio === 'A' || criterio === 'B' || criterio === 'C' || criterio === 'X') {
           match = comp.tier === criterio;
         } else if (criterio === 'FISICO') {
           match = comp.tipoDeDano === 'AD' || comp.tipoDeDano === 'Híbrido';
@@ -1254,7 +1394,7 @@
       const toc = document.getElementById('sidebar-toc');
       if (!toc) return;
 
-      const tiers = ['S', 'A', 'B'];
+      const tiers = ['S', 'A', 'B', 'C', 'X'];
 
       toc.innerHTML = tiers.map(t => {
         const list = tftData.filter(c => c.tier === t);
@@ -1269,10 +1409,12 @@
           </li>
         `).join('');
 
+        const badgeColor = tierBadgeStyle[t] ? tierBadgeStyle[t].bg : '#eea402';
+
         return `
           <div>
             <div class="text-xs font-black text-gray-300 uppercase tracking-wider mb-2 flex items-center gap-1.5">
-              <span class="w-2.5 h-2.5 rounded-sm ${t === 'S' ? 'bg-[#fe3e4b]' : 'bg-[#eea402]'} inline-block"></span>
+              <span class="w-2.5 h-2.5 rounded-sm inline-block" style="background-color: ${badgeColor};"></span>
               Tier ${t}
             </div>
             <ul class="pl-3 space-y-1 border-l border-[#26282c]">
@@ -2322,7 +2464,9 @@
           <select id="builder-select-tier" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white">
             <option value="S">Tier S (Meta OP)</option>
             <option value="A">Tier A (Fuerte)</option>
-            <option value="B">Tier B (Situacional)</option>
+            <option value="B">Tier B (Media)</option>
+            <option value="C">Tier C (Situacional)</option>
+            <option value="X">Tier X (Nicho / Fun)</option>
           </select>
         </div>
         <div>
