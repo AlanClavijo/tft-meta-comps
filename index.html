@@ -382,16 +382,18 @@
           </nav>
         </div>
 
-        <!-- Ad Slot Publicitario Sidebar (Google AdSense Oficial) -->
+        <!-- Ad Slot Publicitario Sidebar (Adsterra Oficial 300x250) -->
         <div class="w-[300px] h-[250px] mx-auto border border-[#26282c] bg-[#121316] rounded-3xl overflow-hidden flex items-center justify-center shadow-xl relative">
-          <!-- Bloque de Anuncio Google AdSense -->
-          <ins class="adsbygoogle"
-               style="display:inline-block;width:300px;height:250px"
-               data-ad-client="ca-pub-1862247020827439"
-               data-ad-slot="auto"></ins>
           <script>
-               (adsbygoogle = window.adsbygoogle || []).push({});
+            atOptions = {
+              'key' : '5c78e5fa60cfa3afae3c7eab42ccce06',
+              'format' : 'iframe',
+              'height' : 250,
+              'width' : 300,
+              'params' : {}
+            };
           </script>
+          <script src="https://www.highrevenueformat.com/5c78e5fa60cfa3afae3c7eab42ccce06/invoke.js"></script>
         </div>
 
       </aside>
@@ -1306,16 +1308,12 @@
           </article>
         `;
 
-        // Anuncio In-Feed entre composiciones (Cada 2 composiciones)
+        // Anuncio In-Feed Native Banner entre composiciones (Cada 2 composiciones)
         if ((idx + 1) % 2 === 0) {
           html += `
-            <div class="w-full my-6 p-4 border border-[#26282c] bg-[#121316] rounded-3xl overflow-hidden shadow-xl text-center">
-              <ins class="adsbygoogle"
-                   style="display:block"
-                   data-ad-format="fluid"
-                   data-ad-layout-key="-fb+5w+4e-db+86"
-                   data-ad-client="ca-pub-1862247020827439"
-                   data-ad-slot="auto"></ins>
+            <div class="w-full my-6 p-4 border border-[#26282c] bg-[#121316] rounded-3xl overflow-hidden shadow-xl text-center flex justify-center">
+              <script async="async" data-cfasync="false" src="https://pl31435972.profitableratecpmnetwork.com/3d46d4b7eb151d4f598478ccdc139542/invoke.js"><\/script>
+              <div id="container-3d46d4b7eb151d4f598478ccdc139542"></div>
             </div>
           `;
         }
@@ -1323,11 +1321,17 @@
         if (idx === 0) {
           html += `
             <div class="block lg:hidden my-6 flex justify-center">
-              <div class="w-[320px] h-[50px] border border-[#26282c] bg-[#121316] rounded-2xl overflow-hidden shadow-lg flex items-center justify-center">
-                <ins class="adsbygoogle"
-                     style="display:inline-block;width:320px;height:50px"
-                     data-ad-client="ca-pub-1862247020827439"
-                     data-ad-slot="auto"></ins>
+              <div class="w-[300px] h-[250px] border border-[#26282c] bg-[#121316] rounded-2xl overflow-hidden shadow-lg flex items-center justify-center">
+                <script>
+                  atOptions = {
+                    'key' : '5c78e5fa60cfa3afae3c7eab42ccce06',
+                    'format' : 'iframe',
+                    'height' : 250,
+                    'width' : 300,
+                    'params' : {}
+                  };
+                <\/script>
+                <script src="https://www.highrevenueformat.com/5c78e5fa60cfa3afae3c7eab42ccce06/invoke.js"><\/script>
               </div>
             </div>
           `;
