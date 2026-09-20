@@ -972,49 +972,50 @@
         const badgeInfo = tierBadgeStyle[t] || { bg: '#64748b', text: '#fff', label: `TIER ${t}` };
 
         const compsCardsHTML = compsInTier.map(comp => {
-          // Filtrar campeones para mostrar en la vista resumen: sólo los seleccionados en mejoresBuilds (Main Carry y Main Tanque)
-          let targetChamps = [];
-          if (comp.mejoresBuilds && comp.mejoresBuilds.length > 0) {
-            targetChamps = comp.mejoresBuilds.map(b => {
-              const matchedChamp = comp.campeones.find(ch => ch.nombre === b.campeon);
-              return matchedChamp || { nombre: b.campeon, coste: b.coste || 4, items: b.items || [] };
-            }).filter(c => c.nombre);
-          }
-          if (targetChamps.length === 0) {
-            targetChamps = comp.campeones;
+          // Obtener solo el Carry principal (el primero de mejoresBuilds)
+          let mainCarry = null;
+          if (comp.mejoresBuilds && comp.mejoresBuilds.length > 0 && comp.mejoresBuilds[0].campeon) {
+            const b = comp.mejoresBuilds[0];
+            const matchedChamp = comp.campeones.find(ch => ch.nombre === b.campeon);
+            mainCarry = matchedChamp || { nombre: b.campeon, coste: b.coste || 4, items: b.items || [] };
+          } else if (comp.campeones && comp.campeones.length > 0) {
+            mainCarry = comp.campeones[0];
           }
 
-          const champBadgesHTML = targetChamps.map(ch => {
-            const bColor = costBorderHex[ch.coste] || '#a1a1aa';
-            const itemIconsHTML = (ch.items && ch.items.length > 0) ? `
-              <div class="absolute -bottom-1 left-1/2 -translate-x-1/2 flex gap-0.5 z-10">
-                ${ch.items.slice(0, 3).map(it => `
-                  <div class="w-3.5 h-3.5 rounded-sm border border-black bg-[#0b0d0f] p-0.5 overflow-hidden shadow-md">
-                    <img src="${getItemImage(it)}" alt="${it}" class="w-full h-full object-cover" />
-                  </div>
-                `).join('')}
-              </div>
-            ` : '';
+          if (!mainCarry) return '';
 
-            return `
-              <div class="relative group/ch shrink-0 mb-1" title="${ch.nombre}">
-                <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-[#0b0d0f] border-2 overflow-hidden shadow-md flex items-center justify-center relative" style="border-color: ${bColor};">
-                  <img src="${getChampionImage(ch.nombre)}" alt="${ch.nombre}" class="w-full h-full object-cover aspect-square" onerror="handleChampError(this, '${ch.nombre}')" />
+          const bColor = costBorderHex[mainCarry.coste] || '#a1a1aa';
+          const itemIconsHTML = (mainCarry.items && mainCarry.items.length > 0) ? `
+            <div class="flex gap-1 items-center justify-center mt-1">
+              ${mainCarry.items.slice(0, 3).map(it => `
+                <div class="w-4 h-4 rounded-md border border-gray-800 bg-[#0b0d0f] p-0.5 overflow-hidden shadow-sm" title="${it}">
+                  <img src="${getItemImage(it)}" alt="${it}" class="w-full h-full object-cover" />
                 </div>
-                ${itemIconsHTML}
-              </div>
-            `;
-          }).join('');
+              `).join('')}
+            </div>
+          ` : '';
 
           return `
-            <a href="#${comp.id}" class="bg-[#121316] hover:bg-[#1a1c22] border border-[#26282c] hover:border-amber-500/50 rounded-2xl p-3 flex flex-col gap-2 transition-all shadow-lg group">
-              <div class="flex items-center justify-between gap-2">
-                <span class="text-xs font-black text-white group-hover:text-amber-400 transition-colors truncate max-w-[180px] sm:max-w-[220px]">${comp.nombre}</span>
-                <span class="text-[9px] font-extrabold px-1.5 py-0.5 rounded-full ${comp.tipoDeDano === 'AD' ? 'bg-amber-500/20 text-amber-300' : comp.tipoDeDano === 'AP' ? 'bg-blue-500/20 text-blue-300' : 'bg-green-500/20 text-green-300'}">${comp.tipoDeDano}</span>
+            <a href="#${comp.id}" class="bg-[#121316] hover:bg-[#1a1c22] border border-[#26282c] hover:border-amber-500/50 rounded-2xl p-3 flex items-center justify-between gap-3 transition-all shadow-lg group">
+              <!-- Avatar Carry Único -->
+              <div class="flex items-center gap-3">
+                <div class="relative shrink-0" title="${mainCarry.nombre}">
+                  <div class="w-12 h-12 rounded-xl bg-[#0b0d0f] border-2 overflow-hidden shadow-md flex items-center justify-center relative" style="border-color: ${bColor};">
+                    <img src="${getChampionImage(mainCarry.nombre)}" alt="${mainCarry.nombre}" class="w-full h-full object-cover aspect-square" onerror="handleChampError(this, '${mainCarry.nombre}')" />
+                  </div>
+                </div>
+                <!-- Nombre de Comp y Objetos -->
+                <div class="flex flex-col justify-center">
+                  <span class="text-xs font-black text-white group-hover:text-amber-400 transition-colors line-clamp-1">${comp.nombre}</span>
+                  <div class="flex items-center gap-2 mt-0.5">
+                    <span class="text-[10px] font-bold text-gray-400">${mainCarry.nombre}</span>
+                    ${itemIconsHTML}
+                  </div>
+                </div>
               </div>
-              <div class="flex items-center gap-3 overflow-x-auto pb-1 no-scrollbar">
-                ${champBadgesHTML}
-              </div>
+
+              <!-- Tag de Tipo de Daño -->
+              <span class="text-[9px] font-extrabold px-2 py-0.5 rounded-full ${comp.tipoDeDano === 'AD' ? 'bg-amber-500/20 text-amber-300' : comp.tipoDeDano === 'AP' ? 'bg-blue-500/20 text-blue-300' : 'bg-green-500/20 text-green-300'} shrink-0">${comp.tipoDeDano}</span>
             </a>
           `;
         }).join('');
