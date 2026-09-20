@@ -1482,101 +1482,49 @@
       const articleEl = document.getElementById(compId);
       if (!comp || !articleEl) return;
 
+      const detailsEl = document.getElementById(`details-${compId}`);
+      const arrowEl = document.getElementById(`arrow-${compId}`);
+      let originallyClosed = false;
+
       showToast(`📸 Generando infografía JPG de ${comp.nombre}...`, 'info');
 
-      // Crear tarjeta limpia de exportación estilizada tipo TikTok
-      const exportContainer = document.createElement('div');
-      exportContainer.id = `export-card-${compId}`;
-      exportContainer.style.position = 'fixed';
-      exportContainer.style.left = '-9999px';
-      exportContainer.style.top = '0';
-      exportContainer.style.width = '700px';
-      exportContainer.style.backgroundColor = '#0b0d0f';
-      exportContainer.style.color = '#ffffff';
-      exportContainer.style.fontFamily = 'system-ui, -apple-system, sans-serif';
-      exportContainer.style.border = '2px solid #eea402';
-      exportContainer.style.borderRadius = '28px';
-      exportContainer.style.padding = '24px';
-      exportContainer.style.boxSizing = 'border-box';
-
-      // 1. Marca de Agua Encabezado Superior (Estilo TikTok Gamer)
-      const headerWM = document.createElement('div');
-      headerWM.style.display = 'flex';
-      headerWM.style.alignItems = 'center';
-      headerWM.style.justifyContent = 'space-between';
-      headerWM.style.backgroundColor = '#17181a';
-      headerWM.style.border = '1px solid #26282c';
-      headerWM.style.borderRadius = '18px';
-      headerWM.style.padding = '12px 18px';
-      headerWM.style.marginBottom = '20px';
-
-      const logoImg = document.createElement('img');
-      logoImg.src = './scr/img/logo.svg';
-      logoImg.style.width = '32px';
-      logoImg.style.height = '32px';
-
-      const brandTitle = document.createElement('span');
-      brandTitle.innerText = 'TFT META COMPS';
-      brandTitle.style.fontWeight = '900';
-      brandTitle.style.fontSize = '16px';
-      brandTitle.style.color = '#eea402';
-      brandTitle.style.letterSpacing = '1px';
-      brandTitle.style.marginLeft = '10px';
-
-      const brandLeft = document.createElement('div');
-      brandLeft.style.display = 'flex';
-      brandLeft.style.alignItems = 'center';
-      brandLeft.appendChild(logoImg);
-      brandLeft.appendChild(brandTitle);
-
-      const brandUrl = document.createElement('div');
-      brandUrl.innerText = '🌐 aslandevstudio.com';
-      brandUrl.style.fontSize = '13px';
-      brandUrl.style.fontWeight = '800';
-      brandUrl.style.color = '#38bdf8';
-
-      headerWM.appendChild(brandLeft);
-      headerWM.appendChild(brandUrl);
-      exportContainer.appendChild(headerWM);
-
-      // 2. Clonar el contenido de la tarjeta sin botones
-      const clone = articleEl.cloneNode(true);
-      
-      // Asegurar que las secciones desplegables estén visibles en el clon
-      const cloneDetails = clone.querySelector('.detalles-expandidos');
-      if (cloneDetails) {
-        cloneDetails.style.maxHeight = 'none';
-        cloneDetails.style.opacity = '1';
-        cloneDetails.style.display = 'block';
+      // 1. Si está cerrado, desplegarlo para la captura
+      if (detailsEl && detailsEl.classList.contains('max-h-0')) {
+        originallyClosed = true;
+        detailsEl.classList.remove('max-h-0', 'opacity-0');
+        detailsEl.classList.add('max-h-[3000px]', 'opacity-100');
+        detailsEl.style.maxHeight = '3000px';
       }
 
-      // Remover botones, fallback icons previos y elementos interactivos
-      clone.querySelectorAll('button, #arrow-' + compId, '.detalles-expandidos button, .fallback-icon').forEach(el => el.remove());
+      // 2. Insertar marca de agua superior e inferior temporalmente en la tarjeta real
+      const headerWM = document.createElement('div');
+      headerWM.className = 'export-wm-header w-full bg-[#17181a] border border-[#26282c] p-3 rounded-2xl mb-4 flex items-center justify-between shadow-md';
+      headerWM.innerHTML = `
+        <div class="flex items-center gap-2">
+          <img src="./scr/img/logo.svg" style="width:28px;height:28px;" />
+          <span class="font-extrabold text-sm text-amber-400 tracking-wider">TFT META COMPS</span>
+        </div>
+        <div class="text-[12px] font-bold text-sky-400">
+          🌐 aslandevstudio.com
+        </div>
+      `;
 
-      exportContainer.appendChild(clone);
-
-      // 3. Marca de Agua Pie Inferior
       const footerWM = document.createElement('div');
+      footerWM.className = 'export-wm-footer w-full text-center py-2.5 border-t border-[#26282c] mt-4 text-[10px] font-black text-amber-400 tracking-widest uppercase';
       footerWM.innerText = '© 2026 ASLAN DEV STUDIO • GUÍAS Y TIER LIST DE TFT';
-      footerWM.style.textAlign = 'center';
-      footerWM.style.paddingTop = '16px';
-      footerWM.style.marginTop = '20px';
-      footerWM.style.borderTop = '1px solid #26282c';
-      footerWM.style.fontSize = '11px';
-      footerWM.style.fontWeight = '900';
-      footerWM.style.color = '#eea402';
-      footerWM.style.letterSpacing = '2px';
 
-      exportContainer.appendChild(footerWM);
+      // Insertar en la tarjeta visible
+      articleEl.insertBefore(headerWM, articleEl.firstChild);
+      articleEl.appendChild(footerWM);
 
-      document.body.appendChild(exportContainer);
+      // Ocultar botones de interacción durante la captura
+      const actionButtons = articleEl.querySelectorAll('button, #arrow-' + compId);
+      actionButtons.forEach(btn => btn.style.visibility = 'hidden');
 
       try {
-        // Sincronizar directamente las imágenes cargadas del elemento original al clon
-        await syncAndPrepareImagesForExport(articleEl, clone);
-        await new Promise(r => setTimeout(r, 300));
+        await new Promise(r => setTimeout(r, 500)); // Breve pausa para asegurarnos de que la tarjeta desplegada se vea limpia
 
-        const canvas = await html2canvas(exportContainer, {
+        const canvas = await html2canvas(articleEl, {
           backgroundColor: '#0b0d0f',
           scale: 2,
           useCORS: true,
@@ -1596,8 +1544,15 @@
         console.error("Error al exportar imagen:", err);
         showToast("❌ Error al exportar la imagen.", 'error');
       } finally {
-        if (exportContainer && exportContainer.parentNode) {
-          exportContainer.parentNode.removeChild(exportContainer);
+        // Restaurar estado visual original de la tarjeta
+        headerWM.remove();
+        footerWM.remove();
+        actionButtons.forEach(btn => btn.style.visibility = 'visible');
+
+        if (originallyClosed && detailsEl) {
+          detailsEl.classList.remove('max-h-[3000px]', 'opacity-100');
+          detailsEl.classList.add('max-h-0', 'opacity-0');
+          detailsEl.style.maxHeight = '';
         }
       }
     }
