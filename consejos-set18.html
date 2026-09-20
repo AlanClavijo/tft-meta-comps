@@ -71,10 +71,10 @@
       
       <!-- NAVEGACIÓN DESKTOP -->
       <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-gray-400">
-        <a href="index.html" class="hover:text-white transition-colors">Inicio / Tier List</a>
-        <a href="consejos-set18.html" class="text-amber-400 hover:text-white transition-colors">Consejos Set 18 TFT</a>
-        <a href="set17.html" class="hover:text-amber-400 transition-colors">Set 17</a>
-        <a href="aprender.html" class="hover:text-amber-400 transition-colors">Aprender TFT</a>
+        <a href="index.html" class="hover:text-white transition-colors" data-i18n="navHome">Inicio / Tier List</a>
+        <a href="consejos-set18.html" class="text-amber-400 hover:text-white transition-colors" data-i18n="navComps">Consejos Set 18 TFT</a>
+        <a href="set17.html" class="hover:text-amber-400 transition-colors" data-i18n="navSet17">Set 17</a>
+        <a href="aprender.html" class="hover:text-amber-400 transition-colors" data-i18n="navLearn">Aprender TFT</a>
         
         <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR DESKTOP -->
         <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
@@ -146,10 +146,10 @@
     
     <!-- Encabezado Principal -->
     <header class="mb-6">
-      <h1 class="font-black text-2xl md:text-3xl text-white tracking-tight">
+      <h1 class="font-black text-2xl md:text-3xl text-white tracking-tight" data-i18n="title">
         Consejos del Set 18 TFT: Enchanted Wilds
       </h1>
-      <p class="text-gray-400 text-sm mt-1">Estrategias avanzadas, interacciones secretas y optimización de recursos.</p>
+      <p class="text-gray-400 text-sm mt-1" data-i18n="subtitle">Estrategias avanzadas, interacciones secretas y optimización de recursos.</p>
     </header>
 
     <!-- Sección Superior: Grid 2 Columnas en Escritorio (Índice + Anuncio A la Derecha) / 1 Columna en Móviles -->
@@ -161,7 +161,7 @@
           <svg class="w-4 h-4 text-amber-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 10h16M4 14h16M4 18h16"></path>
           </svg>
-          Índice de Consejos Set 18
+          <span data-i18n="tocHeader">Índice de Consejos Set 18</span>
         </h2>
         <ol class="space-y-3 text-sm text-gray-300 font-medium">
           <li>
@@ -354,6 +354,36 @@
   </footer>
 
   <script>
+    const consejos18I18n = {
+      es: {
+        navHome: "Inicio / Tier List",
+        navComps: "Consejos Set 18 TFT",
+        navSet17: "Set 17",
+        navLearn: "Aprender TFT",
+        title: "Consejos del Set 18 TFT: Enchanted Wilds",
+        subtitle: "Estrategias avanzadas, interacciones secretas y optimización de recursos.",
+        tocHeader: "Índice de Consejos Set 18"
+      },
+      en: {
+        navHome: "Home / Tier List",
+        navComps: "Set 18 TFT Tips",
+        navSet17: "Set 17",
+        navLearn: "Learn TFT",
+        title: "Set 18 TFT Tips: Enchanted Wilds",
+        subtitle: "Advanced strategies, secret interactions, and resource optimization.",
+        tocHeader: "Set 18 Tips Index"
+      },
+      pt: {
+        navHome: "Início / Lista de Níveis",
+        navComps: "Dicas Set 18 TFT",
+        navSet17: "Conjunto 17",
+        navLearn: "Aprender TFT",
+        title: "Dicas do Set 18 TFT: Enchanted Wilds",
+        subtitle: "Estratégias avançadas, interações secretas e otimização de recursos.",
+        tocHeader: "Índice de Dicas do Set 18"
+      }
+    };
+
     function toggleMobileMenu() {
       const drawer = document.getElementById('mobile-menu-drawer');
       const content = document.getElementById('mobile-menu-content');
@@ -371,6 +401,13 @@
 
     function changeLanguage(lang) {
       localStorage.setItem('tft_lang', lang);
+      const t = consejos18I18n[lang] || consejos18I18n.es;
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerText = t[key];
+      });
+
       const select = document.getElementById('lang-select');
       if (select) select.value = lang;
       const selectMobile = document.getElementById('lang-select-mobile');

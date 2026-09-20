@@ -75,10 +75,10 @@
       
       <!-- NAVEGACIÓN DESKTOP -->
       <div class="hidden md:flex items-center space-x-6 text-sm font-semibold text-gray-400">
-        <a href="index.html" class="hover:text-amber-400 transition-colors">Inicio / Tier List</a>
-        <a href="consejos-set18.html" class="hover:text-amber-400 transition-colors">Consejos Set 18 TFT</a>
-        <a href="set17.html" class="hover:text-amber-400 transition-colors">Set 17</a>
-        <a href="aprender.html" class="hover:text-amber-400 transition-colors">Aprender TFT</a>
+        <a href="index.html" class="hover:text-amber-400 transition-colors" data-i18n="navHome">Inicio / Tier List</a>
+        <a href="consejos-set18.html" class="hover:text-amber-400 transition-colors" data-i18n="navComps">Consejos Set 18 TFT</a>
+        <a href="set17.html" class="hover:text-amber-400 transition-colors" data-i18n="navSet17">Set 17</a>
+        <a href="aprender.html" class="hover:text-amber-400 transition-colors" data-i18n="navLearn">Aprender TFT</a>
         
         <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR DESKTOP -->
         <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
@@ -153,30 +153,30 @@
       <div class="absolute -right-16 -top-16 w-60 h-60 bg-purple-500/10 rounded-full filter blur-3xl"></div>
       
       <div class="flex items-center gap-3">
-        <span class="px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/40">
+        <span class="px-3.5 py-1 rounded-full text-xs font-black uppercase tracking-wider bg-purple-500/20 text-purple-300 border border-purple-500/40" data-i18n="badge">
           💎 GUÍA OFICIAL DE ARTEFACTOS
         </span>
         <span class="text-xs font-bold text-amber-400">Set 18: Enchanted Wilds</span>
       </div>
 
-      <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight">
+      <h1 class="text-2xl sm:text-4xl font-black text-white tracking-tight" data-i18n="title">
         Guía de artefactos del set 18 de TFT: Los mejores artefactos para cada campeón
       </h1>
 
-      <p class="text-sm text-gray-300 leading-relaxed max-w-4xl">
+      <p class="text-sm text-gray-300 leading-relaxed max-w-4xl" data-i18n="heroText1">
         Los artefactos son de los objetos más poderosos en TFT, pero sus efectos inusuales hacen que asignarlos sea más complejo que los objetos estándar. El artefacto correcto puede transformar por completo a un campeón, mientras que en un portador incorrecto se puede desperdiciar la mayor parte de su valor.
       </p>
 
-      <p class="text-xs text-gray-400 leading-relaxed max-w-4xl">
+      <p class="text-xs text-gray-400 leading-relaxed max-w-4xl" data-i18n="heroText2">
         Esta guía abarca los mejores portadores de artefactos en el Set 18 de TFT: Enchanted Wilds. Una vez que encuentres al portador ideal, consulta nuestra página de composiciones para conocer el meta y las construcciones más actualizadas.
       </p>
 
       <div class="pt-2 flex items-center gap-4 flex-wrap">
         <a href="index.html" class="px-5 py-2.5 rounded-2xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-xs shadow-xl hover:brightness-110 transition-all flex items-center gap-2">
-          <span>🏆</span> Ver Tier List de Composiciones
+          <span>🏆</span> <span data-i18n="btnComps">Ver Tier List de Composiciones</span>
         </a>
         <a href="consejos-set18.html" class="px-5 py-2.5 rounded-2xl bg-[#121316] border border-[#26282c] text-gray-300 hover:text-white font-bold text-xs transition-all flex items-center gap-2">
-          <span>💡</span> Consejos del Set 18
+          <span>💡</span> <span data-i18n="btnTips">Consejos del Set 18</span>
         </a>
       </div>
     </header>
@@ -184,9 +184,9 @@
     <!-- Bloque 1: Los mejores portadores de artefactos en el parche 18.2 -->
     <section class="bg-[#17181a] border border-[#26282c] rounded-3xl p-6 shadow-xl space-y-4">
       <h2 class="text-xl font-black text-amber-400 flex items-center gap-2">
-        <span>🔥</span> Los mejores portadores de artefactos en el parche 18.2
+        <span>🔥</span> <span data-i18n="secPatchTitle">Los mejores portadores de artefactos en el parche 18.2</span>
       </h2>
-      <p class="text-xs text-gray-400">
+      <p class="text-xs text-gray-400" data-i18n="secPatchSub">
         Si necesitas elegir rápidamente desde un Yunque de Artefactos, estas son algunas de las combinaciones más fuertes del set:
       </p>
 
@@ -365,6 +365,66 @@
   </footer>
 
   <script>
+    const artefactosI18n = {
+      es: {
+        badge: "💎 GUÍA OFICIAL DE ARTEFACTOS",
+        title: "Guía de artefactos del set 18 de TFT: Los mejores artefactos para cada campeón",
+        heroText1: "Los artefactos son de los objetos más poderosos en TFT, pero sus efectos inusuales hacen que asignarlos sea más complejo que los objetos estándar. El artefacto correcto puede transformar por completo a un campeón, mientras que en un portador incorrecto se puede desperdiciar la mayor parte de su valor.",
+        heroText2: "Esta guía abarca los mejores portadores de artefactos en el Set 18 de TFT: Enchanted Wilds. Una vez que encuentres al portador ideal, consulta nuestra página de composiciones para conocer el meta y las construcciones más actualizadas.",
+        btnComps: "Ver Tier List de Composiciones",
+        btnTips: "Consejos del Set 18",
+        secPatchTitle: "Los mejores portadores de artefactos en el parche 18.2",
+        secPatchSub: "Si necesitas elegir rápidamente desde un Yunque de Artefactos, estas son algunas de las combinaciones más fuertes del set:",
+        cost1: "1 Campeones de Coste",
+        cost2: "2 Campeones de Coste",
+        cost3: "3 Campeones de Coste",
+        cost4: "4 Campeones de Coste",
+        cost5: "5 Campeones de Coste",
+        navHome: "Inicio / Tier List",
+        navComps: "Consejos Set 18 TFT",
+        navSet17: "Set 17",
+        navLearn: "Aprender TFT"
+      },
+      en: {
+        badge: "💎 OFFICIAL ARTIFACT GUIDE",
+        title: "TFT Set 18 Artifact Guide: Best Artifact Holders for Every Champion",
+        heroText1: "Artifacts are some of the most powerful items in TFT, but their unusual effects make them much harder to place than standard items. The right Artifact can completely change a champion, while the wrong holder can waste most of its value.",
+        heroText2: "This guide covers the best Artifact holders in TFT Set 18: Enchanted Wilds. Once you have found the right Artifact holder, check out our TFT team comps page for the latest comps and builds for the current patch.",
+        btnComps: "View Comps Tier List",
+        btnTips: "Set 18 Tips",
+        secPatchTitle: "Best Artifact Holders in Patch 18.2",
+        secPatchSub: "If you need to make a quick choice from an Artifact Anvil, these are some of the strongest pairings in the set:",
+        cost1: "1-Cost Champions",
+        cost2: "2-Cost Champions",
+        cost3: "3-Cost Champions",
+        cost4: "4-Cost Champions",
+        cost5: "5-Cost Champions",
+        navHome: "Home / Tier List",
+        navComps: "Set 18 TFT Tips",
+        navSet17: "Set 17",
+        navLearn: "Learn TFT"
+      },
+      pt: {
+        badge: "💎 GUIA OFICIAL DE ARTEFATOS",
+        title: "Guia de Artefatos do Set 18 de TFT: Melhores Portadores para Cada Campeão",
+        heroText1: "Os artefatos são alguns dos itens mais poderosos no TFT, mas seus efeitos incomuns tornam a atribuição mais complexa do que os itens padrão. O artefato certo pode transformar completamente um campeão, enquanto no portador errado a maior parte de seu valor pode ser desperdiçada.",
+        heroText2: "Este guia cobre os melhores portadores de artefatos no Set 18 do TFT: Enchanted Wilds. Assim que encontrar o portador ideal, confira nossa página de composições para ver as composições mais atualizadas.",
+        btnComps: "Ver Lista de Níveis de Composições",
+        btnTips: "Dicas do Set 18",
+        secPatchTitle: "Os Melhores Portadores de Artefatos no Patch 18.2",
+        secPatchSub: "Se você precisa escolher rapidamente em uma Bigorna de Artefatos, estas são algumas das combinações mais fortes do conjunto:",
+        cost1: "Campeões de Custo 1",
+        cost2: "Campeões de Custo 2",
+        cost3: "Campeões de Custo 3",
+        cost4: "Campeões de Custo 4",
+        cost5: "Campeões de Custo 5",
+        navHome: "Início / Lista de Níveis",
+        navComps: "Dicas Set 18 TFT",
+        navSet17: "Conjunto 17",
+        navLearn: "Aprender TFT"
+      }
+    };
+
     function toggleMobileMenu() {
       const drawer = document.getElementById('mobile-menu-drawer');
       const content = document.getElementById('mobile-menu-content');
@@ -382,6 +442,13 @@
 
     function changeLanguage(lang) {
       localStorage.setItem('tft_lang', lang);
+      const t = artefactosI18n[lang] || artefactosI18n.es;
+      
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (t[key]) el.innerText = t[key];
+      });
+
       const select = document.getElementById('lang-select');
       if (select) select.value = lang;
       const selectMobile = document.getElementById('lang-select-mobile');
