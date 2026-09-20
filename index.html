@@ -200,6 +200,9 @@
         <a href="index.html#comps-container" class="hover:text-white transition-colors">Composiciones</a>
         <a href="set17.html" class="hover:text-amber-400 transition-colors">Set 17</a>
         <a href="aprender.html" class="hover:text-amber-400 transition-colors">Aprender TFT</a>
+        <button onclick="openAdminBuilderModal()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold shadow-lg hover:brightness-110 transition-all flex items-center gap-1.5">
+          <span>🛠️</span> Creador de Guías
+        </button>
         
         <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR DESKTOP -->
         <div class="relative flex items-center bg-[#121316] border border-[#26282c] rounded-xl px-2.5 py-1 text-xs font-bold text-gray-300 gap-1.5 shadow-md">
@@ -249,6 +252,9 @@
         </div>
 
         <nav class="flex flex-col space-y-4 text-sm font-bold text-gray-300">
+          <button onclick="toggleMobileMenu(); openAdminBuilderModal();" class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold flex items-center gap-2 shadow-lg">
+            <span>🛠️</span> Creador de Guías (Admin)
+          </button>
           <a href="index.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">Inicio / Tier List</a>
           <a href="index.html#comps-container" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Composiciones Meta</a>
           <a href="set17.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Set 17 Dioses del Espacio</a>
@@ -390,12 +396,12 @@
         "earlyGame": ["Sett", "Yorick", "Vi", "Gnar"],
         "prioridadCarrusel": ["lagrima", "vara", "cinto", "malla"],
         "campeones": [
-          { "nombre": "Sett", "coste": 4, "items": ["gargola", "armadura_warmog", "cota_espinas"] },
+          { "nombre": "Sett", "coste": 4, "items": ["gargola", "armadura_warmog", "apariencia_espiritual"] },
           { "nombre": "Yorick", "coste": 1, "items": [] },
           { "nombre": "Vi", "coste": 2, "es3Estrellas": true, "items": ["gargola", "armadura_warmog", "garra_dragon"] },
-          { "nombre": "Gnar", "coste": 2, "es3Estrellas": true, "items": ["guantelete_joyado"] },
-          { "nombre": "Ashe", "coste": 1, "es3Estrellas": true, "items": ["lanza_shojin", "guinsoo", "ultimo_suspiro"] },
-          { "nombre": "Ahri", "coste": 3, "items": ["lanza_shojin", "guantelete_joyado", "bufo_azul"] },
+          { "nombre": "Gnar", "coste": 2, "es3Estrellas": true, "items": ["guantes_ladron"] },
+          { "nombre": "Ashe", "coste": 1, "es3Estrellas": true, "items": ["lanza_shojin", "buf_rojo", "ultimo_suspiro"] },
+          { "nombre": "Ahri", "coste": 3, "items": ["lanza_shojin", "guantelete_joyado", "rompeguardias"] },
           { "nombre": "Sivir", "coste": 2, "items": [] },
           { "nombre": "Karma", "coste": 1, "items": [] }
         ],
@@ -413,12 +419,12 @@
           { "nombre": "Healing Orbs", "tipo": "Plata" }
         ],
         "tablero": [
-          { "campeon": "Sett", "fila": 1, "col": 2 },
+          { "campeon": "Sett", "fila": 1, "col": 2, "items": ["gargola", "armadura_warmog", "apariencia_espiritual"] },
           { "campeon": "Yorick", "fila": 1, "col": 4 },
           { "campeon": "Vi", "fila": 1, "col": 6, "es3Estrellas": true },
-          { "campeon": "Gnar", "fila": 2, "col": 1, "es3Estrellas": true },
-          { "campeon": "Ashe", "fila": 4, "col": 1, "es3Estrellas": true },
-          { "campeon": "Ahri", "fila": 4, "col": 4 },
+          { "campeon": "Gnar", "fila": 2, "col": 1, "es3Estrellas": true, "items": ["guantes_ladron"] },
+          { "campeon": "Ashe", "fila": 4, "col": 1, "es3Estrellas": true, "items": ["lanza_shojin", "buf_rojo", "ultimo_suspiro"] },
+          { "campeon": "Ahri", "fila": 4, "col": 4, "items": ["lanza_shojin", "guantelete_joyado", "rompeguardias"] },
           { "campeon": "Sivir", "fila": 4, "col": 6 },
           { "campeon": "Karma", "fila": 4, "col": 7 }
         ],
@@ -426,12 +432,12 @@
           {
             "campeon": "Ahri",
             "coste": 3,
-            "items": ["lanza_shojin", "guantelete_joyado", "bufo_azul"]
+            "items": ["lanza_shojin", "guantelete_joyado", "rompeguardias"]
           },
           {
             "campeon": "Ashe",
             "coste": 1,
-            "items": ["lanza_shojin", "guinsoo", "ultimo_suspiro"]
+            "items": ["lanza_shojin", "buf_rojo", "ultimo_suspiro"]
           }
         ]
       },
@@ -917,6 +923,10 @@
       'sanguinaria': '3072',
       'protector_eterno': '3065',
       'mano_de_la_justicia': '3070',
+      'rompeguardias': '3116',
+      'buf_rojo': '3068',
+      'guantes_ladron': '3107',
+      'apariencia_espiritual': '3065',
       // Componentes Base DataDragon
       'espadon': '1038',
       'arco': '1043',
@@ -1652,8 +1662,583 @@
       }
     }
 
+    // ==========================================
+    // CREADOR DE EQUIPOS Y PANEL ADMIN TFT (SET 17)
+    // ==========================================
+    let builderBoardState = Array(28).fill(null); // Array 4x7
+    let selectedCellIndex = null;
+    let selectedChampForBuild = null;
+    let selectedCarrySlot = null; // { type: 'carry'|'tank', index: 0|1 }
+    
+    let builderData = {
+      id: '',
+      tier: 'S',
+      nombre: '',
+      dificultad: 'Fácil',
+      categoria: 'Fast 8',
+      tipoDeDano: 'AP',
+      earlyGame: [],
+      prioridadCarrusel: ['lagrima', "vara", "cinto", "malla"],
+      aumentos: [
+        { nombre: 'Augment 1', tipo: 'Prismático' },
+        { nombre: 'Augment 2', tipo: 'Dorado' },
+        { nombre: 'Augment 3', tipo: 'Plata' }
+      ],
+      mejoresBuilds: [
+        { campeon: '', coste: 4, items: [] },
+        { campeon: '', coste: 4, items: [] }
+      ]
+    };
+
+    function openAdminBuilderModal() {
+      const modal = document.getElementById('admin-builder-modal');
+      if (!modal) return;
+      modal.classList.remove('hidden');
+      initBuilderUI();
+    }
+
+    function closeAdminBuilderModal() {
+      const modal = document.getElementById('admin-builder-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function initBuilderUI() {
+      renderBuilderGrid();
+      renderBuilderCatalog();
+      renderBuilderItemCatalog();
+      updateCalculatedTraits();
+      renderEarlyChampsSelection();
+      renderCarouselItemsSelection();
+      renderBestBuildsForm();
+    }
+
+    function renderBuilderGrid() {
+      const grid = document.getElementById('builder-board-grid');
+      if (!grid) return;
+
+      const hexWidth = 62;
+      const hexHeight = 70;
+      const gapX = 8;
+      const gapY = 6;
+      const startX = 42;
+      const startY = 40;
+      const width = 560;
+      const height = 320;
+      const hw = hexWidth / 2;
+      const hh = hexHeight / 2;
+      const hq = hexHeight * 0.25;
+      const basePoints = `${hw},0 ${hexWidth},${hq} ${hexWidth},${hexHeight - hq} ${hw},${hexHeight} 0,${hexHeight - hq} 0,${hq}`;
+
+      let defsClips = '';
+      let cellsHTML = '';
+      let overlaysHTML = '';
+
+      for (let r = 1; r <= 4; r++) {
+        for (let c = 1; c <= 7; c++) {
+          const idx = (r - 1) * 7 + (c - 1);
+          const isRowEven = (r % 2 === 0);
+          const offsetX = isRowEven ? (hexWidth + gapX) / 2 : 0;
+          const cx = startX + (c - 1) * (hexWidth + gapX) + offsetX;
+          const cy = startY + (r - 1) * (hexHeight * 0.75 + gapY);
+          const placed = builderBoardState[idx];
+          const isSelected = selectedCellIndex === idx;
+
+          if (placed) {
+            const champObj = champTooltipDB_ES[placed.campeon] || { coste: 1 };
+            const borderColor = costBorderHex[champObj.coste] || '#a1a1aa';
+            const clipId = `bclip-${r}-${c}`;
+            const champImg = getChampionImage(placed.campeon);
+
+            defsClips += `
+              <clipPath id="${clipId}">
+                <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" />
+              </clipPath>
+            `;
+
+            cellsHTML += `
+              <g onclick="selectBuilderCell(${idx})" class="cursor-pointer">
+                <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" fill="#151822" />
+                <image href="${champImg}" x="${cx - hw}" y="${cy - hh}" width="${hexWidth}" height="${hexHeight}" preserveAspectRatio="xMidYMid slice" clip-path="url(#${clipId})" />
+                <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" fill="none" stroke="${isSelected ? '#eea402' : borderColor}" stroke-width="${isSelected ? '5' : '3'}" stroke-linejoin="round" />
+                <rect x="${cx - 26}" y="${cy + 10}" width="52" height="12" rx="3" fill="rgba(11, 13, 18, 0.9)" />
+                <text x="${cx}" y="${cy + 19}" text-anchor="middle" fill="#ffffff" font-size="8" font-weight="900">${placed.campeon}</text>
+              </g>
+            `;
+
+            if (placed.es3Estrellas) {
+              overlaysHTML += `
+                <g onclick="toggle3Stars(${idx})" class="cursor-pointer">
+                  <rect x="${cx - 18}" y="${cy - hh - 6}" width="36" height="12" rx="6" fill="#0b0d0f" stroke="#eea402" stroke-width="1" />
+                  <text x="${cx}" y="${cy - hh + 3}" text-anchor="middle" fill="#eea402" font-size="8" font-weight="900">★★★</text>
+                </g>
+              `;
+            }
+
+            if (placed.items && placed.items.length > 0) {
+              const itemsCount = Math.min(placed.items.length, 3);
+              const itemWidth = 14;
+              const itemGap = 2;
+              const totalWidth = itemsCount * itemWidth + (itemsCount - 1) * itemGap;
+              const startIX = cx - totalWidth / 2;
+              const itemY = cy + hh - 10;
+
+              placed.items.forEach((itemKey, itemIdx) => {
+                const ix = startIX + itemIdx * (itemWidth + itemGap);
+                overlaysHTML += `
+                  <g onclick="removeItemFromBuilderCell(event, ${idx}, ${itemIdx})" class="cursor-pointer">
+                    <rect x="${ix}" y="${itemY}" width="${itemWidth}" height="${itemWidth}" rx="3" fill="#0b0d0f" stroke="${borderColor}" stroke-width="1" />
+                    <image href="${getItemImage(itemKey)}" x="${ix + 1}" y="${itemY + 1}" width="${itemWidth - 2}" height="${itemWidth - 2}" preserveAspectRatio="xMidYMid slice" />
+                  </g>
+                `;
+              });
+            }
+
+          } else {
+            cellsHTML += `
+              <g onclick="selectBuilderCell(${idx})" class="cursor-pointer opacity-60 hover:opacity-100">
+                <polygon points="${basePoints}" transform="translate(${cx - hw}, ${cy - hh})" fill="#11131a" stroke="${isSelected ? '#eea402' : 'rgba(255, 255, 255, 0.15)'}" stroke-width="${isSelected ? '4' : '1.5'}" stroke-linejoin="round" />
+              </g>
+            `;
+          }
+        }
+      }
+
+      grid.innerHTML = `
+        <svg viewBox="0 0 ${width} ${height}" class="w-full h-auto max-w-[600px] mx-auto select-none" preserveAspectRatio="xMidYMid meet">
+          <defs>${defsClips}</defs>
+          <rect width="100%" height="100%" rx="16" fill="#0b0d12" />
+          <g>${cellsHTML}</g>
+          <g>${overlaysHTML}</g>
+        </svg>
+      `;
+
+      updateSelectedCellInfo();
+    }
+
+    function selectBuilderCell(idx) {
+      selectedCellIndex = idx;
+      renderBuilderGrid();
+    }
+
+    function updateSelectedCellInfo() {
+      const infoBox = document.getElementById('selected-cell-controls');
+      if (!infoBox) return;
+
+      if (selectedCellIndex === null) {
+        infoBox.innerHTML = `<span class="text-xs text-gray-500 italic">Haz clic en un hexágono para asignar campeón u objetos</span>`;
+        return;
+      }
+
+      const placed = builderBoardState[selectedCellIndex];
+      const r = Math.floor(selectedCellIndex / 7) + 1;
+      const c = (selectedCellIndex % 7) + 1;
+
+      if (!placed) {
+        infoBox.innerHTML = `
+          <div class="flex items-center justify-between">
+            <span class="text-xs text-gray-300 font-bold">Celda (${r}, ${c}) - Vacía</span>
+            <span class="text-[10px] text-amber-400">Selecciona un campeón del catálogo abajo</span>
+          </div>
+        `;
+      } else {
+        infoBox.innerHTML = `
+          <div class="flex items-center justify-between gap-2">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-black text-white">${placed.campeon} (${r}, ${c})</span>
+              <button onclick="toggle3Stars(${selectedCellIndex})" class="px-2 py-0.5 rounded text-[10px] font-black ${placed.es3Estrellas ? 'bg-amber-500 text-black' : 'bg-gray-800 text-amber-400 border border-amber-500/40'}">
+                ${placed.es3Estrellas ? '★★★ 3 Estrellas' : '★ 1/2 Estrellas'}
+              </button>
+            </div>
+            <button onclick="clearBuilderCell(${selectedCellIndex})" class="px-2.5 py-1 bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white rounded text-xs font-bold transition-colors">
+              🗑️ Quitar
+            </button>
+          </div>
+        `;
+      }
+    }
+
+    function clearBuilderCell(idx) {
+      builderBoardState[idx] = null;
+      renderBuilderGrid();
+      updateCalculatedTraits();
+    }
+
+    function toggle3Stars(idx) {
+      if (builderBoardState[idx]) {
+        builderBoardState[idx].es3Estrellas = !builderBoardState[idx].es3Estrellas;
+        renderBuilderGrid();
+      }
+    }
+
+    function addChampToSelectedCell(champName) {
+      if (selectedCellIndex === null) {
+        // Asignar en la primera celda vacía disponible
+        const emptyIdx = builderBoardState.findIndex(cell => cell === null);
+        if (emptyIdx !== -1) selectedCellIndex = emptyIdx;
+        else selectedCellIndex = 0;
+      }
+
+      const existing = builderBoardState[selectedCellIndex];
+      builderBoardState[selectedCellIndex] = {
+        campeon: champName,
+        es3Estrellas: existing ? existing.es3Estrellas : false,
+        items: existing && existing.items ? existing.items : []
+      };
+
+      renderBuilderGrid();
+      updateCalculatedTraits();
+    }
+
+    function addItemToSelectedCell(itemKey) {
+      if (selectedCellIndex === null || !builderBoardState[selectedCellIndex]) {
+        alert("Selecciona primero una celda ocupada por un campeón en el tablero");
+        return;
+      }
+      const cell = builderBoardState[selectedCellIndex];
+      if (!cell.items) cell.items = [];
+      if (cell.items.length >= 3) {
+        alert("Un campeón solo puede llevar máximo 3 objetos");
+        return;
+      }
+      cell.items.push(itemKey);
+      renderBuilderGrid();
+    }
+
+    function removeItemFromBuilderCell(event, cellIdx, itemIdx) {
+      event.stopPropagation();
+      if (builderBoardState[cellIdx] && builderBoardState[cellIdx].items) {
+        builderBoardState[cellIdx].items.splice(itemIdx, 1);
+        renderBuilderGrid();
+      }
+    }
+
+    // CÁLCULO AUTOMÁTICO DE SINERGIAS (TRAITS)
+    function updateCalculatedTraits() {
+      const traitsContainer = document.getElementById('builder-calculated-traits');
+      if (!traitsContainer) return;
+
+      const traitCounts = {};
+      const uniqueChamps = new Set();
+
+      builderBoardState.forEach(cell => {
+        if (cell && cell.campeon && !uniqueChamps.has(cell.campeon)) {
+          uniqueChamps.add(cell.campeon);
+          const cInfo = champTooltipDB_ES[cell.campeon];
+          if (cInfo && cInfo.sinergias) {
+            cInfo.sinergias.forEach(trait => {
+              traitCounts[trait] = (traitCounts[trait] || 0) + 1;
+            });
+          }
+        }
+      });
+
+      const traitsList = Object.keys(traitCounts).map(traitName => {
+        const count = traitCounts[traitName];
+        let type = 'bronze';
+        if (count >= 5) type = 'gold';
+        else if (count >= 3) type = 'silver';
+        return { nombre: traitName, nivel: count, tipo: type };
+      }).sort((a, b) => b.nivel - a.nivel);
+
+      if (traitsList.length === 0) {
+        traitsContainer.innerHTML = `<span class="text-xs text-gray-500 italic">Coloca campeones en el tablero para calcular sinergias automáticamente</span>`;
+        return;
+      }
+
+      traitsContainer.innerHTML = traitsList.map(t => `
+        <div class="flex items-center gap-2 bg-[#17181a] border border-[#26282c] px-3 py-1.5 rounded-xl shadow-md">
+          <div class="trait-badge ${t.tipo}">${t.nivel}</div>
+          <span class="text-xs font-black text-white">${t.nombre}</span>
+        </div>
+      `).join('');
+    }
+
+    function renderBuilderCatalog() {
+      const catalog = document.getElementById('builder-champ-catalog');
+      if (!catalog) return;
+
+      const champs = Object.keys(localChampMap);
+      catalog.innerHTML = champs.map(champ => {
+        const cInfo = champTooltipDB_ES[champ] || { coste: 1 };
+        const borderColor = costBorderHex[cInfo.coste] || '#a1a1aa';
+        return `
+          <div onclick="addChampToSelectedCell('${champ}')" class="w-12 h-12 rounded-xl overflow-hidden border-2 cursor-pointer hover:scale-110 transition-transform relative group bg-[#0b0d0f]" style="border-color: ${borderColor};">
+            <img src="${getChampionImage(champ)}" alt="${champ}" class="w-full h-full object-cover" onerror="handleChampError(this, '${champ}')" />
+            <div class="absolute inset-0 bg-black/60 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[9px] font-black text-white text-center p-0.5 leading-none">
+              ${champ}
+            </div>
+          </div>
+        `;
+      }).join('');
+    }
+
+    function renderBuilderItemCatalog() {
+      const catalog = document.getElementById('builder-item-catalog');
+      if (!catalog) return;
+
+      const items = Object.keys(localItemMap);
+      catalog.innerHTML = items.map(itemKey => `
+        <div onclick="addItemToSelectedCell('${itemKey}')" class="w-8 h-8 rounded-lg overflow-hidden border border-gray-700 bg-[#0b0d0f] cursor-pointer hover:scale-110 transition-transform p-0.5 relative group">
+          <img src="${getItemImage(itemKey)}" alt="${itemKey}" class="w-full h-full object-cover" />
+        </div>
+      `).join('');
+    }
+
+    function renderEarlyChampsSelection() {
+      const container = document.getElementById('builder-early-champs');
+      if (!container) return;
+      const champs = Object.keys(localChampMap).slice(0, 16);
+      container.innerHTML = champs.map(c => `
+        <button onclick="toggleEarlyChamp('${c}')" class="px-2.5 py-1 rounded-lg border text-xs font-bold ${builderData.earlyGame.includes(c) ? 'bg-amber-500 text-black border-amber-400' : 'bg-[#121316] text-gray-400 border-[#26282c]'}">
+          ${c}
+        </button>
+      `).join('');
+    }
+
+    function toggleEarlyChamp(c) {
+      if (builderData.earlyGame.includes(c)) {
+        builderData.earlyGame = builderData.earlyGame.filter(x => x !== c);
+      } else {
+        if (builderData.earlyGame.length < 4) builderData.earlyGame.push(c);
+      }
+      renderEarlyChampsSelection();
+    }
+
+    function renderCarouselItemsSelection() {
+      const container = document.getElementById('builder-carousel-items');
+      if (!container) return;
+      const components = ['espadon', 'arco', 'lagrima', 'vara', 'malla', 'capa', 'cinto', 'guante'];
+      container.innerHTML = components.map(k => `
+        <div onclick="toggleCarouselItem('${k}')" class="w-8 h-8 rounded-lg border cursor-pointer p-0.5 ${builderData.prioridadCarrusel.includes(k) ? 'border-amber-400 bg-amber-500/20' : 'border-gray-800 bg-[#0b0d0f]'}">
+          <img src="${getItemImage(k, true)}" class="w-full h-full object-cover" />
+        </div>
+      `).join('');
+    }
+
+    function toggleCarouselItem(k) {
+      if (builderData.prioridadCarrusel.includes(k)) {
+        builderData.prioridadCarrusel = builderData.prioridadCarrusel.filter(x => x !== k);
+      } else {
+        if (builderData.prioridadCarrusel.length < 4) builderData.prioridadCarrusel.push(k);
+      }
+      renderCarouselItemsSelection();
+    }
+
+    function renderBestBuildsForm() {
+      const container = document.getElementById('builder-best-builds-inputs');
+      if (!container) return;
+      container.innerHTML = [0, 1].map(idx => {
+        const build = builderData.mejoresBuilds[idx] || { campeon: 'Carry ' + (idx + 1), coste: 4, items: ['lanza_shojin', 'guantelete_joyado', 'bufo_azul'] };
+        return `
+          <div class="bg-[#121316] border border-[#26282c] p-3 rounded-xl space-y-2">
+            <label class="text-xs font-bold text-gray-400">Carry / Tanque ${idx + 1}</label>
+            <input type="text" value="${build.campeon}" onchange="builderData.mejoresBuilds[${idx}].campeon = this.value" placeholder="Nombre Campeón" class="w-full bg-[#0b0d0f] border border-gray-800 rounded px-2 py-1 text-xs text-white" />
+          </div>
+        `;
+      }).join('');
+    }
+
+    function generateFinalGuideJSON() {
+      const name = document.getElementById('builder-input-name').value || "Nueva Composición TFT";
+      const tier = document.getElementById('builder-select-tier').value;
+      const difficulty = document.getElementById('builder-select-diff').value;
+      const category = document.getElementById('builder-select-cat').value;
+      const damageType = document.getElementById('builder-select-damage').value;
+
+      const board = [];
+      const champsList = [];
+
+      builderBoardState.forEach((cell, idx) => {
+        if (cell && cell.campeon) {
+          const r = Math.floor(idx / 7) + 1;
+          const c = (idx % 7) + 1;
+          board.push({
+            campeon: cell.campeon,
+            fila: r,
+            col: c,
+            es3Estrellas: cell.es3Estrellas || false
+          });
+
+          const cInfo = champTooltipDB_ES[cell.campeon] || { coste: 3 };
+          champsList.push({
+            nombre: cell.campeon,
+            coste: cInfo.coste || 3,
+            es3Estrellas: cell.es3Estrellas || false,
+            items: cell.items || []
+          });
+        }
+      });
+
+      // Calcular Sinergias
+      const traitCounts = {};
+      const uniqueChamps = new Set();
+      champsList.forEach(c => {
+        if (!uniqueChamps.has(c.nombre)) {
+          uniqueChamps.add(c.nombre);
+          const cInfo = champTooltipDB_ES[c.nombre];
+          if (cInfo && cInfo.sinergias) {
+            cInfo.sinergias.forEach(s => {
+              traitCounts[s] = (traitCounts[s] || 0) + 1;
+            });
+          }
+        }
+      });
+
+      const sinergias = Object.keys(traitCounts).map(traitName => {
+        const count = traitCounts[traitName];
+        let type = 'bronze';
+        if (count >= 5) type = 'gold';
+        else if (count >= 3) type = 'silver';
+        return { nombre: traitName, nivel: count, tipo: type, escala: "2 > 4 > 6" };
+      });
+
+      const newComp = {
+        id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        tier: tier,
+        nombre: name,
+        dificultad: difficulty,
+        categoria: category,
+        tipoDeDano: damageType,
+        earlyGame: builderData.earlyGame.length > 0 ? builderData.earlyGame : ["Sett", "Yorick", "Vi"],
+        prioridadCarrusel: builderData.prioridadCarrusel,
+        campeones: champsList,
+        sinergias: sinergias,
+        aumentos: builderData.aumentos,
+        tablero: board,
+        mejoresBuilds: [
+          { campeon: champsList[0] ? champsList[0].nombre : "Carry", coste: 4, items: ["lanza_shojin", "guantelete_joyado", "rompeguardias"] },
+          { campeon: champsList[1] ? champsList[1].nombre : "Tanque", coste: 4, items: ["gargola", "armadura_warmog", "apariencia_espiritual"] }
+        ]
+      };
+
+      // Agregar a tftData local e re-renderizar
+      tftData.unshift(newComp);
+      renderTierList(tftData);
+      closeAdminBuilderModal();
+      alert("¡Guía Creada y Publicada Exitosamente en la Tier List!");
+    }
+
     // changeLanguage unificado arriba
   </script>
+
+  <!-- MODAL CREADOR DE GUÍAS Y TABLERO INTERACTIVO TFT (PANEL ADMIN) -->
+  <div id="admin-builder-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[9999] hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
+    <div class="bg-[#17181a] border border-amber-500/50 rounded-3xl w-full max-w-5xl max-h-[92vh] overflow-y-auto p-4 sm:p-6 shadow-2xl space-y-6 text-left">
+      
+      <!-- Encabezado Modal -->
+      <div class="flex items-center justify-between pb-4 border-b border-[#26282c]">
+        <div class="flex items-center space-x-3">
+          <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-xl">🛠️</div>
+          <div>
+            <h3 class="text-lg font-black text-white tracking-wide">Creador de Equipos & Guías TFT (Panel Admin)</h3>
+            <p class="text-xs text-gray-400">Diseña composiciones, coloca celdas y calcula sinergias automáticamente.</p>
+          </div>
+        </div>
+        <button onclick="closeAdminBuilderModal()" class="text-gray-400 hover:text-white p-2 rounded-xl bg-[#121316] border border-[#26282c]">
+          ✖️
+        </button>
+      </div>
+
+      <!-- Configuración Básica de Guía -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 bg-[#121316] p-4 rounded-2xl border border-[#26282c]">
+        <div>
+          <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider block mb-1">Nombre Guía</label>
+          <input type="text" id="builder-input-name" placeholder="Ej: Ahri & Ashe Carry" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white focus:border-amber-400 focus:outline-none" />
+        </div>
+        <div>
+          <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider block mb-1">Tier</label>
+          <select id="builder-select-tier" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white">
+            <option value="S">Tier S (Meta OP)</option>
+            <option value="A">Tier A (Fuerte)</option>
+            <option value="B">Tier B (Situacional)</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider block mb-1">Dificultad</label>
+          <select id="builder-select-diff" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white">
+            <option value="Fácil">Fácil</option>
+            <option value="Media">Media</option>
+            <option value="Difícil">Difícil</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider block mb-1">Categoría</label>
+          <select id="builder-select-cat" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white">
+            <option value="Fast 8">Fast 8</option>
+            <option value="Reroll">Reroll</option>
+            <option value="Hyper Roll">Hyper Roll</option>
+          </select>
+        </div>
+        <div>
+          <label class="text-[11px] font-black text-gray-400 uppercase tracking-wider block mb-1">Daño</label>
+          <select id="builder-select-damage" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-1.5 text-xs text-white">
+            <option value="AP">AP (Poder de Habilidad)</option>
+            <option value="AD">AD (Daño Físico)</option>
+            <option value="Híbrido">Híbrido</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Layout Principal Creador: Tablero + Sinergias Calculadas -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 items-start">
+        
+        <!-- Tablero Hexagonal Interactivo (2 Cols en Desktop) -->
+        <div class="lg:col-span-2 bg-[#121316] border border-[#26282c] rounded-2xl p-4 space-y-3">
+          <div class="flex items-center justify-between">
+            <h4 class="text-xs font-black text-amber-400 uppercase tracking-wider">Tablero Hexagonal Interactivo</h4>
+            <div id="selected-cell-controls" class="text-xs"></div>
+          </div>
+
+          <!-- Contenedor Tablero SVG -->
+          <div id="builder-board-grid" class="w-full flex justify-center py-2 bg-[#0b0d12] rounded-2xl border border-gray-800/80"></div>
+
+          <!-- Sinergias Calculadas Automáticamente -->
+          <div class="border-t border-[#26282c] pt-3">
+            <h5 class="text-[11px] font-black text-gray-400 uppercase tracking-wider mb-2">Sinergias Calculadas Automáticamente:</h5>
+            <div id="builder-calculated-traits" class="flex flex-wrap gap-2"></div>
+          </div>
+        </div>
+
+        <!-- Catálogo de Selección (Campeones e Ítems) -->
+        <div class="bg-[#121316] border border-[#26282c] rounded-2xl p-4 space-y-4 max-h-[500px] overflow-y-auto">
+          <div>
+            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-2">1. Seleccionar Campeón</h4>
+            <div id="builder-champ-catalog" class="flex flex-wrap gap-1.5 max-h-48 overflow-y-auto p-1 bg-[#0b0d0f] rounded-xl border border-gray-800"></div>
+          </div>
+
+          <div>
+            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-2">2. Equipar Objetos a Ficha</h4>
+            <div id="builder-item-catalog" class="flex flex-wrap gap-1 max-h-36 overflow-y-auto p-1 bg-[#0b0d0f] rounded-xl border border-gray-800"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Apartados Secundarios (Salida Early, Carrusel) -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+        <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2">
+          <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider">Salida de Campeones (Early)</h4>
+          <div id="builder-early-champs" class="flex flex-wrap gap-1.5"></div>
+        </div>
+
+        <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2">
+          <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider">Prioridad Objetos Carrusel</h4>
+          <div id="builder-carousel-items" class="flex gap-2"></div>
+        </div>
+      </div>
+
+      <!-- Botón Publicar Guía -->
+      <div class="pt-4 border-t border-[#26282c] flex items-center justify-end gap-3">
+        <button onclick="closeAdminBuilderModal()" class="px-5 py-2.5 rounded-xl bg-gray-800 text-gray-300 font-bold hover:bg-gray-700 text-xs">
+          Cancelar
+        </button>
+        <button onclick="generateFinalGuideJSON()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-xs shadow-xl hover:brightness-110">
+          🚀 Publicar Guía en Tier List
+        </button>
+      </div>
+
+    </div>
+  </div>
 
   <!-- CONTENEDOR GLOBAL DE TOOLTIP EN LA RAÍZ DEL DOCUMENTO (NUNCA RE CORTADO) -->
   <div id="global-tooltip" class="fixed opacity-0 pointer-events-none transition-all duration-200 z-[9999] transform scale-95 origin-bottom"></div>
