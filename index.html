@@ -1207,8 +1207,8 @@
                 </div>
               </div>
 
-              <!-- Flecha Interactiva & Controles (Descargar, Copiar Fichas, Admin) -->
-              <div class="action-controls-container flex items-center gap-2 self-end sm:self-center flex-wrap justify-end">
+              <!-- Controles (Descargar, Copiar Fichas, Admin) -->
+              <div class="action-controls-container flex items-center gap-2 flex-wrap justify-end">
                 <!-- Botón 📸 Descargar Imagen JPG -->
                 <button onclick="event.stopPropagation(); downloadCompImage('${comp.id}')" title="Descargar imagen JPG de la composición" class="px-2.5 py-1.5 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white rounded-xl text-xs font-black transition-all border border-indigo-500/40 flex items-center gap-1.5 shadow-md">
                   <span>📸</span>
@@ -1237,10 +1237,12 @@
                     🗑️ Eliminar
                   </button>
                 ` : ''}
-                <div class="comp-details-trigger flex items-center gap-1.5 text-xs font-bold text-amber-400 ml-1">
-                  <span>Detalles</span>
-                  <span id="arrow-${comp.id}" class="inline-block transition-transform duration-300 font-black text-sm">v</span>
-                </div>
+              </div>
+
+              <!-- Flecha Interactiva & Texto Detalles -->
+              <div class="comp-details-trigger flex items-center gap-1.5 text-xs font-bold text-amber-400 ml-1">
+                <span>Detalles</span>
+                <span id="arrow-${comp.id}" class="inline-block transition-transform duration-300 font-black text-sm">v</span>
               </div>
             </div>
 
@@ -1518,7 +1520,7 @@
       articleEl.appendChild(footerWM);
 
       // Ocultar botones de interacción, controles admin y texto 'Detalles' durante la captura
-      const actionButtons = articleEl.querySelectorAll('button, #arrow-' + compId, '.action-controls-container', '.comp-details-trigger');
+      const actionButtons = articleEl.querySelectorAll('button, #arrow-' + compId + ', .action-controls-container, .comp-details-trigger');
       actionButtons.forEach(btn => btn.style.display = 'none');
 
       try {
