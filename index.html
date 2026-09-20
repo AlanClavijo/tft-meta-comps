@@ -1942,23 +1942,54 @@
       openAdminBuilderModal(compIdxId);
     }
 
+    let customConfirmCallback = null;
+
+    function showCustomConfirm(title, message, onConfirm) {
+      const modal = document.getElementById('custom-confirm-modal');
+      const titleEl = document.getElementById('confirm-modal-title');
+      const msgEl = document.getElementById('confirm-modal-msg');
+      if (!modal || !titleEl || !msgEl) return;
+
+      titleEl.innerText = title;
+      msgEl.innerText = message;
+      customConfirmCallback = onConfirm;
+      modal.classList.remove('hidden');
+    }
+
+    function closeCustomConfirm(confirmed = false) {
+      const modal = document.getElementById('custom-confirm-modal');
+      if (modal) modal.classList.add('hidden');
+      if (confirmed && typeof customConfirmCallback === 'function') {
+        customConfirmCallback();
+      }
+      customConfirmCallback = null;
+    }
+
     async function deletePublishedComp(compIdxId) {
       if (!isAdminLoggedIn) {
         showToast("Debes ser administrador para eliminar guías", "error");
         return;
       }
-      if (confirm(`¿Estás seguro de que deseas eliminar permanentemente esta guía (${compIdxId})?`)) {
-        try {
-          await db.collection("guias_tft").doc(compIdxId).delete();
-          const idx = tftData.findIndex(c => c.id === compIdxId);
-          if (idx !== -1) tftData.splice(idx, 1);
-          renderTierList(tftData);
-          showToast("Guía eliminada permanentemente de la base de datos", "info");
-        } catch (err) {
-          console.error("Firestore Delete Error:", err);
-          showToast("Error al eliminar la guía: " + err.message, "error");
+      
+      const comp = tftData.find(c => c.id === compIdxId);
+      const compName = comp ? comp.nombre : compIdxId;
+
+      showCustomConfirm(
+        "¿Eliminar Guía?",
+        `¿Estás seguro de que deseas eliminar permanentemente la guía "${compName}"? Esta acción no se puede deshacer.`,
+        async () => {
+          try {
+            await db.collection("guias_tft").doc(compIdxId).delete();
+            const idx = tftData.findIndex(c => c.id === compIdxId);
+            if (idx !== -1) tftData.splice(idx, 1);
+            renderTierList(tftData);
+            showToast("Guía eliminada permanentemente de la base de datos", "info");
+          } catch (err) {
+            console.error("Firestore Delete Error:", err);
+            showToast("Error al eliminar la guía: " + err.message, "error");
+          }
         }
-      }
+      );
     }
 
     function initBuilderUI() {
@@ -2679,6 +2710,26 @@
         </div>
       </div>
 
+    </div>
+  </div>
+
+  <!-- MODAL DE CONFIRMACIÓN CUSTOMIZADO GAMER (REEMPLAZA EL CONFIRM NATIVO DEL NAVEGADOR) -->
+  <div id="custom-confirm-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[10001] hidden flex items-center justify-center p-4">
+    <div class="bg-[#17181a] border border-red-500/50 rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-6 text-center transform scale-100 transition-all">
+      <div class="w-16 h-16 rounded-2xl bg-red-600/20 border border-red-500/40 flex items-center justify-center text-3xl mx-auto">⚠️</div>
+      <div>
+        <h3 id="confirm-modal-title" class="text-xl font-black text-white tracking-wide">¿Eliminar Guía?</h3>
+        <p id="confirm-modal-msg" class="text-xs text-gray-400 mt-2 leading-relaxed"></p>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button onclick="closeCustomConfirm(false)" class="px-4 py-2.5 rounded-xl bg-gray-800 hover:bg-gray-700 text-gray-300 font-bold text-xs transition-colors">
+          Cancelar
+        </button>
+        <button onclick="closeCustomConfirm(true)" class="px-6 py-2.5 rounded-xl bg-red-600 hover:bg-red-500 text-white font-black text-xs shadow-xl transition-all">
+          Sí, Eliminar
+        </button>
+      </div>
     </div>
   </div>
 
