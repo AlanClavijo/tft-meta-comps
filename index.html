@@ -1558,7 +1558,32 @@
           scale: 2,
           useCORS: true,
           allowTaint: true,
-          logging: false
+          logging: false,
+          onclone: (clonedDoc, clonedEl) => {
+            // Ajustar estilos en el documento clonado justo antes de dibujar la foto JPG
+            const tierBadge = clonedEl.querySelector('.shrink-0.font-black');
+            if (tierBadge) {
+              tierBadge.style.display = 'flex';
+              tierBadge.style.alignItems = 'center';
+              tierBadge.style.justifyContent = 'center';
+              tierBadge.style.lineHeight = 'normal';
+              const span = tierBadge.querySelector('span');
+              if (span) {
+                span.style.lineHeight = 'normal';
+                span.style.marginTop = '-2px';
+              }
+            }
+
+            const pills = clonedEl.querySelectorAll('.rounded-full');
+            pills.forEach(pill => {
+              pill.style.display = 'inline-flex';
+              pill.style.alignItems = 'center';
+              pill.style.justifyContent = 'center';
+              pill.style.paddingTop = '4px';
+              pill.style.paddingBottom = '4px';
+              pill.style.lineHeight = '1';
+            });
+          }
         });
 
         const imgData = canvas.toDataURL('image/jpeg', 0.95);
