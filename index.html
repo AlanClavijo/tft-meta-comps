@@ -2063,18 +2063,6 @@
     }
 
     function addItemToSelectedCell(itemKey) {
-      if (selectedCellIndex !== null && builderBoardState[selectedCellIndex]) {
-        const cell = builderBoardState[selectedCellIndex];
-        if (!cell.items) cell.items = [];
-        if (cell.items.length >= 3) {
-          alert("Un campeón solo puede llevar máximo 3 objetos");
-          return;
-        }
-        cell.items.push(itemKey);
-        renderBuilderGrid();
-        return;
-      }
-
       if (selectedBuildIndex !== null) {
         const targetBuild = builderData.mejoresBuilds[selectedBuildIndex];
         if (targetBuild) {
@@ -2087,6 +2075,18 @@
           renderBestBuildsForm();
           return;
         }
+      }
+
+      if (selectedCellIndex !== null && builderBoardState[selectedCellIndex]) {
+        const cell = builderBoardState[selectedCellIndex];
+        if (!cell.items) cell.items = [];
+        if (cell.items.length >= 3) {
+          alert("Un campeón solo puede llevar máximo 3 objetos");
+          return;
+        }
+        cell.items.push(itemKey);
+        renderBuilderGrid();
+        return;
       }
 
       alert("Selecciona primero una casilla del tablero o una casilla de Mejores Builds (Main Carry / Main Tanque) para equipar el objeto.");
