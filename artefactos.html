@@ -338,7 +338,7 @@
 
   <script>
     const localChampMap = {
-      'Akali': './scr/img/Champs/DA_18_Akali.webp',
+      'Akali': './scr/img/Champs/DA_18_Akali_AD.webp',
       'Kayle': './scr/img/Champs/DA_18_Kayle.webp',
       'Master Yi': './scr/img/Champs/DA_18_MasterYi_AD.webp',
       'Cassiopeia': './scr/img/Champs/DA_18_Cassiopeia.webp',
@@ -432,6 +432,47 @@
     function getItemImg(name) {
       const trimmed = name.trim();
       return localItemMap[trimmed] || './scr/img/items plus/GoldCollector.png';
+    }
+
+    function formatItemsListHTML(itemsStr) {
+      const items = itemsStr.split(',').map(s => s.trim()).filter(Boolean);
+      return items.map(it => `
+        <span class="inline-flex items-center gap-1 bg-[#121316] border border-gray-800 rounded px-1.5 py-0.5 text-[11px] font-semibold text-purple-300">
+          <img src="${getItemImg(it)}" class="w-3.5 h-3.5 object-contain" onerror="this.src='./scr/img/logo.svg'" />
+          ${it}
+        </span>
+      `).join(' ');
+    }
+
+    function enhanceCostSectionsWithIcons() {
+      const sections = document.querySelectorAll('main section');
+      sections.forEach(sec => {
+        const champRows = sec.querySelectorAll('.grid > div');
+        champRows.forEach(row => {
+          if (row.dataset.enhanced) return;
+          const boldSpan = row.querySelector('span.font-bold');
+          const itemsSpan = row.querySelector('span.text-gray-300');
+          if (boldSpan && itemsSpan) {
+            const rawChampName = boldSpan.innerText.replace(':', '').trim();
+            const itemsText = itemsSpan.innerText.trim();
+            const champImgSrc = getChampImg(rawChampName);
+
+            row.className = "p-3 rounded-2xl bg-[#0b0d0f] border border-gray-800 flex flex-col gap-2 hover:border-amber-500/30 transition-all";
+            row.innerHTML = `
+              <div class="flex items-center gap-2">
+                <div class="w-7 h-7 rounded-lg border border-amber-500/40 overflow-hidden bg-[#121316] shrink-0 shadow">
+                  <img src="${champImgSrc}" alt="${rawChampName}" class="w-full h-full object-cover" onerror="this.src='./scr/img/logo.svg'" />
+                </div>
+                <span class="font-black text-white text-xs">${rawChampName}</span>
+              </div>
+              <div class="flex flex-wrap gap-1">
+                ${formatItemsListHTML(itemsText)}
+              </div>
+            `;
+            row.dataset.enhanced = "1";
+          }
+        });
+      });
     }
 
     function renderArtifactHolders() {
@@ -568,6 +609,7 @@
 
     document.addEventListener('DOMContentLoaded', () => {
       renderArtifactHolders();
+      enhanceCostSectionsWithIcons();
       const savedLang = localStorage.getItem('tft_lang') || 'es';
       changeLanguage(savedLang);
     });
