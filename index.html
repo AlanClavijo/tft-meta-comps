@@ -322,6 +322,12 @@
             <h3 class="text-sm sm:text-base font-black text-white tracking-wide flex items-center gap-2">
               <span>🏆</span> RESUMEN VISUAL DE TIER LIST
             </h3>
+            <!-- Botón Editar Tier List (Solo visible si hay sesión de Administrador activa) -->
+            <div id="admin-summary-edit-btn-container" class="hidden">
+              <button onclick="openAdminBuilderModal(); switchAdminTab('reorder');" class="px-3.5 py-1.5 rounded-xl bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black border border-amber-500/40 font-black text-xs transition-all flex items-center gap-1.5 shadow-md">
+                <span>⚙️</span> Editar Posiciones & Tier List
+              </button>
+            </div>
           </div>
           <div id="tier-summary-rows" class="space-y-3">
             <!-- Inyectado dinámicamente con filas S, A, B, C, X -->
@@ -1714,11 +1720,14 @@
 
     // Escuchar el estado de Autenticación de Firebase Admin
     auth.onAuthStateChanged((user) => {
+      const adminSummaryBtn = document.getElementById('admin-summary-edit-btn-container');
       if (user) {
         isAdminLoggedIn = true;
         showToast(`Sesión activa como Admin (${user.email})`, "success");
+        if (adminSummaryBtn) adminSummaryBtn.classList.remove('hidden');
       } else {
         isAdminLoggedIn = false;
+        if (adminSummaryBtn) adminSummaryBtn.classList.add('hidden');
       }
       renderTierList(tftData);
     });
