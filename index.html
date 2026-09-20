@@ -983,6 +983,7 @@
     };
 
     const localItemMap = {
+      // Objetos Compuestos Estándar
       'guinsoo': './scr/img/items compuestos/DA_GuinsoosRageblade.webp',
       'filo_infinito': './scr/img/items compuestos/DA_InfinityEdge.webp',
       'sable_pistola': './scr/img/items compuestos/DA_HextechGunblade.webp',
@@ -1019,7 +1020,13 @@
       'guardia_corona': './scr/img/items compuestos/DA_Crownguard.webp',
       'mortaja_mediodia': './scr/img/items compuestos/DA_Evenshroud.webp',
       'baston_vacio': './scr/img/items compuestos/DA_VoidStaff.webp',
-      // 8 Componentes Base Universales
+      'filo_mortal': './scr/img/items compuestos/DA_Deathblade.webp',
+      'furia_kraken': './scr/img/items compuestos/DA_KrakensFury.webp',
+      'capa_tactico': './scr/img/items compuestos/DA_TacticiansCape.webp',
+      'corona_tactico': './scr/img/items compuestos/DA_TacticiansCrown.webp',
+      'escudo_tactico': './scr/img/items compuestos/DA_TacticiansShield.webp',
+
+      // Componentes Base Universales (con Espátula y Sartén)
       'espadon': './scr/img/items/Espadón .webp',
       'arco': './scr/img/items/Arco Curvo .webp',
       'lagrima': './scr/img/items/Lágrima de la Diosa.webp',
@@ -1027,7 +1034,57 @@
       'malla': './scr/img/items/Chaleco de Cadenas.webp',
       'capa': './scr/img/items/Capa Negatron.webp',
       'cinto': './scr/img/items/Cinturón de Gigante.webp',
-      'guante': './scr/img/items/Guantes de Combate.webp'
+      'guante': './scr/img/items/Guantes de Combate.webp',
+      'espatula': './scr/img/items/Component_Spatula.webp',
+      'sarten': './scr/img/items/Component_FryingPan.webp',
+
+      // Objetos Plus / Artefactos & Radiantes
+      'aegis_dawn': './scr/img/items plus/AegisOfDawn.png',
+      'aegis_dusk': './scr/img/items plus/AegisOfDusk.png',
+      'blighting_jewel': './scr/img/items plus/BlightingJewel.png',
+      'cappa_juice': './scr/img/items plus/CappaJuice.png',
+      'crown_demacia': './scr/img/items plus/CrownOfDemacia.png',
+      'dawncore': './scr/img/items plus/Dawncore.png',
+      'deaths_defiance': './scr/img/items plus/DeathsDefiance.png',
+      'eternal_pact': './scr/img/items plus/EternalPact.png',
+      'fishbones': './scr/img/items plus/Fishbones.png',
+      'flickerblades': './scr/img/items plus/Flickerblades.png',
+      'gamblers_blade': './scr/img/items plus/GamblersBlade.png',
+      'gold_collector': './scr/img/items plus/GoldCollector.png',
+      'hellfire_hatchet': './scr/img/items plus/HellfireHatchet.png',
+      'horizon_focus': './scr/img/items plus/HorizonFocus.png',
+      'hullcrusher': './scr/img/items plus/Hullcrusher.png',
+      'silvermere_dawn': './scr/img/items plus/SilvermereDawn.png',
+      'snipers_focus': './scr/img/items plus/SnipersFocus.png',
+      'statikk_shiv': './scr/img/items plus/StatikkShiv.png',
+      'talisman_ascension': './scr/img/items plus/TalismanOfAscension.png',
+      'the_indomitable': './scr/img/items plus/TheIndomitable.png',
+      'titanic_hydra': './scr/img/items plus/TitanicHydra.png',
+      'void_gauntlet': './scr/img/items plus/VoidGauntlet.png',
+      'wits_end': './scr/img/items plus/WitsEnd.png',
+      'zhonyas_paradox': './scr/img/items plus/ZhonyasParadox.png',
+
+      // Emblemas de Sinergia
+      'emblema_blackthorn': './scr/img/items emblema/DA_18_EmblemBlackthorn.webp',
+      'emblema_blossom': './scr/img/items emblema/DA_18_EmblemBlossom.webp',
+      'emblema_brawler': './scr/img/items emblema/DA_18_EmblemBrawler.webp',
+      'emblema_coven': './scr/img/items emblema/DA_18_EmblemCoven.webp',
+      'emblema_defender': './scr/img/items emblema/DA_18_EmblemDefender.webp',
+      'emblema_elderwood': './scr/img/items emblema/DA_18_EmblemElderwood.webp',
+      'emblema_executioner': './scr/img/items emblema/DA_18_EmblemExecutioner.webp',
+      'emblema_fae': './scr/img/items emblema/DA_18_EmblemFae.webp',
+      'emblema_florafatalis': './scr/img/items emblema/DA_18_EmblemFloraFatalis.webp',
+      'emblema_hunter': './scr/img/items emblema/DA_18_EmblemHunter.webp',
+      'emblema_inferno': './scr/img/items emblema/DA_18_EmblemInferno.webp',
+      'emblema_invoker': './scr/img/items emblema/DA_18_EmblemInvoker.webp',
+      'emblema_juggernaut': './scr/img/items emblema/DA_18_EmblemJuggernaut.webp',
+      'emblema_lunar': './scr/img/items emblema/DA_18_EmblemLunar.webp',
+      'emblema_primal': './scr/img/items emblema/DA_18_EmblemPrimal.webp',
+      'emblema_rapidfire': './scr/img/items emblema/DA_18_EmblemRapidfire.webp',
+      'emblema_slayer': './scr/img/items emblema/DA_18_EmblemSlayer.webp',
+      'emblema_spellweaver': './scr/img/items emblema/DA_18_EmblemSpellweaver.webp',
+      'emblema_sprykin': './scr/img/items emblema/DA_18_EmblemSprykin.webp',
+      'emblema_vanguard': './scr/img/items emblema/DA_18_EmblemVanguard.webp'
     };
 
     const localTraitIconMap = {
