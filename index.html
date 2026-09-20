@@ -1844,9 +1844,6 @@
       ]
     };
 
-    let isAdminLoggedIn = false;
-    let editingCompId = null;
-
     // Escuchar el estado de Autenticación de Firebase Admin
     auth.onAuthStateChanged((user) => {
       if (user) {
@@ -2426,7 +2423,7 @@
       }
     }
 
-    function generateFinalGuideJSON() {
+    async function generateFinalGuideJSON() {
       const name = document.getElementById('builder-input-name').value || "Nueva Composición TFT";
       const tier = document.getElementById('builder-select-tier').value;
       const difficulty = document.getElementById('builder-select-diff').value;
