@@ -322,7 +322,6 @@
             <h3 class="text-sm sm:text-base font-black text-white tracking-wide flex items-center gap-2">
               <span>🏆</span> RESUMEN VISUAL DE TIER LIST
             </h3>
-            <span class="text-xs font-semibold text-gray-400">Guías en directo desde Firebase</span>
           </div>
           <div id="tier-summary-rows" class="space-y-3">
             <!-- Inyectado dinámicamente con filas S, A, B, C, X -->
@@ -1855,7 +1854,69 @@
       }
 
       modal.classList.remove('hidden');
+      switchAdminTab('builder');
       initBuilderUI();
+    }
+
+    function switchAdminTab(tab) {
+      const btnBuilder = document.getElementById('admin-tab-builder-btn');
+      const btnReorder = document.getElementById('admin-tab-reorder-btn');
+      const contentBuilder = document.getElementById('admin-tab-builder-content');
+      const contentReorder = document.getElementById('admin-tab-reorder-content');
+      const saveBtn = document.getElementById('admin-save-guide-btn');
+
+      if (!btnBuilder || !btnReorder || !contentBuilder || !contentReorder) return;
+
+      if (tab === 'builder') {
+        btnBuilder.className = "px-4 py-2 rounded-xl text-xs font-black bg-amber-500 text-black border border-amber-400 shadow-md";
+        btnReorder.className = "px-4 py-2 rounded-xl text-xs font-black bg-[#121316] text-gray-300 border border-[#26282c] hover:text-white hover:border-amber-500/50";
+        contentBuilder.classList.remove('hidden');
+        contentReorder.classList.add('hidden');
+        if (saveBtn) saveBtn.classList.remove('hidden');
+      } else {
+        btnReorder.className = "px-4 py-2 rounded-xl text-xs font-black bg-amber-500 text-black border border-amber-400 shadow-md";
+        btnBuilder.className = "px-4 py-2 rounded-xl text-xs font-black bg-[#121316] text-gray-300 border border-[#26282c] hover:text-white hover:border-amber-500/50";
+        contentReorder.classList.remove('hidden');
+        contentBuilder.classList.add('hidden');
+        if (saveBtn) saveBtn.classList.add('hidden');
+        renderAdminReorderList();
+      }
+    }
+
+    function renderAdminReorderList() {
+      const container = document.getElementById('admin-reorder-list');
+      if (!container) return;
+
+      if (tftData.length === 0) {
+        container.innerHTML = `<div class="text-xs text-gray-500 italic p-4 text-center">No hay guías registradas para reordenar</div>`;
+        return;
+      }
+
+      container.innerHTML = tftData.map((comp, idx) => {
+        const badgeColor = tierBadgeStyle[comp.tier] ? tierBadgeStyle[comp.tier].bg : '#eea402';
+        return `
+          <div class="flex items-center justify-between bg-[#0b0d0f] border border-[#26282c] hover:border-amber-500/40 p-3 rounded-xl transition-all">
+            <div class="flex items-center gap-3">
+              <span class="text-xs font-black text-gray-500 w-5">#${idx + 1}</span>
+              <span class="px-2 py-0.5 rounded text-[10px] font-black text-white" style="background-color: ${badgeColor};">${comp.tier}</span>
+              <span class="text-xs font-bold text-white">${comp.nombre}</span>
+              <span class="text-[10px] text-gray-400 font-semibold">(${comp.tipoDeDano})</span>
+            </div>
+
+            <div class="flex items-center gap-2">
+              <button onclick="moveCompOrder('${comp.id}', -1); renderAdminReorderList();" ${idx === 0 ? 'disabled' : ''} class="px-3 py-1 rounded-lg bg-[#17181a] border border-[#26282c] hover:border-amber-400 text-amber-400 font-black text-xs disabled:opacity-30 disabled:pointer-events-none">
+                ▲ Subir
+              </button>
+              <button onclick="moveCompOrder('${comp.id}', 1); renderAdminReorderList();" ${idx === tftData.length - 1 ? 'disabled' : ''} class="px-3 py-1 rounded-lg bg-[#17181a] border border-[#26282c] hover:border-amber-400 text-amber-400 font-black text-xs disabled:opacity-30 disabled:pointer-events-none">
+                ▼ Bajar
+              </button>
+              <button onclick="closeAdminBuilderModal(); editPublishedComp('${comp.id}')" class="px-3 py-1 rounded-lg bg-amber-500/20 border border-amber-500/40 text-amber-300 font-bold text-xs hover:bg-amber-500 hover:text-black transition-colors">
+                ✏️ Editar
+              </button>
+            </div>
+          </div>
+        `;
+      }).join('');
     }
 
     function closeAdminBuilderModal() {
@@ -2449,14 +2510,27 @@
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-xl">🛠️</div>
           <div>
-            <h3 class="text-lg font-black text-white tracking-wide">Panel Administrador & Creador de Guías TFT</h3>
-            <p class="text-xs text-gray-400">Diseña composiciones, coloca celdas y calcula sinergias automáticamente.</p>
+            <h3 class="text-lg font-black text-white tracking-wide">Panel Administrador TFT</h3>
+            <p class="text-xs text-gray-400">Diseña composiciones y gestiona el orden de la Tier List.</p>
           </div>
         </div>
         <button onclick="closeAdminBuilderModal()" class="text-gray-400 hover:text-white p-2 rounded-xl bg-[#121316] border border-[#26282c]">
           ✖️
         </button>
       </div>
+
+      <!-- PESTAÑAS DEL PANEL ADMIN -->
+      <div class="flex items-center gap-2 border-b border-[#26282c] pb-3">
+        <button id="admin-tab-builder-btn" onclick="switchAdminTab('builder')" class="px-4 py-2 rounded-xl text-xs font-black bg-amber-500 text-black border border-amber-400 shadow-md">
+          📝 Creador / Editor de Guía
+        </button>
+        <button id="admin-tab-reorder-btn" onclick="switchAdminTab('reorder')" class="px-4 py-2 rounded-xl text-xs font-black bg-[#121316] text-gray-300 border border-[#26282c] hover:text-white hover:border-amber-500/50">
+          ↕️ Gestor de Posiciones & Orden
+        </button>
+      </div>
+
+      <!-- SECCIÓN 1: CREADOR / EDITOR DE GUÍA -->
+      <div id="admin-tab-builder-content" class="space-y-6">
 
       <!-- Configuración Básica de Guía -->
       <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-5 gap-3 bg-[#121316] p-4 rounded-2xl border border-[#26282c]">
@@ -2559,7 +2633,23 @@
         </div>
       </div>
 
-      <!-- Botón Publicar Guía -->
+      </div>
+      <!-- FIN SECCIÓN 1: CREADOR / EDITOR DE GUÍA -->
+
+      <!-- SECCIÓN 2: GESTOR DE POSICIONES & ORDEN -->
+      <div id="admin-tab-reorder-content" class="hidden space-y-4">
+        <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl">
+          <h4 class="text-sm font-black text-amber-400 uppercase tracking-wider mb-1">Reordenar Posición de Guías en la Tier List</h4>
+          <p class="text-xs text-gray-400 mb-4">Usa los botones o arrastra para cambiar la prioridad en la que aparecen las guías en vivo.</p>
+
+          <div id="admin-reorder-list" class="space-y-2 max-h-[55vh] overflow-y-auto pr-1">
+            <!-- Inyectado dinámicamente con las guías -->
+          </div>
+        </div>
+      </div>
+      <!-- FIN SECCIÓN 2 -->
+
+      <!-- Botón Publicar / Cerrar Sesión -->
       <div class="pt-4 border-t border-[#26282c] flex items-center justify-between gap-3">
         <button onclick="logoutAdmin()" class="px-4 py-2 rounded-xl bg-red-600/20 text-red-400 font-bold hover:bg-red-600 hover:text-white text-xs">
           🔒 Cerrar Sesión Admin
@@ -2569,7 +2659,7 @@
           <button onclick="closeAdminBuilderModal()" class="px-5 py-2.5 rounded-xl bg-gray-800 text-gray-300 font-bold hover:bg-gray-700 text-xs">
             Cancelar
           </button>
-          <button onclick="generateFinalGuideJSON()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-xs shadow-xl hover:brightness-110">
+          <button onclick="generateFinalGuideJSON()" id="admin-save-guide-btn" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-xs shadow-xl hover:brightness-110">
             🚀 Guardar y Publicar Guía
           </button>
         </div>
