@@ -190,38 +190,10 @@
         Si necesitas elegir rápidamente desde un Yunque de Artefactos, estas son algunas de las combinaciones más fuertes del set:
       </p>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2">
+      <div id="top-artifact-holders-grid" class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-3 pt-2">
         <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-1">
           <div class="font-black text-xs text-white">Akali</div>
           <div class="text-[11px] font-semibold text-purple-300">Lich Bane, Seeker's Armguard, Rapid Firecannon</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-1">
-          <div class="font-black text-xs text-white">Kayle</div>
-          <div class="text-[11px] font-semibold text-purple-300">Flickerblades, Wit's End or Seeker's Armguard</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-1">
-          <div class="font-black text-xs text-white">Master Yi</div>
-          <div class="text-[11px] font-semibold text-purple-300">Wit's End, Hellfire Hatchet or Flickerblades</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-1">
-          <div class="font-black text-xs text-white">Cassiopeia</div>
-          <div class="text-[11px] font-semibold text-purple-300">Blighting Jewel, Dawncore or Eternal Pact</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-1">
-          <div class="font-black text-xs text-white">Veigar</div>
-          <div class="text-[11px] font-semibold text-purple-300">Dawncore, Luden's Tempest or Eternal Pact</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-1">
-          <div class="font-black text-xs text-white">Morgana</div>
-          <div class="text-[11px] font-semibold text-purple-300">Blighting Jewel, Seeker's Armguard or Zhonya's Paradox</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-1">
-          <div class="font-black text-xs text-white">Xayah</div>
-          <div class="text-[11px] font-semibold text-purple-300">Fishbones, Flickerblades, Titanic Hydra</div>
-        </div>
-        <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-1">
-          <div class="font-black text-xs text-white">Ornn, Sejuani & Rammus</div>
-          <div class="text-[11px] font-semibold text-purple-300">Lightshield Crest</div>
         </div>
       </div>
     </section>
@@ -365,6 +337,145 @@
   </footer>
 
   <script>
+    const localChampMap = {
+      'Akali': './scr/img/Champs/DA_18_Akali.webp',
+      'Kayle': './scr/img/Champs/DA_18_Kayle.webp',
+      'Master Yi': './scr/img/Champs/DA_18_MasterYi_AD.webp',
+      'Cassiopeia': './scr/img/Champs/DA_18_Cassiopeia.webp',
+      'Veigar': './scr/img/Champs/DA_18_Veigar.webp',
+      'Morgana': './scr/img/Champs/DA_18_Morgana.webp',
+      'Xayah': './scr/img/Champs/DA_18_Xayah.webp',
+      'Ornn': './scr/img/Champs/DA_18_Ornn.webp',
+      'Sejuani': './scr/img/Champs/DA_18_Sejuani.webp',
+      'Rammus': './scr/img/Champs/DA_18_Rammus.webp',
+      'Camille': './scr/img/Champs/DA_18_Camille.webp',
+      'Karma': './scr/img/Champs/DA_Karma18.webp',
+      'Kobuko': './scr/img/Champs/DA_18_Kobuko.webp',
+      'Leona': './scr/img/Champs/DA_18_Leona.webp',
+      'Rakan': './scr/img/Champs/DA_18_Rakan.webp',
+      'Rek\'Sai': './scr/img/Champs/DA_18_RekSai.webp',
+      'Varus': './scr/img/Champs/DA_18_Varus.webp',
+      'Yorick': './scr/img/Champs/DA_18_Yorick.webp',
+      'Alistar': './scr/img/Champs/DA_18_Alistar.webp',
+      'Caitlyn': './scr/img/Champs/DA_18_Caitlyn.webp',
+      'Elise': './scr/img/Champs/DA_18_Elise.webp',
+      'LeBlanc': './scr/img/Champs/DA_18_LeBlanc.webp',
+      'Shen': './scr/img/Champs/DA_18_Shen.webp',
+      'Teemo': './scr/img/Champs/DA_18_Teemo.webp',
+      'Warwick': './scr/img/Champs/DA_18_Warwick.webp',
+      'Azir': './scr/img/Champs/DA_18_Azir.webp',
+      'Diana': './scr/img/Champs/DA_18_Diana.webp',
+      'Fiddlesticks': './scr/img/Champs/DA_Fiddlesticks18.webp',
+      'Hecarim': './scr/img/Champs/DA_18_Hecarim.webp',
+      'Kha\'Zix': './scr/img/Champs/DA_18_KhaZix.webp',
+      'Kog\'Maw': './scr/img/Champs/DA_KogMaw18_AD.webp',
+      'Rengar': './scr/img/Champs/DA_18_Rengar.webp',
+      'Tristana': './scr/img/Champs/DA_18_Tristana.webp',
+      'Vi': './scr/img/Champs/DA_Vi18.webp',
+      'Ahri': './scr/img/Champs/DA_18_Ahri.webp',
+      'Amumu': './scr/img/Champs/DA_Amumu18.webp',
+      'Aphelios': './scr/img/Champs/DA_18_Aphelios.webp',
+      'Ezreal': './scr/img/Champs/DA_18_Ezreal.webp',
+      'Lillia': './scr/img/Champs/DA_18_Lillia.webp',
+      'Malphite': './scr/img/Champs/DA_18_Malphite.webp',
+      'Sett': './scr/img/Champs/DA_18_Sett.webp',
+      'Sivir': './scr/img/Champs/DA_18_Sivir.webp',
+      'Soraka': './scr/img/Champs/DA_18_Soraka.webp',
+      'Zyra': './scr/img/Champs/DA_18_Zyra.webp',
+      'Alune': './scr/img/Champs/DA_18_Alune.webp',
+      'Ashe': './scr/img/Champs/DA_18_Ashe.webp',
+      'Draven': './scr/img/Champs/DA_18_Draven.webp',
+      'Gnar': './scr/img/Champs/DA_18_GnarSmall.webp',
+      'Ivern': './scr/img/Champs/DA_18_Ivern.webp',
+      'Kennen': './scr/img/Champs/DA_18_Kennen.webp',
+      'Lux': './scr/img/Champs/DA_18_Lux.webp',
+      'Maokai': './scr/img/Champs/DA_18_Maokai.webp',
+      'Taric': './scr/img/Champs/DA_Taric18.webp'
+    };
+
+    const localItemMap = {
+      'Lich Bane': './scr/img/items plus/LichBane.png',
+      'Seeker\'s Armguard': './scr/img/items plus/SeekersArmguard.png',
+      'Rapid Firecannon': './scr/img/items plus/RapidFirecannon.png',
+      'Flickerblades': './scr/img/items plus/Flickerblades.png',
+      'Wit\'s End': './scr/img/items plus/WitsEnd.png',
+      'Hellfire Hatchet': './scr/img/items plus/HellfireHatchet.png',
+      'Blighting Jewel': './scr/img/items plus/BlightingJewel.png',
+      'Dawncore': './scr/img/items plus/Dawncore.png',
+      'Eternal Pact': './scr/img/items plus/EternalPact.png',
+      'Luden\'s Tempest': './scr/img/items plus/LudensTempest.png',
+      'Zhonya\'s Paradox': './scr/img/items plus/ZhonyasParadox.png',
+      'Fishbones': './scr/img/items plus/Fishbones.png',
+      'Titanic Hydra': './scr/img/items plus/TitanicHydra.png',
+      'Lightshield Crest': './scr/img/items plus/LightshieldCrest.png',
+      'Infinity Force': './scr/img/items plus/InfinityForce.png',
+      'Gold Collector': './scr/img/items plus/GoldCollector.png',
+      'Mogul\'s Mail': './scr/img/items plus/MogulsMail.png',
+      'Aegis of Dawn': './scr/img/items plus/AegisOfDawn.png',
+      'Aegis of Dusk': './scr/img/items plus/AegisOfDusk.png',
+      'Void Gauntlet': './scr/img/items plus/VoidGauntlet.png',
+      'The Indomitable': './scr/img/items plus/TheIndomitable.png',
+      'Forbidden Idol': './scr/img/items plus/ForbiddenIdol.png',
+      'Manazane': './scr/img/items plus/Manazane.png',
+      'Mittens': './scr/img/items plus/Mittens.png',
+      'Silvermere Dawn': './scr/img/items plus/SilvermereDawn.png',
+      'Horizon Focus': './scr/img/items plus/HorizonFocus.png',
+      'Gambler\'s Blade': './scr/img/items plus/GamblersBlade.png',
+      'Statikk Shiv': './scr/img/items plus/StatikkShiv.png'
+    };
+
+    function getChampImg(name) {
+      const clean = name.replace(/\(AP\)|\(AD\)/g, '').trim();
+      return localChampMap[clean] || localChampMap[name] || `./scr/img/Champs/DA_18_${clean}.webp`;
+    }
+
+    function getItemImg(name) {
+      const trimmed = name.trim();
+      return localItemMap[trimmed] || './scr/img/items plus/GoldCollector.png';
+    }
+
+    function renderArtifactHolders() {
+      const topHolders = [
+        { champ: 'Akali', items: ["Lich Bane", "Seeker's Armguard", "Rapid Firecannon"] },
+        { champ: 'Kayle', items: ["Flickerblades", "Wit's End", "Seeker's Armguard"] },
+        { champ: 'Master Yi', items: ["Wit's End", "Hellfire Hatchet", "Flickerblades"] },
+        { champ: 'Cassiopeia', items: ["Blighting Jewel", "Dawncore", "Eternal Pact"] },
+        { champ: 'Veigar', items: ["Dawncore", "Luden's Tempest", "Eternal Pact"] },
+        { champ: 'Morgana', items: ["Blighting Jewel", "Seeker's Armguard", "Zhonya's Paradox"] },
+        { champ: 'Xayah', items: ["Fishbones", "Flickerblades", "Titanic Hydra"] },
+        { champ: 'Ornn, Sejuani & Rammus', items: ["Lightshield Crest"] }
+      ];
+
+      const grid = document.getElementById('top-artifact-holders-grid');
+      if (!grid) return;
+
+      grid.innerHTML = topHolders.map(h => {
+        const champNames = h.champ.split('&').map(s => s.split(',')).flat().map(c => c.trim());
+        const champImgsHTML = champNames.map(c => `
+          <div class="w-9 h-9 rounded-xl border border-amber-500/40 overflow-hidden bg-[#121316] shrink-0 shadow-md">
+            <img src="${getChampImg(c)}" alt="${c}" class="w-full h-full object-cover" onerror="this.src='./scr/img/logo.svg'" />
+          </div>
+        `).join('');
+
+        const itemsImgsHTML = h.items.map(it => `
+          <div class="group relative flex items-center gap-1 bg-[#121316] border border-gray-800 rounded-lg px-2 py-1 shadow">
+            <img src="${getItemImg(it)}" alt="${it}" class="w-5 h-5 object-contain" onerror="this.src='./scr/img/logo.svg'" />
+            <span class="text-[11px] font-semibold text-purple-300">${it}</span>
+          </div>
+        `).join('');
+
+        return `
+          <div class="p-3.5 rounded-2xl bg-[#0b0d0f] border border-gray-800 space-y-2.5 flex flex-col justify-between hover:border-amber-500/30 transition-all">
+            <div class="flex items-center gap-2.5">
+              <div class="flex items-center gap-1 flex-wrap">${champImgsHTML}</div>
+              <div class="font-black text-xs text-white leading-tight">${h.champ}</div>
+            </div>
+            <div class="flex flex-wrap gap-1.5">${itemsImgsHTML}</div>
+          </div>
+        `;
+      }).join('');
+    }
+
     const artefactosI18n = {
       es: {
         badge: "💎 GUÍA OFICIAL DE ARTEFACTOS",
@@ -456,6 +567,7 @@
     }
 
     document.addEventListener('DOMContentLoaded', () => {
+      renderArtifactHolders();
       const savedLang = localStorage.getItem('tft_lang') || 'es';
       changeLanguage(savedLang);
     });
