@@ -1013,12 +1013,12 @@
       'guante': './scr/img/DA_Component_SparringGloves.webp'
     };
 
-    // Conexión directa a los 113 archivos locales guardados en ./scr/img/
+    // Conexión directa a los archivos locales guardados en ./scr/img/ (y subcarpetas Champs / items)
     function getChampionImage(nombre) {
       if (localChampMap[nombre]) {
         return localChampMap[nombre];
       }
-      return `./scr/img/DA_18_${nombre}.webp`;
+      return `./scr/img/Champs/DA_18_${nombre}.webp`;
     }
 
     function getItemImage(nombre, isComponent = false) {
@@ -1031,20 +1031,14 @@
 
     // Manejador de error multinivel
     function handleChampError(imgElem, nombre) {
-      if (nombre === 'Stonebark Tree') {
-        imgElem.onerror = null;
-        imgElem.src = 'https://raw.communitydragon.org/latest/game/assets/ux/tft/championsplashes/tft_stonebark_mobile.tft_set13.png';
-        return;
-      }
-      if (nombre === 'Lifebloom') {
-        imgElem.onerror = null;
-        imgElem.src = 'https://raw.communitydragon.org/latest/game/assets/ux/tft/championsplashes/tft13_lifebloom.png';
-        return;
-      }
       if (!imgElem.dataset.retried) {
         imgElem.dataset.retried = '1';
-        const lolName = champLoLNames[nombre] || nombre;
-        imgElem.src = `https://ddragon.leagueoflegends.com/cdn/14.8.1/img/champion/${lolName}.png`;
+        if (localChampMap[nombre]) {
+          const baseName = localChampMap[nombre].split('/').pop();
+          imgElem.src = `./scr/img/Champs/${baseName}`;
+        } else {
+          imgElem.src = `./scr/img/DA_18_${nombre}.webp`;
+        }
         return;
       }
       imgElem.onerror = null;
