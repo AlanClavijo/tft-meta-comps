@@ -2512,7 +2512,17 @@
         showToast("¡Guía Guardada y Publicada en Cloud Firestore Exitosamente!", "success");
       } catch (err) {
         console.error("Firestore Save Error:", err);
-        showToast("Error al guardar la guía en Firestore: " + err.message, "error");
+        // Fallback local instantáneo si Firestore aún no tiene permisos o está en offline
+        if (editingCompId) {
+          const idx = tftData.findIndex(c => c.id === editingCompId);
+          if (idx !== -1) tftData[idx] = newComp;
+          else tftData.unshift(newComp);
+        } else {
+          tftData.unshift(newComp);
+        }
+        renderTierList(tftData);
+        closeAdminBuilderModal();
+        showToast("Guía guardada localmente (Verifica reglas en Firebase Console si deseas sincronización global)", "warning");
       }
     }
 
