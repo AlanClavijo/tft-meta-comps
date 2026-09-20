@@ -1303,9 +1303,9 @@
                   <div class="rounded-xl border border-indigo-900/40 p-3 bg-[#12121c] shadow-inner flex flex-col justify-between">
                     <h4 class="text-[11px] font-black text-gray-400 uppercase tracking-wider mb-1">Condiciones OP (Early)</h4>
                     <div class="flex items-center justify-center gap-2 py-1">
-                      ${comp.earlyGame && comp.earlyGame.length > 0 ? `
-                        <div class="w-9 h-9 rounded-xl bg-[#0b0d0f] border-2 border-purple-500 overflow-hidden relative shadow-lg" title="${comp.earlyGame[0]}">
-                          <img src="${getChampionImage(comp.earlyGame[0])}" alt="${comp.earlyGame[0]}" class="w-full h-full object-cover" onerror="handleChampError(this, '${comp.earlyGame[0]}')" />
+                      ${(comp.opConditionChamp || (comp.earlyGame && comp.earlyGame.length > 0 ? comp.earlyGame[0] : null)) ? `
+                        <div class="w-9 h-9 rounded-xl bg-[#0b0d0f] border-2 border-purple-500 overflow-hidden relative shadow-lg" title="${comp.opConditionChamp || comp.earlyGame[0]}">
+                          <img src="${getChampionImage(comp.opConditionChamp || comp.earlyGame[0])}" alt="${comp.opConditionChamp || comp.earlyGame[0]}" class="w-full h-full object-cover" onerror="handleChampError(this, '${comp.opConditionChamp || comp.earlyGame[0]}')" />
                         </div>
                       ` : ''}
                       <div class="w-8 h-8 rounded-xl bg-purple-900/30 border border-purple-500/50 flex items-center justify-center text-purple-400 font-black text-xs">
@@ -1824,6 +1824,7 @@
           });
 
           builderData.earlyGame = comp.earlyGame || [];
+          builderData.opConditionChamp = comp.opConditionChamp || (comp.earlyGame && comp.earlyGame.length > 0 ? comp.earlyGame[0] : '');
           builderData.prioridadCarrusel = comp.prioridadCarrusel || [];
           builderData.mejoresBuilds = comp.mejoresBuilds ? JSON.parse(JSON.stringify(comp.mejoresBuilds)) : [
             { campeon: 'Carry 1', coste: 4, items: [] },
@@ -1835,6 +1836,7 @@
         document.getElementById('builder-input-name').value = '';
         builderBoardState = Array(28).fill(null);
         builderData.earlyGame = [];
+        builderData.opConditionChamp = '';
         builderData.prioridadCarrusel = ['lagrima', "vara", "cinto", "malla"];
         builderData.mejoresBuilds = [
           { campeon: '', coste: 4, items: [] },
@@ -1873,8 +1875,27 @@
       renderBuilderItemCatalog();
       updateCalculatedTraits();
       renderEarlyChampsSelection();
+      renderOpConditionChampSelection();
       renderCarouselItemsSelection();
       renderBestBuildsForm();
+    }
+
+    function renderOpConditionChampSelection() {
+      const container = document.getElementById('builder-op-condition-champ');
+      if (!container) return;
+
+      container.innerHTML = `
+        <select onchange="setOpConditionChamp(this.value)" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-2 text-xs text-white focus:border-amber-400 focus:outline-none">
+          <option value="">-- Usar primer campeón Early por defecto --</option>
+          ${Object.keys(localChampMap).map(c => `
+            <option value="${c}" ${builderData.opConditionChamp === c ? 'selected' : ''}>${c}</option>
+          `).join('')}
+        </select>
+      `;
+    }
+
+    function setOpConditionChamp(c) {
+      builderData.opConditionChamp = c;
     }
 
     function renderBuilderGrid() {
@@ -2333,6 +2354,7 @@
         categoria: category,
         tipoDeDano: damageType,
         earlyGame: builderData.earlyGame.length > 0 ? builderData.earlyGame : ["Sett", "Yorick", "Vi"],
+        opConditionChamp: builderData.opConditionChamp || (builderData.earlyGame.length > 0 ? builderData.earlyGame[0] : ''),
         prioridadCarrusel: builderData.prioridadCarrusel,
         campeones: champsList,
         sinergias: sinergias,
@@ -2477,16 +2499,22 @@
 
       </div>
 
-      <!-- Apartados Secundarios (Salida Early, Carrusel, Mejores Builds) -->
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2">
+      <!-- Apartados Secundarios (Salida Early, Condiciones OP, Carrusel, Mejores Builds) -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2 max-h-[220px] overflow-y-auto">
           <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider">Salida de Campeones (Early)</h4>
-          <div id="builder-early-champs" class="flex flex-wrap gap-1.5"></div>
+          <div id="builder-early-champs" class="flex flex-wrap gap-1.5 max-h-[150px] overflow-y-auto"></div>
+        </div>
+
+        <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2">
+          <h4 class="text-xs font-black text-amber-400 uppercase tracking-wider">Condiciones OP (Early)</h4>
+          <p class="text-[10px] text-gray-400">Selecciona el campeón que desata la condición OP inicial:</p>
+          <div id="builder-op-condition-champ" class="pt-1"></div>
         </div>
 
         <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2">
           <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider">Prioridad Objetos Carrusel</h4>
-          <div id="builder-carousel-items" class="flex gap-2"></div>
+          <div id="builder-carousel-items" class="flex gap-2 flex-wrap"></div>
         </div>
 
         <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2">
