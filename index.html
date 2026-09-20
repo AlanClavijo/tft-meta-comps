@@ -3,8 +3,8 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <!-- Google AdSense Oficial Monetización -->
-  <script async src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=ca-pub-1862247020827439" crossorigin="anonymous"></script>
+  <!-- html2canvas para generación y descarga de imágenes JPG -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/html2canvas/1.4.1/html2canvas.min.js"></script>
 
   <title>TFT Consejos, Guías y Mejores Composiciones Meta Set 17 | TFT Tier List</title>
   <meta name="description" content="TFT Consejos, Guías completas y la Tier List de mejores composiciones del meta de Teamfight Tactics Set 17. Posicionamiento hexagonal, ítems recomendados y aumentos.">
@@ -1207,8 +1207,20 @@
                 </div>
               </div>
 
-              <!-- Flecha Interactiva & Controles Admin (Reordenar, Editar, Eliminar) -->
-              <div class="flex items-center gap-2 self-end sm:self-center">
+              <!-- Flecha Interactiva & Controles (Descargar, Copiar Fichas, Admin) -->
+              <div class="flex items-center gap-2 self-end sm:self-center flex-wrap justify-end">
+                <!-- Botón 📸 Descargar Imagen JPG -->
+                <button onclick="event.stopPropagation(); downloadCompImage('${comp.id}')" title="Descargar imagen JPG de la composición" class="px-2.5 py-1.5 bg-indigo-600/30 hover:bg-indigo-600 text-indigo-200 hover:text-white rounded-xl text-xs font-black transition-all border border-indigo-500/40 flex items-center gap-1.5 shadow-md">
+                  <span>📸</span>
+                  <span class="hidden sm:inline">Descargar JPG</span>
+                </button>
+
+                <!-- Botón 📋 Copiar Fichas TFT -->
+                <button onclick="event.stopPropagation(); copyCompCode('${comp.id}')" title="Copiar nombres de fichas para el cliente TFT" class="px-2.5 py-1.5 bg-emerald-600/30 hover:bg-emerald-600 text-emerald-200 hover:text-white rounded-xl text-xs font-black transition-all border border-emerald-500/40 flex items-center gap-1.5 shadow-md">
+                  <span>📋</span>
+                  <span class="hidden sm:inline">Copiar Fichas</span>
+                </button>
+
                 ${isAdminLoggedIn ? `
                   <div class="flex items-center gap-1 bg-[#0b0d0f] border border-[#26282c] rounded-xl p-1">
                     <button onclick="event.stopPropagation(); moveCompOrder('${comp.id}', -1)" title="Subir prioridad" class="p-1 hover:bg-amber-500/20 text-amber-400 rounded font-black text-xs">
@@ -1370,6 +1382,137 @@
         showToast("Orden de guías actualizado", "success");
       } catch (err) {
         console.warn("Error guardando orden en Firestore:", err);
+      }
+    }
+
+    // Copiar código / nombres de fichas para TFT
+    function copyCompCode(compId) {
+      const comp = tftData.find(c => c.id === compId);
+      if (!comp) return;
+
+      const champNames = (comp.campeones || []).map(ch => ch.nombre).join(', ');
+      const compCodeText = `TFT Meta Comp [Tier ${comp.tier}]: ${comp.nombre} -> Fichas: ${champNames} (vía aslandevstudio.com)`;
+
+      if (navigator.clipboard && navigator.clipboard.writeText) {
+        navigator.clipboard.writeText(compCodeText).then(() => {
+          showToast(`📋 Fichas copiadas: ${comp.nombre}`, 'success');
+        }).catch(() => {
+          fallbackCopyText(compCodeText, comp.nombre);
+        });
+      } else {
+        fallbackCopyText(compCodeText, comp.nombre);
+      }
+    }
+
+    function fallbackCopyText(text, name) {
+      const ta = document.createElement('textarea');
+      ta.value = text;
+      document.body.appendChild(ta);
+      ta.select();
+      document.execCommand('copy');
+      document.body.removeChild(ta);
+      showToast(`📋 Fichas copiadas: ${name}`, 'success');
+    }
+
+    // Descargar imagen JPG estilizada con marca de agua oficial
+    async function downloadCompImage(compId) {
+      const comp = tftData.find(c => c.id === compId);
+      const articleEl = document.getElementById(compId);
+      if (!comp || !articleEl) return;
+
+      const detailsEl = document.getElementById(`details-${compId}`);
+      const arrowEl = document.getElementById(`arrow-${compId}`);
+      let originallyClosed = false;
+
+      // Desplegar panel si está cerrado para la captura
+      if (detailsEl && detailsEl.classList.contains('max-h-0')) {
+        originallyClosed = true;
+        detailsEl.classList.remove('max-h-0', 'opacity-0');
+        detailsEl.classList.add('max-h-[2000px]', 'opacity-100');
+      }
+
+      showToast(`📸 Generando imagen JPG de ${comp.nombre}...`, 'info');
+
+      // Crear contenedor temporal de exportación con la Marca de Agua y Estilo Gamer
+      const clone = articleEl.cloneNode(true);
+      clone.id = `export-clone-${compId}`;
+      clone.style.position = 'fixed';
+      clone.style.left = '-9999px';
+      clone.style.top = '0';
+      clone.style.width = '780px';
+      clone.style.zIndex = '-9999';
+      clone.style.backgroundColor = '#0b0d0f';
+      clone.style.border = '2px solid #eea402';
+      clone.style.borderRadius = '24px';
+      clone.style.padding = '12px';
+
+      // Asegurar que los detalles del clon estén abiertos
+      const cloneDetails = clone.querySelector('.detalles-expandidos');
+      if (cloneDetails) {
+        cloneDetails.classList.remove('max-h-0', 'opacity-0');
+        cloneDetails.style.maxHeight = 'none';
+        cloneDetails.style.opacity = '1';
+        cloneDetails.style.display = 'block';
+      }
+
+      // Eliminar botones interactivos de la captura
+      const cloneButtons = clone.querySelectorAll('button');
+      cloneButtons.forEach(btn => btn.remove());
+
+      // Agregar encabezado de marca de agua oficial en la parte superior del clon
+      const headerWatermark = document.createElement('div');
+      headerWatermark.className = 'w-full bg-gradient-to-r from-amber-500/20 via-purple-500/20 to-indigo-500/20 border border-amber-500/40 p-3 rounded-2xl mb-3 flex items-center justify-between';
+      headerWatermark.innerHTML = `
+        <div class="flex items-center gap-2">
+          <img src="./scr/img/logo.svg" style="width:28px;height:28px;" />
+          <span class="font-extrabold text-sm text-amber-400 tracking-wider">TFT META COMPS</span>
+        </div>
+        <div class="text-[11px] font-bold text-gray-300">
+          🌐 aslandevstudio.com
+        </div>
+      `;
+      clone.insertBefore(headerWatermark, clone.firstChild);
+
+      // Agregar pie de marca de agua inferior
+      const footerWatermark = document.createElement('div');
+      footerWatermark.className = 'w-full text-center py-2 border-t border-[#26282c] mt-3 text-[10px] font-black text-amber-400/80 tracking-widest uppercase';
+      footerWatermark.innerText = '© 2026 ASLAN DEV STUDIO • GUÍAS Y TIER LIST DE TFT';
+      clone.appendChild(footerWatermark);
+
+      document.body.appendChild(clone);
+
+      try {
+        await new Promise(r => setTimeout(r, 400)); // Esperar render de imágenes
+
+        const canvas = await html2canvas(clone, {
+          backgroundColor: '#0b0d0f',
+          scale: 2, // Alta resolución HD
+          useCORS: true,
+          allowTaint: true,
+          logging: false
+        });
+
+        // Convertir a JPG y descargar
+        const imgData = canvas.toDataURL('image/jpeg', 0.92);
+        const link = document.createElement('a');
+        const cleanName = comp.nombre.toLowerCase().replace(/[^a-z0-9]/g, '_');
+        link.download = `tft_meta_${cleanName}.jpg`;
+        link.href = imgData;
+        link.click();
+
+        showToast(`✅ Imagen descargada exitosamente: tft_meta_${cleanName}.jpg`, 'success');
+      } catch (err) {
+        console.error("Error al generar imagen:", err);
+        showToast("❌ No se pudo exportar la imagen. Intenta de nuevo.", 'error');
+      } finally {
+        // Limpieza de nodos clonados
+        if (clone && clone.parentNode) clone.parentNode.removeChild(clone);
+
+        // Si estaba cerrado originalmente, volver a cerrarlo en la UI
+        if (originallyClosed && detailsEl) {
+          detailsEl.classList.remove('max-h-[2000px]', 'opacity-100');
+          detailsEl.classList.add('max-h-0', 'opacity-0');
+        }
       }
     }
 
