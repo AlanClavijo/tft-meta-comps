@@ -2,26 +2,44 @@
 <urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
   <url>
     <loc>https://aslandevstudio.com/</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
     <priority>1.0</priority>
   </url>
   <url>
-    <loc>https://aslandevstudio.com/index.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <loc>https://aslandevstudio.com/consejos-set18.html</loc>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>daily</changefreq>
-    <priority>1.0</priority>
+    <priority>0.9</priority>
+  </url>
+  <url>
+    <loc>https://aslandevstudio.com/artefactos.html</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aslandevstudio.com/set17.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
   </url>
   <url>
     <loc>https://aslandevstudio.com/aprender.html</loc>
-    <lastmod>2026-08-23</lastmod>
+    <lastmod>2026-09-20</lastmod>
     <changefreq>weekly</changefreq>
     <priority>0.8</priority>
+  </url>
+  <url>
+    <loc>https://aslandevstudio.com/privacy.html</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
+  </url>
+  <url>
+    <loc>https://aslandevstudio.com/terms.html</loc>
+    <lastmod>2026-09-20</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.3</priority>
   </url>
 </urlset>
