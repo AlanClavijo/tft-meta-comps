@@ -1022,6 +1022,53 @@
       'guante': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/1018.png'
     };
 
+    const localTraitIconMap = {
+      'Adaptor': './scr/img/Sinergias/Trait_Icon_18_Adaptor.TFT_Set18.png',
+      'ApexPredator': './scr/img/Sinergias/Trait_Icon_18_ApexPredator.TFT_Set18.png',
+      'Attuned': './scr/img/Sinergias/Trait_Icon_18_Attuned.TFT_Set18.png',
+      'Avatar': './scr/img/Sinergias/Trait_Icon_18_Avatar.TFT_Set18.png',
+      'Blossom': './scr/img/Sinergias/Trait_Icon_18_Blossom.TFT_Set18.png',
+      'BountySeeker': './scr/img/Sinergias/Trait_Icon_18_BountySeeker.TFT_Set18.png',
+      'Brawler': './scr/img/Sinergias/Trait_Icon_18_Brawler.TFT_Set18.png',
+      'Caustic': './scr/img/Sinergias/Trait_Icon_18_Caustic.TFT_Set18.png',
+      'Coven': './scr/img/Sinergias/Trait_Icon_18_Coven.TFT_Set18.png',
+      'Defender': './scr/img/Sinergias/Trait_Icon_18_Defender.TFT_Set18.png',
+      'Eclipse': './scr/img/Sinergias/Trait_Icon_18_Eclipse.TFT_Set18.png',
+      'Elderwood': './scr/img/Sinergias/Trait_Icon_18_Elderwood.TFT_Set18.png',
+      'EmeraldAspect': './scr/img/Sinergias/Trait_Icon_18_EmeraldAspect.TFT_Set18.png',
+      'Emerald Aspect': './scr/img/Sinergias/Trait_Icon_18_EmeraldAspect.TFT_Set18.png',
+      'Executioner': './scr/img/Sinergias/Trait_Icon_18_Executioner.TFT_Set18.png',
+      'Fae': './scr/img/Sinergias/Trait_Icon_18_Fae.TFT_Set18.png',
+      'FloraFatalis': './scr/img/Sinergias/Trait_Icon_18_FloraFatalis.TFT_Set18.png',
+      'Flora Fatalis': './scr/img/Sinergias/Trait_Icon_18_FloraFatalis.TFT_Set18.png',
+      'Greenfather': './scr/img/Sinergias/Trait_Icon_18_Greenfather.TFT_Set18.png',
+      'Hunter': './scr/img/Sinergias/Trait_Icon_18_Hunter.TFT_Set18.png',
+      'Inferno': './scr/img/Sinergias/Trait_Icon_18_Inferno.TFT_Set18.png',
+      'Invoker': './scr/img/Sinergias/Trait_Icon_18_Invoker.TFT_Set18.png',
+      'Juggernaut': './scr/img/Sinergias/Trait_Icon_18_Juggernaut.TFT_Set18.png',
+      'Lunar': './scr/img/Sinergias/Trait_Icon_18_Lunar.TFT_Set18.png',
+      'Monolith': './scr/img/Sinergias/Trait_Icon_18_Monolith.TFT_Set18.png',
+      'OldGod': './scr/img/Sinergias/Trait_Icon_18_OldGod.TFT_Set18.png',
+      'Old God': './scr/img/Sinergias/Trait_Icon_18_OldGod.TFT_Set18.png',
+      'OldGrowth': './scr/img/Sinergias/Trait_Icon_18_OldGrowth.TFT_Set18.png',
+      'Primal': './scr/img/Sinergias/Trait_Icon_18_Primal.TFT_Set18.png',
+      'Rapidfire': './scr/img/Sinergias/Trait_Icon_18_Rapidfire.TFT_Set18.png',
+      'Ravager': './scr/img/Sinergias/Trait_Icon_18_Ravager.TFT_Set18.png',
+      'Riftbeast': './scr/img/Sinergias/Trait_Icon_18_Riftbeast.TFT_Set18.png',
+      'Rival': './scr/img/Sinergias/Trait_Icon_18_Rival.TFT_Set18.png',
+      'Solar': './scr/img/Sinergias/Trait_Icon_18_Solar.TFT_Set18.png',
+      'Spellweaver': './scr/img/Sinergias/Trait_Icon_18_Spellweaver.TFT_Set18.png',
+      'Sprykin': './scr/img/Sinergias/Trait_Icon_18_Sprykin.TFT_Set18.png',
+      'Summoner': './scr/img/Sinergias/Trait_Icon_18_Summoner.TFT_Set18.png',
+      'Vanguard': './scr/img/Sinergias/Trait_Icon_18_Vanguard.TFT_Set18.png',
+      'ZyraOrigin': './scr/img/Sinergias/Trait_Icon_18_ZyraOrigin.TFT_Set18.png'
+    };
+
+    function getTraitIcon(traitName) {
+      const cleanName = traitName.replace(/\s+/g, '');
+      return localTraitIconMap[traitName] || localTraitIconMap[cleanName] || `./scr/img/Sinergias/Trait_Icon_18_${cleanName}.TFT_Set18.png`;
+    }
+
     function getChampionImage(nombre) {
       if (localChampMap[nombre]) {
         return localChampMap[nombre];
@@ -1112,14 +1159,16 @@
           `;
         }).join('');
 
-        // 3. Sinergias (Traits) con insignias hex de nivel y escalas activas
+        // 3. Sinergias (Traits) con insignias hex de nivel, iconos y escalas activas
         const traitsHTML = comp.sinergias ? comp.sinergias.map(tr => {
           const traitClass = tr.tipo || 'bronze';
           const escalaHTML = tr.escala ? `<div class="text-[9px] font-medium text-gray-500">${tr.escala}</div>` : '';
+          const iconSrc = getTraitIcon(tr.nombre);
           return `
             <div class="flex items-center gap-2 bg-[#0b0d0f] px-2.5 py-1 rounded-xl border border-[#26282c]">
-              <div class="trait-badge ${traitClass}">
-                ${tr.nivel}
+              <div class="trait-badge ${traitClass} relative flex items-center justify-center">
+                <img src="${iconSrc}" alt="${tr.nombre}" class="w-4 h-4 object-contain brightness-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
+                <span class="text-[10px] font-black leading-none">${tr.nivel}</span>
               </div>
               <div>
                 <div class="text-xs font-black text-white tracking-wide">${tr.nombre}</div>
@@ -2067,12 +2116,18 @@
         return;
       }
 
-      traitsContainer.innerHTML = traitsList.map(t => `
-        <div class="flex items-center gap-2 bg-[#17181a] border border-[#26282c] px-3 py-1.5 rounded-xl shadow-md">
-          <div class="trait-badge ${t.tipo}">${t.nivel}</div>
-          <span class="text-xs font-black text-white">${t.nombre}</span>
-        </div>
-      `).join('');
+      traitsContainer.innerHTML = traitsList.map(t => {
+        const iconSrc = getTraitIcon(t.nombre);
+        return `
+          <div class="flex items-center gap-2 bg-[#17181a] border border-[#26282c] px-3 py-1.5 rounded-xl shadow-md">
+            <div class="trait-badge ${t.tipo} relative flex items-center justify-center gap-0.5">
+              <img src="${iconSrc}" alt="${t.nombre}" class="w-3.5 h-3.5 object-contain brightness-200" onerror="this.style.display='none';" />
+              <span class="text-[10px] font-black leading-none">${t.nivel}</span>
+            </div>
+            <span class="text-xs font-black text-white">${t.nombre}</span>
+          </div>
+        `;
+      }).join('');
     }
 
     function renderBuilderCatalog() {
