@@ -1237,7 +1237,7 @@
                     🗑️ Eliminar
                   </button>
                 ` : ''}
-                <div class="flex items-center gap-1.5 text-xs font-bold text-amber-400 ml-1">
+                <div class="comp-details-trigger flex items-center gap-1.5 text-xs font-bold text-amber-400 ml-1">
                   <span>Detalles</span>
                   <span id="arrow-${comp.id}" class="inline-block transition-transform duration-300 font-black text-sm">v</span>
                 </div>
@@ -1517,8 +1517,8 @@
       articleEl.insertBefore(headerWM, articleEl.firstChild);
       articleEl.appendChild(footerWM);
 
-      // Ocultar botones de interacción y controles admin mediante display:none para evitar parpadeos visuales en la página
-      const actionButtons = articleEl.querySelectorAll('button, #arrow-' + compId, '.action-controls-container');
+      // Ocultar botones de interacción, controles admin y texto 'Detalles' durante la captura
+      const actionButtons = articleEl.querySelectorAll('button, #arrow-' + compId, '.action-controls-container', '.comp-details-trigger');
       actionButtons.forEach(btn => btn.style.display = 'none');
 
       try {
