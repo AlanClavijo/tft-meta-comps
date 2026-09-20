@@ -200,8 +200,8 @@
         <a href="index.html#comps-container" class="hover:text-white transition-colors">Composiciones</a>
         <a href="set17.html" class="hover:text-amber-400 transition-colors">Set 17</a>
         <a href="aprender.html" class="hover:text-amber-400 transition-colors">Aprender TFT</a>
-        <button onclick="openAdminBuilderModal()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold shadow-lg hover:brightness-110 transition-all flex items-center gap-1.5">
-          <span>🛠️</span> Creador de Guías
+        <button onclick="openAdminLoginModal()" class="px-3.5 py-1.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold shadow-lg hover:brightness-110 transition-all flex items-center gap-1.5">
+          <span>🔒</span> Panel Admin
         </button>
         
         <!-- SELECTOR MULTI-IDIOMA EN LA BARRA SUPERIOR DESKTOP -->
@@ -252,8 +252,8 @@
         </div>
 
         <nav class="flex flex-col space-y-4 text-sm font-bold text-gray-300">
-          <button onclick="toggleMobileMenu(); openAdminBuilderModal();" class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold flex items-center gap-2 shadow-lg">
-            <span>🛠️</span> Creador de Guías (Admin)
+          <button onclick="toggleMobileMenu(); openAdminLoginModal();" class="py-2.5 px-4 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-extrabold flex items-center gap-2 shadow-lg">
+            <span>🔒</span> Panel Administrador
           </button>
           <a href="index.html" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl bg-amber-500/10 text-amber-400 border border-amber-500/20">Inicio / Tier List</a>
           <a href="index.html#comps-container" onclick="toggleMobileMenu()" class="py-2.5 px-4 rounded-xl hover:bg-[#17181a] hover:text-white">Composiciones Meta</a>
@@ -982,38 +982,45 @@
     };
 
     const localItemMap = {
-      'guinsoo': './scr/img/DA_GuinsoosRageblade.webp',
-      'filo_infinito': './scr/img/DA_InfinityEdge.webp',
-      'sable_pistola': './scr/img/DA_HextechGunblade.webp',
-      'morellonomicon': './scr/img/DA_Morellonomicon.webp',
-      'lanza_shojin': './scr/img/DA_SpearOfShojin.webp',
-      'sombrero_rabadon': './scr/img/DA_RabadonsDeathcap.webp',
-      'gargola': './scr/img/DA_GargoyleStoneplate.webp',
-      'chispa_ionica': './scr/img/DA_IonicSpark.webp',
-      'capa_fuego_solar': './scr/img/DA_SunfireCape.webp',
-      'mejora_azul': './scr/img/DA_BlueBuff.webp',
-      'guantelete_joyado': './scr/img/DA_JeweledGauntlet.webp',
-      'ultimo_suspiro': './scr/img/DA_LastWhisper.webp',
-      'armadura_warmog': './scr/img/DA_WarmogsArmor.webp',
-      'garra_dragon': './scr/img/DA_DragonsClaw.webp',
-      'capa_mercurial': './scr/img/DA_Quicksilver.webp',
-      'valor_titanico': './scr/img/DA_TitansResolve.webp',
-      'diente_nashor': './scr/img/DA_NashorsTooth.webp',
-      'baston_arcangel': './scr/img/DA_ArchangelsStaff.webp',
-      'cota_espinas': './scr/img/DA_BrambleVest.webp',
-      'verdugo_gigantes': './scr/img/DA_GiantSlayer.webp',
-      'sanguinaria': './scr/img/DA_Bloodthirster.webp',
-      // Componentes Base Locales
-      'espadon': './scr/img/DA_Component_NeedlesslyLargeRod.webp',
-      'arco': './scr/img/DA_Component_RecurveBow.webp',
-      'lagrima': './scr/img/DA_Component_TearOfTheGoddess.webp',
-      'vara': './scr/img/DA_Component_NeedlesslyLargeRod.webp',
-      'malla': './scr/img/DA_Component_ChainVest.webp',
-      'cinto': './scr/img/DA_Component_GiantsBelt.webp',
-      'guante': './scr/img/DA_Component_SparringGloves.webp'
+      'guinsoo': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3124.png',
+      'filo_infinito': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3031.png',
+      'sable_pistola': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3146.png',
+      'morellonomicon': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3165.png',
+      'lanza_shojin': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3161.png',
+      'sombrero_rabadon': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3089.png',
+      'gargola': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3193.png',
+      'chispa_ionica': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3198.png',
+      'capa_fuego_solar': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3068.png',
+      'mejora_azul': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3040.png',
+      'bufo_azul': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3040.png',
+      'guantelete_joyado': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3152.png',
+      'ultimo_suspiro': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3035.png',
+      'armadura_warmog': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3083.png',
+      'garra_dragon': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3155.png',
+      'capa_mercurial': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3140.png',
+      'valor_titanico': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3742.png',
+      'diente_nashor': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3115.png',
+      'baston_arcangel': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3003.png',
+      'cota_espinas': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3075.png',
+      'verdugo_gigantes': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3036.png',
+      'sanguinaria': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3072.png',
+      'protector_eterno': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3065.png',
+      'mano_de_la_justicia': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3070.png',
+      'rompeguardias': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3116.png',
+      'buf_rojo': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3068.png',
+      'guantes_ladron': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3107.png',
+      'apariencia_espiritual': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3065.png',
+      // 8 Componentes Base Universales (Imágenes Oficiales Garantizadas 100%)
+      'espadon': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/1038.png',
+      'arco': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/1043.png',
+      'lagrima': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/3070.png',
+      'vara': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/1058.png',
+      'malla': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/1031.png',
+      'capa': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/1033.png',
+      'cinto': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/1011.png',
+      'guante': 'https://ddragon.leagueoflegends.com/cdn/14.8.1/img/item/1018.png'
     };
 
-    // Conexión directa a los archivos locales guardados en ./scr/img/ (y subcarpetas Champs / items)
     function getChampionImage(nombre) {
       if (localChampMap[nombre]) {
         return localChampMap[nombre];
@@ -1204,10 +1211,20 @@
                 </div>
               </div>
 
-              <!-- Flecha Interactiva -->
-              <div class="flex items-center gap-2 text-xs font-bold text-amber-400 self-end sm:self-center">
-                <span>Detalles</span>
-                <span id="arrow-${comp.id}" class="inline-block transition-transform duration-300 font-black text-sm">v</span>
+              <!-- Flecha Interactiva & Controles Admin -->
+              <div class="flex items-center gap-3 self-end sm:self-center">
+                ${isAdminLoggedIn ? `
+                  <button onclick="event.stopPropagation(); editPublishedComp('${comp.id}')" class="px-2.5 py-1 bg-amber-500/20 text-amber-300 hover:bg-amber-500 hover:text-black rounded-lg text-xs font-black transition-colors border border-amber-500/40">
+                    ✏️ Editar
+                  </button>
+                  <button onclick="event.stopPropagation(); deletePublishedComp('${comp.id}')" class="px-2.5 py-1 bg-red-600/20 text-red-400 hover:bg-red-600 hover:text-white rounded-lg text-xs font-black transition-colors border border-red-500/40">
+                    🗑️ Eliminar
+                  </button>
+                ` : ''}
+                <div class="flex items-center gap-1.5 text-xs font-bold text-amber-400">
+                  <span>Detalles</span>
+                  <span id="arrow-${comp.id}" class="inline-block transition-transform duration-300 font-black text-sm">v</span>
+                </div>
               </div>
             </div>
 
@@ -1657,12 +1674,14 @@
     }
 
     // ==========================================
-    // CREADOR DE EQUIPOS Y PANEL ADMIN TFT (SET 17)
+    // CREADOR DE EQUIPOS Y PANEL ADMIN TFT (CON LOGIN Y EDICIÓN COMPLETA)
     // ==========================================
+    let isAdminLoggedIn = false;
+    let editingCompId = null;
+
     let builderBoardState = Array(28).fill(null); // Array 4x7
     let selectedCellIndex = null;
-    let selectedChampForBuild = null;
-    let selectedCarrySlot = null; // { type: 'carry'|'tank', index: 0|1 }
+    let selectedBuildIndex = 0; // 0 para Carry 1, 1 para Carry 2
     
     let builderData = {
       id: '',
@@ -1679,14 +1698,95 @@
         { nombre: 'Augment 3', tipo: 'Plata' }
       ],
       mejoresBuilds: [
-        { campeon: '', coste: 4, items: [] },
-        { campeon: '', coste: 4, items: [] }
+        { campeon: 'Carry 1', coste: 4, items: [] },
+        { campeon: 'Tanque 1', coste: 4, items: [] }
       ]
     };
 
-    function openAdminBuilderModal() {
+    function openAdminLoginModal() {
+      if (isAdminLoggedIn) {
+        openAdminBuilderModal();
+        return;
+      }
+      const modal = document.getElementById('admin-login-modal');
+      if (modal) modal.classList.remove('hidden');
+    }
+
+    function closeAdminLoginModal() {
+      const modal = document.getElementById('admin-login-modal');
+      if (modal) modal.classList.add('hidden');
+    }
+
+    function attemptAdminLogin() {
+      const user = document.getElementById('admin-user-input').value;
+      const pass = document.getElementById('admin-pass-input').value;
+
+      if (user === 'aslan' && pass === '1234') {
+        isAdminLoggedIn = true;
+        closeAdminLoginModal();
+        alert("🔓 ¡Bienvenido al Panel Administrador!");
+        renderTierList(tftData);
+        openAdminBuilderModal();
+      } else {
+        alert("❌ Usuario o contraseña incorrectos");
+      }
+    }
+
+    function logoutAdmin() {
+      isAdminLoggedIn = false;
+      renderTierList(tftData);
+      alert("🔒 Sesión de administrador cerrada.");
+    }
+
+    function openAdminBuilderModal(editId = null) {
+      if (!isAdminLoggedIn) {
+        openAdminLoginModal();
+        return;
+      }
+
+      editingCompId = editId;
       const modal = document.getElementById('admin-builder-modal');
       if (!modal) return;
+
+      if (editId) {
+        const comp = tftData.find(c => c.id === editId);
+        if (comp) {
+          document.getElementById('builder-input-name').value = comp.nombre;
+          document.getElementById('builder-select-tier').value = comp.tier;
+          document.getElementById('builder-select-diff').value = comp.dificultad;
+          document.getElementById('builder-select-cat').value = comp.categoria;
+          document.getElementById('builder-select-damage').value = comp.tipoDeDano;
+
+          builderBoardState = Array(28).fill(null);
+          comp.tablero.forEach(cell => {
+            const idx = (cell.fila - 1) * 7 + (cell.col - 1);
+            const champInfo = comp.campeones.find(c => c.nombre === cell.campeon) || {};
+            builderBoardState[idx] = {
+              campeon: cell.campeon,
+              es3Estrellas: cell.es3Estrellas || champInfo.es3Estrellas || false,
+              items: cell.items || champInfo.items || []
+            };
+          });
+
+          builderData.earlyGame = comp.earlyGame || [];
+          builderData.prioridadCarrusel = comp.prioridadCarrusel || [];
+          builderData.mejoresBuilds = comp.mejoresBuilds ? JSON.parse(JSON.stringify(comp.mejoresBuilds)) : [
+            { campeon: 'Carry 1', coste: 4, items: [] },
+            { campeon: 'Tanque 1', coste: 4, items: [] }
+          ];
+        }
+      } else {
+        // Reset para nueva guía
+        document.getElementById('builder-input-name').value = '';
+        builderBoardState = Array(28).fill(null);
+        builderData.earlyGame = [];
+        builderData.prioridadCarrusel = ['lagrima', "vara", "cinto", "malla"];
+        builderData.mejoresBuilds = [
+          { campeon: '', coste: 4, items: [] },
+          { campeon: '', coste: 4, items: [] }
+        ];
+      }
+
       modal.classList.remove('hidden');
       initBuilderUI();
     }
@@ -1694,6 +1794,22 @@
     function closeAdminBuilderModal() {
       const modal = document.getElementById('admin-builder-modal');
       if (modal) modal.classList.add('hidden');
+    }
+
+    function editPublishedComp(compIdxId) {
+      openAdminBuilderModal(compIdxId);
+    }
+
+    function deletePublishedComp(compIdxId) {
+      if (!isAdminLoggedIn) return;
+      if (confirm(`¿Estás seguro de que deseas eliminar permanentemente esta guía (${compIdxId})?`)) {
+        const idx = tftData.findIndex(c => c.id === compIdxId);
+        if (idx !== -1) {
+          tftData.splice(idx, 1);
+          renderTierList(tftData);
+          alert("🗑️ Guía eliminada correctamente.");
+        }
+      }
     }
 
     function initBuilderUI() {
@@ -1866,7 +1982,6 @@
 
     function addChampToSelectedCell(champName) {
       if (selectedCellIndex === null) {
-        // Asignar en la primera celda vacía disponible
         const emptyIdx = builderBoardState.findIndex(cell => cell === null);
         if (emptyIdx !== -1) selectedCellIndex = emptyIdx;
         else selectedCellIndex = 0;
@@ -1885,9 +2000,16 @@
 
     function addItemToSelectedCell(itemKey) {
       if (selectedCellIndex === null || !builderBoardState[selectedCellIndex]) {
-        alert("Selecciona primero una celda ocupada por un campeón en el tablero");
+        // También permitir equipar a los objetos de la build destacada
+        const targetBuild = builderData.mejoresBuilds[selectedBuildIndex];
+        if (targetBuild) {
+          if (!targetBuild.items) targetBuild.items = [];
+          if (targetBuild.items.length < 3) targetBuild.items.push(itemKey);
+          renderBestBuildsForm();
+        }
         return;
       }
+
       const cell = builderBoardState[selectedCellIndex];
       if (!cell.items) cell.items = [];
       if (cell.items.length >= 3) {
@@ -2003,7 +2125,7 @@
       if (!container) return;
       const components = ['espadon', 'arco', 'lagrima', 'vara', 'malla', 'capa', 'cinto', 'guante'];
       container.innerHTML = components.map(k => `
-        <div onclick="toggleCarouselItem('${k}')" class="w-8 h-8 rounded-lg border cursor-pointer p-0.5 ${builderData.prioridadCarrusel.includes(k) ? 'border-amber-400 bg-amber-500/20' : 'border-gray-800 bg-[#0b0d0f]'}">
+        <div onclick="toggleCarouselItem('${k}')" class="w-9 h-9 rounded-lg border cursor-pointer p-1 relative ${builderData.prioridadCarrusel.includes(k) ? 'border-amber-400 bg-amber-500/20' : 'border-gray-800 bg-[#0b0d0f]'}">
           <img src="${getItemImage(k, true)}" class="w-full h-full object-cover" />
         </div>
       `).join('');
@@ -2021,15 +2143,55 @@
     function renderBestBuildsForm() {
       const container = document.getElementById('builder-best-builds-inputs');
       if (!container) return;
+
       container.innerHTML = [0, 1].map(idx => {
-        const build = builderData.mejoresBuilds[idx] || { campeon: 'Carry ' + (idx + 1), coste: 4, items: ['lanza_shojin', 'guantelete_joyado', 'bufo_azul'] };
+        const build = builderData.mejoresBuilds[idx] || { campeon: 'Carry ' + (idx + 1), coste: 4, items: [] };
+        const isSelected = selectedBuildIndex === idx;
+
+        const itemsHTML = (build.items && build.items.length > 0) ? build.items.map((itKey, itemIdx) => `
+          <div onclick="removeItemFromBestBuild(${idx}, ${itemIdx})" class="w-7 h-7 rounded bg-[#0b0d0f] border border-gray-700 p-0.5 relative group cursor-pointer" title="Hacer clic para eliminar">
+            <img src="${getItemImage(itKey)}" class="w-full h-full object-cover" />
+            <div class="absolute inset-0 bg-red-600/60 opacity-0 group-hover:opacity-100 flex items-center justify-center text-[8px] font-black text-white">✖</div>
+          </div>
+        `).join('') : `<span class="text-[10px] text-gray-500 italic">Sin objetos asignados</span>`;
+
         return `
-          <div class="bg-[#121316] border border-[#26282c] p-3 rounded-xl space-y-2">
-            <label class="text-xs font-bold text-gray-400">Carry / Tanque ${idx + 1}</label>
-            <input type="text" value="${build.campeon}" onchange="builderData.mejoresBuilds[${idx}].campeon = this.value" placeholder="Nombre Campeón" class="w-full bg-[#0b0d0f] border border-gray-800 rounded px-2 py-1 text-xs text-white" />
+          <div onclick="selectedBuildIndex = ${idx}; renderBestBuildsForm();" class="bg-[#121316] border-2 ${isSelected ? 'border-amber-400 bg-amber-500/10' : 'border-[#26282c]'} p-3 rounded-xl space-y-2 cursor-pointer transition-all">
+            <div class="flex items-center justify-between">
+              <label class="text-xs font-black ${isSelected ? 'text-amber-400' : 'text-gray-400'} uppercase tracking-wider">${idx === 0 ? '🏆 Main Carry' : '🛡️ Main Tanque'}</label>
+              <span class="text-[9px] px-2 py-0.5 rounded ${isSelected ? 'bg-amber-500 text-black font-bold' : 'bg-gray-800 text-gray-400'}">${isSelected ? 'SELECCIONADO' : 'Seleccionar'}</span>
+            </div>
+            
+            <select onchange="setBestBuildChamp(${idx}, this.value)" class="w-full bg-[#0b0d0f] border border-gray-800 rounded px-2 py-1.5 text-xs text-white">
+              <option value="">-- Seleccionar Campeón --</option>
+              ${Object.keys(localChampMap).map(cName => `<option value="${cName}" ${build.campeon === cName ? 'selected' : ''}>${cName}</option>`).join('')}
+            </select>
+
+            <div>
+              <span class="text-[10px] font-bold text-gray-400 block mb-1">Objetos Asignados (Haz clic en catálogo abajo para añadir):</span>
+              <div class="flex items-center gap-1 min-h-[32px] bg-[#0b0d0f] p-1 rounded-lg border border-gray-800">
+                ${itemsHTML}
+              </div>
+            </div>
           </div>
         `;
       }).join('');
+    }
+
+    function setBestBuildChamp(buildIdx, champName) {
+      if (!builderData.mejoresBuilds[buildIdx]) {
+        builderData.mejoresBuilds[buildIdx] = { campeon: champName, coste: 4, items: [] };
+      } else {
+        builderData.mejoresBuilds[buildIdx].campeon = champName;
+      }
+      renderBestBuildsForm();
+    }
+
+    function removeItemFromBestBuild(buildIdx, itemIdx) {
+      if (builderData.mejoresBuilds[buildIdx] && builderData.mejoresBuilds[buildIdx].items) {
+        builderData.mejoresBuilds[buildIdx].items.splice(itemIdx, 1);
+        renderBestBuildsForm();
+      }
     }
 
     function generateFinalGuideJSON() {
@@ -2087,7 +2249,7 @@
       });
 
       const newComp = {
-        id: name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
+        id: editingCompId || name.toLowerCase().replace(/[^a-z0-9]/g, '-'),
         tier: tier,
         nombre: name,
         dificultad: difficulty,
@@ -2099,21 +2261,51 @@
         sinergias: sinergias,
         aumentos: builderData.aumentos,
         tablero: board,
-        mejoresBuilds: [
-          { campeon: champsList[0] ? champsList[0].nombre : "Carry", coste: 4, items: ["lanza_shojin", "guantelete_joyado", "rompeguardias"] },
-          { campeon: champsList[1] ? champsList[1].nombre : "Tanque", coste: 4, items: ["gargola", "armadura_warmog", "apariencia_espiritual"] }
-        ]
+        mejoresBuilds: builderData.mejoresBuilds
       };
 
-      // Agregar a tftData local e re-renderizar
-      tftData.unshift(newComp);
+      if (editingCompId) {
+        const idx = tftData.findIndex(c => c.id === editingCompId);
+        if (idx !== -1) tftData[idx] = newComp;
+        else tftData.unshift(newComp);
+      } else {
+        tftData.unshift(newComp);
+      }
+
       renderTierList(tftData);
       closeAdminBuilderModal();
-      alert("¡Guía Creada y Publicada Exitosamente en la Tier List!");
+      alert("🚀 ¡Guía Guardada y Publicada Exitosamente en la Tier List!");
     }
 
     // changeLanguage unificado arriba
   </script>
+
+  <!-- MODAL INICIO SESIÓN ADMIN (SOLO USUARIO AUTORIZADO) -->
+  <div id="admin-login-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[9999] hidden flex items-center justify-center p-4">
+    <div class="bg-[#17181a] border border-amber-500/50 rounded-3xl w-full max-w-md p-6 shadow-2xl space-y-6 text-center">
+      <div class="w-16 h-16 rounded-2xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-3xl mx-auto">🔒</div>
+      <div>
+        <h3 class="text-xl font-black text-white tracking-wide">Acceso Administrador</h3>
+        <p class="text-xs text-gray-400 mt-1">Ingresa tus credenciales autorizadas para gestionar las guías.</p>
+      </div>
+
+      <div class="space-y-4 text-left">
+        <div>
+          <label class="text-xs font-bold text-gray-400 block mb-1">Usuario</label>
+          <input type="text" id="admin-user-input" placeholder="Usuario admin" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-400 focus:outline-none" />
+        </div>
+        <div>
+          <label class="text-xs font-bold text-gray-400 block mb-1">Contraseña</label>
+          <input type="password" id="admin-pass-input" placeholder="••••••••" class="w-full bg-[#0b0d0f] border border-gray-800 rounded-xl px-3 py-2 text-sm text-white focus:border-amber-400 focus:outline-none" />
+        </div>
+      </div>
+
+      <div class="flex items-center justify-end gap-3 pt-2">
+        <button onclick="closeAdminLoginModal()" class="px-4 py-2 rounded-xl bg-gray-800 text-gray-300 font-bold text-xs">Cancelar</button>
+        <button onclick="attemptAdminLogin()" class="px-6 py-2 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-xs shadow-xl">Ingresar</button>
+      </div>
+    </div>
+  </div>
 
   <!-- MODAL CREADOR DE GUÍAS Y TABLERO INTERACTIVO TFT (PANEL ADMIN) -->
   <div id="admin-builder-modal" class="fixed inset-0 bg-black/90 backdrop-blur-md z-[9999] hidden flex items-center justify-center p-2 sm:p-4 overflow-y-auto">
@@ -2124,7 +2316,7 @@
         <div class="flex items-center space-x-3">
           <div class="w-10 h-10 rounded-xl bg-amber-500/20 border border-amber-500/40 flex items-center justify-center text-xl">🛠️</div>
           <div>
-            <h3 class="text-lg font-black text-white tracking-wide">Creador de Equipos & Guías TFT (Panel Admin)</h3>
+            <h3 class="text-lg font-black text-white tracking-wide">Panel Administrador & Creador de Guías TFT</h3>
             <p class="text-xs text-gray-400">Diseña composiciones, coloca celdas y calcula sinergias automáticamente.</p>
           </div>
         </div>
@@ -2201,15 +2393,15 @@
           </div>
 
           <div>
-            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-2">2. Equipar Objetos a Ficha</h4>
+            <h4 class="text-xs font-black text-white uppercase tracking-wider mb-2">2. Equipar Objetos (Ficha / Builds)</h4>
             <div id="builder-item-catalog" class="flex flex-wrap gap-1 max-h-36 overflow-y-auto p-1 bg-[#0b0d0f] rounded-xl border border-gray-800"></div>
           </div>
         </div>
 
       </div>
 
-      <!-- Apartados Secundarios (Salida Early, Carrusel) -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <!-- Apartados Secundarios (Salida Early, Carrusel, Mejores Builds) -->
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2">
           <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider">Salida de Campeones (Early)</h4>
           <div id="builder-early-champs" class="flex flex-wrap gap-1.5"></div>
@@ -2219,16 +2411,27 @@
           <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider">Prioridad Objetos Carrusel</h4>
           <div id="builder-carousel-items" class="flex gap-2"></div>
         </div>
+
+        <div class="bg-[#121316] border border-[#26282c] p-4 rounded-2xl space-y-2">
+          <h4 class="text-xs font-black text-gray-300 uppercase tracking-wider">Mejores Builds / Objetos</h4>
+          <div id="builder-best-builds-inputs" class="space-y-2"></div>
+        </div>
       </div>
 
       <!-- Botón Publicar Guía -->
-      <div class="pt-4 border-t border-[#26282c] flex items-center justify-end gap-3">
-        <button onclick="closeAdminBuilderModal()" class="px-5 py-2.5 rounded-xl bg-gray-800 text-gray-300 font-bold hover:bg-gray-700 text-xs">
-          Cancelar
+      <div class="pt-4 border-t border-[#26282c] flex items-center justify-between gap-3">
+        <button onclick="logoutAdmin()" class="px-4 py-2 rounded-xl bg-red-600/20 text-red-400 font-bold hover:bg-red-600 hover:text-white text-xs">
+          🔒 Cerrar Sesión Admin
         </button>
-        <button onclick="generateFinalGuideJSON()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-xs shadow-xl hover:brightness-110">
-          🚀 Publicar Guía en Tier List
-        </button>
+
+        <div class="flex items-center gap-3">
+          <button onclick="closeAdminBuilderModal()" class="px-5 py-2.5 rounded-xl bg-gray-800 text-gray-300 font-bold hover:bg-gray-700 text-xs">
+            Cancelar
+          </button>
+          <button onclick="generateFinalGuideJSON()" class="px-6 py-2.5 rounded-xl bg-gradient-to-r from-amber-500 to-amber-600 text-black font-black text-xs shadow-xl hover:brightness-110">
+            🚀 Guardar y Publicar Guía
+          </button>
+        </div>
       </div>
 
     </div>
