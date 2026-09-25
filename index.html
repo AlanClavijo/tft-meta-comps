@@ -1209,20 +1209,21 @@
           `;
         }).join('');
 
-        // 3. Sinergias (Traits) con insignias hex de nivel, iconos y escalas activas
+        // 3. Sinergias (Traits) con insignias hex de nivel, iconos vectoriales y escalas activas
         const traitsHTML = comp.sinergias ? comp.sinergias.map(tr => {
-          const traitClass = tr.tipo || 'bronze';
-          const escalaHTML = tr.escala ? `<div class="text-[9px] font-medium text-gray-500">${tr.escala}</div>` : '';
+          const count = tr.nivel || 1;
+          const traitClass = tr.tipo || getTraitLevelTier(tr.nombre, count);
+          const escalaText = tr.escala || getTraitScaleText(tr.nombre);
           const iconSrc = getTraitIcon(tr.nombre);
           return `
-            <div class="flex items-center gap-2 bg-[#0b0d0f] px-2.5 py-1 rounded-xl border border-[#26282c]">
-              <div class="trait-badge ${traitClass} relative flex items-center justify-center">
-                <img src="${iconSrc}" alt="${tr.nombre}" class="w-4 h-4 object-contain brightness-200" onerror="this.style.display='none'; this.nextElementSibling.style.display='block';" />
-                <span class="text-[10px] font-black leading-none">${tr.nivel}</span>
+            <div class="flex items-center gap-2 bg-[#0b0d0f] px-3 py-1.5 rounded-2xl border border-[#26282c] shadow-md hover:border-amber-500/30 transition-all">
+              <div class="trait-badge ${traitClass} shrink-0 relative flex items-center justify-center gap-0.5">
+                <img src="${iconSrc}" alt="${tr.nombre}" class="w-3.5 h-3.5 object-contain brightness-200" onerror="this.style.display='none';" />
+                <span class="text-[10px] font-black leading-none">${count}</span>
               </div>
-              <div>
-                <div class="text-xs font-black text-white tracking-wide">${tr.nombre}</div>
-                ${escalaHTML}
+              <div class="flex flex-col justify-center">
+                <div class="text-xs font-black text-white leading-tight tracking-wide">${tr.nombre}</div>
+                <div class="text-[9px] font-bold text-gray-400 leading-none mt-0.5">${escalaText}</div>
               </div>
             </div>
           `;
@@ -2611,6 +2612,20 @@
       }
     }
 
+    function getTraitLevelTier(traitName, count) {
+      // Reglas de niveles de sinergia según conteo
+      if (count >= 6) return 'prismatic';
+      if (count >= 4) return 'gold';
+      if (count >= 2) return 'silver';
+      return 'bronze';
+    }
+
+    function getTraitScaleText(traitName) {
+      const uniqueSingleTraits = ['Padre Verde', 'Greenfather', 'Avatar', 'Rival', 'Buscador De Recompensas', 'BountySeeker', 'Aspecto Esmeralda', 'EmeraldAspect', 'Doncella De Espinas', 'ZyraOrigin'];
+      if (uniqueSingleTraits.includes(traitName)) return '1';
+      return '2 > 4 > 6';
+    }
+
     function updateCalculatedTraits() {
       const traitsContainer = document.getElementById('builder-calculated-traits');
       if (!traitsContainer) return;
@@ -2632,10 +2647,8 @@
 
       const traitsList = Object.keys(traitCounts).map(traitName => {
         const count = traitCounts[traitName];
-        let type = 'bronze';
-        if (count >= 5) type = 'gold';
-        else if (count >= 3) type = 'silver';
-        return { nombre: traitName, nivel: count, tipo: type };
+        const type = getTraitLevelTier(traitName, count);
+        return { nombre: traitName, nivel: count, tipo: type, escala: getTraitScaleText(traitName) };
       }).sort((a, b) => b.nivel - a.nivel);
 
       if (traitsList.length === 0) {
@@ -2646,12 +2659,15 @@
       traitsContainer.innerHTML = traitsList.map(t => {
         const iconSrc = getTraitIcon(t.nombre);
         return `
-          <div class="flex items-center gap-2 bg-[#17181a] border border-[#26282c] px-3 py-1.5 rounded-xl shadow-md">
-            <div class="trait-badge ${t.tipo} relative flex items-center justify-center gap-0.5">
+          <div class="flex items-center gap-2 bg-[#0b0d0f] border border-[#26282c] px-3 py-1.5 rounded-2xl shadow-lg hover:border-amber-500/40 transition-colors">
+            <div class="trait-badge ${t.tipo} shrink-0 relative flex items-center justify-center gap-0.5">
               <img src="${iconSrc}" alt="${t.nombre}" class="w-3.5 h-3.5 object-contain brightness-200" onerror="this.style.display='none';" />
               <span class="text-[10px] font-black leading-none">${t.nivel}</span>
             </div>
-            <span class="text-xs font-black text-white">${t.nombre}</span>
+            <div>
+              <span class="text-xs font-extrabold text-white block leading-tight">${t.nombre}</span>
+              <span class="text-[9px] font-semibold text-gray-500 leading-none">${t.escala}</span>
+            </div>
           </div>
         `;
       }).join('');
