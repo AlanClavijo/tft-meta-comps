@@ -1587,54 +1587,187 @@
       await Promise.all(promises);
     }
 
-    // Descargar imagen JPG estilizada con marca de agua oficial (Optimizado para TikTok/Social Media)
+    // MOTOR DE INFOGRAFÍA JPG DEDICADA PARA REDES / DESCARGA (Basada exactamente en la estructura de la maqueta de referencia)
     async function downloadCompImage(compId) {
       const comp = tftData.find(c => c.id === compId);
-      const articleEl = document.getElementById(compId);
-      if (!comp || !articleEl) return;
+      if (!comp) return;
 
-      const detailsEl = document.getElementById(`details-${compId}`);
-      const arrowEl = document.getElementById(`arrow-${compId}`);
-      let originallyClosed = false;
+      showToast(`📸 Generando infografía HD de ${comp.nombre}...`, 'info');
 
-      showToast(`📸 Generando infografía JPG de ${comp.nombre}...`, 'info');
+      // 1. Crear contenedor temporal fuera de pantalla
+      const exportContainer = document.createElement('div');
+      exportContainer.style.position = 'fixed';
+      exportContainer.style.left = '-9999px';
+      exportContainer.style.top = '0';
+      exportContainer.style.width = '780px';
+      exportContainer.style.backgroundColor = '#0b0d12';
+      exportContainer.style.color = '#ffffff';
+      exportContainer.style.fontFamily = "system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif";
+      exportContainer.style.padding = '24px';
+      exportContainer.style.boxSizing = 'border-box';
+      exportContainer.style.borderRadius = '24px';
+      exportContainer.style.border = '1px solid #1e1b4b';
 
-      // 1. Si está cerrado, desplegarlo para la captura
-      if (detailsEl && detailsEl.classList.contains('max-h-0')) {
-        originallyClosed = true;
-        detailsEl.classList.remove('max-h-0', 'opacity-0');
-        detailsEl.classList.add('max-h-[3000px]', 'opacity-100');
-        detailsEl.style.maxHeight = '3000px';
-      }
+      // 2. Campeones Clave
+      const champsHTML = comp.campeones.map(ch => {
+        const borderColor = costBorderHex[ch.coste] || '#a1a1aa';
+        const itemsHTML = (ch.items && ch.items.length > 0) ? `
+          <div style="position:absolute; bottom:-6px; left:50%; transform:translateX(-50%); display:flex; gap:2px; z-index:20;">
+            ${ch.items.slice(0, 3).map(itemKey => `
+              <div style="width:14px; height:14px; border-radius:3px; border:1px solid #000; overflow:hidden; background:#0b0d0f;">
+                <img src="${getItemImage(itemKey)}" style="width:100%; height:100%; object-fit:cover;" />
+              </div>
+            `).join('')}
+          </div>
+        ` : '';
 
-      // 2. Insertar marca de agua superior e inferior temporalmente en la tarjeta real
-      const headerWM = document.createElement('div');
-      headerWM.className = 'export-wm-header w-full bg-[#17181a] border border-[#26282c] p-3 rounded-2xl mb-4 flex items-center justify-between shadow-md';
-      headerWM.innerHTML = `
-        <div class="flex items-center gap-2">
-          <img src="./scr/img/logo.svg" style="width:28px;height:28px;" />
-          <span class="font-extrabold text-sm text-amber-400 tracking-wider">TFT META COMPS</span>
+        return `
+          <div style="position:relative; width:48px; height:48px; border-radius:12px; border:2px solid ${borderColor}; overflow:hidden; background:#121316; display:flex; align-items:center; justify-content:center;">
+            <img src="${getChampionImage(ch.nombre)}" style="width:100%; height:100%; object-fit:cover;" />
+            ${itemsHTML}
+          </div>
+        `;
+      }).join('');
+
+      // 3. Early Game Transition
+      const earlyChamps = comp.earlyGame && comp.earlyGame.length > 0 ? comp.earlyGame : ["Sett", "Yorick", "Vi", "Amumu"];
+      const earlyHTML = earlyChamps.map((eName, idx) => `
+        <div style="display:flex; align-items:center; gap:8px;">
+          <div style="width:40px; height:40px; border-radius:10px; border:1.5px solid #3b82f6; overflow:hidden; background:#0b0d0f;">
+            <img src="${getChampionImage(eName)}" style="width:100%; height:100%; object-fit:cover;" />
+          </div>
+          ${idx < earlyChamps.length - 1 ? '<span style="color:#64748b; font-weight:900; font-size:14px;">></span>' : ''}
         </div>
-        <div class="text-[12px] font-bold text-sky-400">
-          🌐 aslandevstudio.com
+      `).join('');
+
+      // 4. Builds Carry & Tank
+      const builds = comp.mejoresBuilds || [
+        { campeon: comp.campeones[0]?.nombre || 'Carry', coste: 4, items: ['guinsoo', 'filo_infinito'] },
+        { campeon: comp.campeones[1]?.nombre || 'Tanque', coste: 4, items: ['armadura_warmog', 'garra_dragon'] }
+      ];
+
+      const buildsHTML = builds.map((b, i) => {
+        const cInfo = champTooltipDB_ES[b.campeon] || { coste: 4, desc: '' };
+        const bImg = getChampionImage(b.campeon);
+        const bItemsHTML = (b.items && b.items.length > 0) ? b.items.map(itKey => `
+          <div style="width:36px; height:36px; border-radius:8px; border:1px solid #374151; background:#0b0d0f; padding:2px;">
+            <img src="${getItemImage(itKey)}" style="width:100%; height:100%; object-fit:cover;" />
+          </div>
+        `).join('') : '';
+
+        return `
+          <div style="display:flex; items-center; justify-content:space-between; background:#121316; border:1px solid #1e1b4b; border-radius:16px; padding:12px 16px; margin-bottom:8px;">
+            <div style="display:flex; align-items:center; gap:12px;">
+              <div style="width:44px; height:44px; border-radius:12px; border:2px solid ${costBorderHex[cInfo.coste] || '#a1a1aa'}; overflow:hidden; background:#0b0d0f; shrink:0;">
+                <img src="${bImg}" style="width:100%; height:100%; object-fit:cover;" />
+              </div>
+              <div>
+                <div style="font-weight:900; font-size:14px; color:#ffffff; text-transform:uppercase;">${b.campeon} ${i === 0 ? '(MAIN CARRY)' : '(MAIN TANK)'}</div>
+                <div style="font-size:10px; color:#9ca3af; margin-top:2px;">${cInfo.desc ? cInfo.desc.substring(0, 65) + '...' : 'Recomendado con ítems biS'}</div>
+              </div>
+            </div>
+            <div style="display:flex; align-items:center; gap:4px;">
+              ${bItemsHTML}
+            </div>
+          </div>
+        `;
+      }).join('');
+
+      // 5. Prioridad de Objetos Carrusel
+      const carruselHTML = (comp.prioridadCarrusel || ['lagrima', 'vara', 'cinto', 'malla']).map(k => `
+        <div style="width:32px; height:32px; border-radius:8px; border:1px solid #374151; background:#0b0d0f; padding:2px;">
+          <img src="${getItemImage(k, true)}" style="width:100%; height:100%; object-fit:cover;" />
+        </div>
+      `).join('');
+
+      // Plantilla Estructurada Completa
+      exportContainer.innerHTML = `
+        <!-- HEADER MARCA -->
+        <div style="display:flex; align-items:center; justify-between; margin-bottom:16px; padding-bottom:12px; border-bottom:1px solid #1e1b4b;">
+          <div style="display:flex; align-items:center; gap:8px;">
+            <img src="./scr/img/logo.svg" style="width:28px; height:28px;" />
+            <span style="font-weight:900; font-size:14px; color:#f59e0b; letter-spacing:1px;">TFT META COMPS</span>
+          </div>
+          <div style="font-weight:800; font-size:12px; color:#38bdf8;">
+            aalandevstudio.com
+          </div>
+        </div>
+
+        <!-- TÍTULO DE LA COMPOSICIÓN & TIER -->
+        <div style="display:flex; align-items:center; gap:14px; margin-bottom:20px;">
+          <div style="width:48px; height:48px; border-radius:14px; background:${tierBadgeStyle[comp.tier] ? tierBadgeStyle[comp.tier].bg : '#fe3e4b'}; color:#ffffff; display:flex; align-items:center; justify-content:center; font-weight:900; font-size:24px; shrink:0; box-shadow:0 4px 12px rgba(0,0,0,0.5);">
+            ${comp.tier}
+          </div>
+          <div>
+            <h1 style="font-weight:900; font-size:24px; color:#ffffff; margin:0; text-transform:uppercase; letter-spacing:0.5px; line-height:1.1;">${comp.nombre}</h1>
+            <div style="font-weight:800; font-size:11px; color:#f59e0b; letter-spacing:1px; margin-top:4px;">SET 18 META COMP • ${comp.dificultad.toUpperCase()} • ${comp.categoria.toUpperCase()}</div>
+          </div>
+        </div>
+
+        <!-- CAMPEONES CLAVE -->
+        <div style="background:#121316; border:1px solid #1e1b4b; border-radius:18px; padding:14px; margin-bottom:16px;">
+          <div style="font-weight:800; font-size:10px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">CAMPEONES CLAVE</div>
+          <div style="display:flex; align-items:center; gap:10px; flex-wrap:wrap;">
+            ${champsHTML}
+          </div>
+        </div>
+
+        <!-- TRANSICIÓN EARLY & POWER SPIKES -->
+        <div style="display:grid; grid-template-columns:1fr 1fr; gap:12px; margin-bottom:16px;">
+          <div style="background:#121316; border:1px solid #1e1b4b; border-radius:18px; padding:14px;">
+            <div style="font-weight:800; font-size:10px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-bottom:10px;">TRANSICIÓN DE EARLY GAME</div>
+            <div style="display:flex; align-items:center; gap:6px; margin-bottom:8px;">
+              ${earlyHTML}
+            </div>
+            <div style="font-weight:700; font-size:10px; color:#cbd5e1;">Prioridad: Pares de unidades, Econ >50g</div>
+          </div>
+
+          <div style="background:#121316; border:1px solid #1e1b4b; border-radius:18px; padding:14px; display:flex; flex-col; justify-content:space-between;">
+            <div style="font-weight:800; font-size:10px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px;">POWER SPIKES CLAVE</div>
+            <div style="display:flex; align-items:center; justify-content:space-around;">
+              <div style="text-center;">
+                <span style="font-weight:900; font-size:16px; color:#f59e0b;">Nivel 7</span>
+                <div style="font-size:9px; color:#9ca3af; margin-top:2px;">Rollear 2* Carry</div>
+              </div>
+              <div style="width:1px; height:24px; background:#374151;"></div>
+              <div style="text-center;">
+                <span style="font-weight:900; font-size:16px; color:#38bdf8;">Nivel 8</span>
+                <div style="font-size:9px; color:#9ca3af; margin-top:2px;">Compo Completa</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLERO HEXAGONAL CENTRAL -->
+        <div style="background:#0b0d12; border:1px solid #1e1b4b; border-radius:20px; padding:12px; margin-bottom:16px; text-align:center;">
+          ${renderSVGHexBoard(comp)}
+        </div>
+
+        <!-- MEJORES BUILDS PARA CARRY Y TANQUE -->
+        <div style="margin-bottom:16px;">
+          <div style="font-weight:800; font-size:10px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px; margin-bottom:8px; text-align:center;">MEJORES BUILDS / OBJETOS PARA CARRY Y TANQUE</div>
+          ${buildsHTML}
+        </div>
+
+        <!-- PRIORIDAD DE CARRUSEL -->
+        <div style="background:#121316; border:1px solid #1e1b4b; border-radius:16px; padding:12px; display:flex; align-items:center; justify-content:space-between; margin-bottom:16px;">
+          <div style="font-weight:800; font-size:10px; color:#9ca3af; text-transform:uppercase; letter-spacing:1px;">PRIORIDAD DE COMPONENTES CARRUSEL</div>
+          <div style="display:flex; align-items:center; gap:6px;">
+            ${carruselHTML}
+          </div>
+        </div>
+
+        <!-- FOOTER PROMOCIONAL -->
+        <div style="background:linear-gradient(90deg, #f59e0b, #d97706); border-radius:12px; padding:10px; text-align:center; font-weight:900; font-size:11px; color:#000000; text-transform:uppercase; letter-spacing:1px;">
+          GUÍA COMPLETA Y TIER LIST INTERACTIVA EN: aslandevstudio.com
         </div>
       `;
 
-      const footerWM = document.createElement('div');
-      footerWM.className = 'export-wm-footer w-full text-center py-2.5 border-t border-[#26282c] mt-4 text-[10px] font-black text-amber-400 tracking-widest uppercase';
-      footerWM.innerText = '© 2026 ASLAN DEV STUDIO • GUÍAS Y TIER LIST DE TFT';
-
-      // Insertar en la tarjeta visible
-      articleEl.insertBefore(headerWM, articleEl.firstChild);
-      articleEl.appendChild(footerWM);
-
-      // Ocultar botones de interacción, controles admin y texto 'Detalles' durante la captura
-      const actionButtons = articleEl.querySelectorAll('button, #arrow-' + compId + ', .action-controls-container, .comp-details-trigger');
-      actionButtons.forEach(btn => btn.style.display = 'none');
+      document.body.appendChild(exportContainer);
 
       try {
-        // Pre-convertir todas las etiquetas SVG <image> del tablero a DataURI Base64 antes de llamar a html2canvas
-        const svgImages = Array.from(articleEl.querySelectorAll('svg image'));
+        // Pre-convertir imágenes SVG <image> dentro del exportContainer a DataURI Base64 para html2canvas
+        const svgImages = Array.from(exportContainer.querySelectorAll('svg image'));
         await Promise.all(svgImages.map(img => {
           return new Promise(resolve => {
             const href = img.getAttribute('href') || img.getAttribute('xlink:href');
@@ -1659,39 +1792,14 @@
           });
         }));
 
-        await new Promise(r => setTimeout(r, 200));
+        await new Promise(r => setTimeout(r, 250));
 
-        const canvas = await html2canvas(articleEl, {
-          backgroundColor: '#0b0d0f',
+        const canvas = await html2canvas(exportContainer, {
+          backgroundColor: '#0b0d12',
           scale: 2,
           useCORS: true,
           allowTaint: true,
-          logging: false,
-          onclone: (clonedDoc, clonedEl) => {
-            // Ajustar estilos en el documento clonado justo antes de dibujar la foto JPG
-            const tierBadge = clonedEl.querySelector('.shrink-0.font-black');
-            if (tierBadge) {
-              tierBadge.style.display = 'flex';
-              tierBadge.style.alignItems = 'center';
-              tierBadge.style.justifyContent = 'center';
-              tierBadge.style.lineHeight = 'normal';
-              const span = tierBadge.querySelector('span');
-              if (span) {
-                span.style.lineHeight = 'normal';
-                span.style.marginTop = '-2px';
-              }
-            }
-
-            const pills = clonedEl.querySelectorAll('.rounded-full');
-            pills.forEach(pill => {
-              pill.style.display = 'inline-flex';
-              pill.style.alignItems = 'center';
-              pill.style.justifyContent = 'center';
-              pill.style.paddingTop = '4px';
-              pill.style.paddingBottom = '4px';
-              pill.style.lineHeight = '1';
-            });
-          }
+          logging: false
         });
 
         const imgData = canvas.toDataURL('image/jpeg', 0.95);
@@ -1703,19 +1811,10 @@
 
         showToast(`✅ Infografía descargada: tft_meta_${cleanName}.jpg`, 'success');
       } catch (err) {
-        console.error("Error al exportar imagen:", err);
+        console.error("Error al exportar imagen HD:", err);
         showToast("❌ Error al exportar la imagen.", 'error');
       } finally {
-        // Restaurar estado visual original de la tarjeta
-        headerWM.remove();
-        footerWM.remove();
-        actionButtons.forEach(btn => btn.style.display = '');
-
-        if (originallyClosed && detailsEl) {
-          detailsEl.classList.remove('max-h-[3000px]', 'opacity-100');
-          detailsEl.classList.add('max-h-0', 'opacity-0');
-          detailsEl.style.maxHeight = '';
-        }
+        document.body.removeChild(exportContainer);
       }
     }
 
